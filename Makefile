@@ -20,16 +20,16 @@ SFML_LIB := -L$(SFML)/lib -lsfml-graphics -lsfml-window -lsfml-system
 all: $(OBJ_SRC) $(OBJ_TST) $(OBJ_GUI) bld/gui.exe bld/test.exe
 
 $(OBJ_SRC): obj/%.o: %.cpp
-	$(CXX) $(CFLAGS) -I$(SFML)/include $< -c -o $@
+	@$(CXX) $(CFLAGS) -I$(SFML)/include $< -c -o $@
 
 $(OBJ_TST): obj/%o: %cpp
-	$(CXX) -O2 -s -DNDEBUG $(CFLAGS) -I$(CATCH) -I$(SFML)/include -c $< -o $@
+	@$(CXX) $(CFLAGS) -I$(CATCH) -I$(SFML)/include -c $< -o $@
 
 $(OBJ_GUI): obj/%o: %cpp
-	$(CXX) $(CFLAGS) -I$(SFML)/include $< -c -o $@
+	@$(CXX) $(CFLAGS) -I$(SFML)/include $< -c -o $@
 
 bld/gui.exe: $(OBJ_SRC) $(OBJ_GUI)
-	$(CXX) $^ -o $@ $(SFML_LIB)
+	@$(CXX) $^ -o $@ $(SFML_LIB)
 
 bld/test.exe: $(OBJ_SRC) $(OBJ_TST)
-	$(CXX) $^ -o $@ $(SFML_LIB)
+	@$(CXX) $^ -o $@ $(SFML_LIB)
