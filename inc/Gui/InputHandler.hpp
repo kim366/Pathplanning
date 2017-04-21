@@ -12,7 +12,7 @@ class InputHandler
 public:
 	explicit 			InputHandler(sf::RenderWindow& window_);
 	const auto&			getInputs() { return _inputs; }
-	void 				handleInput();
+	bool 				handleInput();
 
 private:
 	RawInputs			_raw_inputs;
