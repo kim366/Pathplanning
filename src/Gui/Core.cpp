@@ -1,4 +1,5 @@
 #include <Gui/Core.hpp>
+#include <Gui/TestEntity.hpp>
 
 namespace Gui
 {
@@ -14,10 +15,12 @@ void Core::run()
 	while (true)
 	{
 		sf::Time delta_time = clock.restart();
+		
 		if(_input_handler.handleInput())
 			return;
+
 		_entity_manager.updateEntities(delta_time.asSeconds());
-		_entity_manager.drawEntities();
+		_entity_manager.drawEntities(_window);
 	}
 }
 

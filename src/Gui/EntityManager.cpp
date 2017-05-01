@@ -1,11 +1,16 @@
+#include <SFML/Graphics/RenderWindow.hpp>
 #include <Gui/EntityManager.hpp>
 
 void Gui::EntityManager::updateEntities(float delta_time_)
 {
-
+	for (auto& entity : _entities)
+		entity->update(delta_time_, _inputs);
 }
 
-void Gui::EntityManager::drawEntities()
+void Gui::EntityManager::drawEntities(sf::RenderWindow& window_)
 {
-	
+	window_.clear();
+	for (auto& entity : _entities)
+		window_.draw(*entity);
+	window_.display();
 }

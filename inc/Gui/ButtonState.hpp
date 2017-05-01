@@ -7,12 +7,26 @@ namespace Gui
 namespace Button
 {
 
-enum class State
+namespace State
+{
+
+enum class Mouse
+{
+	NoAction,
+	Pressed,
+	Held,
+	Clicked,
+	Dragged,
+	DragReleased
+};
+
+enum class Keyboard : bool
 {
 	NotPressed,
-	Clicked,
-	Dragged
+	Pressed
 };
+
+} // namespace State
 
 enum class RawState
 {

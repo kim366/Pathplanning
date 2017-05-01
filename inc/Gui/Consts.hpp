@@ -17,6 +17,13 @@ const auto 			size{500u};
 
 } // namespace Window
 
+namespace Input
+{
+
+const auto			threshold_drag{10u}; // in px; hypot threshold until a held button is considerered a drag
+
+} // namespace Input
+
 } // namespace cst
 
 } // namespace Gui
