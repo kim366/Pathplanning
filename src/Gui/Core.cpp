@@ -1,5 +1,4 @@
 #include <Gui/Core.hpp>
-#include <Gui/TestEntity.hpp>
 
 namespace Gui
 {
