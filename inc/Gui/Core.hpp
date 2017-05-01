@@ -12,12 +12,11 @@ namespace Gui
 class Core
 {
 public:
-						Core();
 	void 				run();
 
 private:
 	InputHandler		_input_handler{_window};
-	EntityManager		_entity_manager;
+	EntityManager		_entity_manager{_input_handler.getInputs()};
 	sf::RenderWindow	_window{{cst::Window::size, cst::Window::size}, cst::Window::title};
 };
 

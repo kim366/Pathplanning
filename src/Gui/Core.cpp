@@ -3,11 +3,6 @@
 namespace Gui
 {
 
-Core::Core()
-	: _entity_manager(_input_handler.getInputs())
-{
-}
-
 void Core::run()
 {
 	sf::Clock clock;
