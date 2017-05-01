@@ -19,7 +19,7 @@ public:
 	void 			addEntity(std::unique_ptr<Entity>&& entity_) { _entities.emplace_back(std::move(entity_)); }
 	const auto&		getEntities() const { return _entities; }
 	void 			updateEntities(float delta_time_);
-	void			drawEntities(sf::RenderWindow& window_);
+	void			drawEntities(std::unique_ptr<sf::RenderWindow>& window_);
 
 private:
 	EntityVec 		_entities;

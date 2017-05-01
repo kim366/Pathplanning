@@ -12,12 +12,12 @@ namespace Gui
 class Core
 {
 public:
-	void 				loop();
+	void 								loop();
 
 private:
-	InputHandler		_input_handler{_window};
-	EntityManager		_entity_manager{_input_handler.getInputs()};
-	sf::RenderWindow	_window{{cst::Window::size, cst::Window::size}, cst::Window::title};
+	std::unique_ptr<sf::RenderWindow>	_window{new sf::RenderWindow{{cst::Window::size, cst::Window::size}, cst::Window::title}};
+	std::unique_ptr<InputHandler>		_input_handler{new InputHandler{*_window}};
+	std::unique_ptr<EntityManager>		_entity_manager{new EntityManager{_input_handler->getInputs()}};
 };
 
 } // namespace Gui

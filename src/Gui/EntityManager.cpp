@@ -7,10 +7,10 @@ void Gui::EntityManager::updateEntities(float delta_time_)
 		entity->update(delta_time_, _inputs);
 }
 
-void Gui::EntityManager::drawEntities(sf::RenderWindow& window_)
+void Gui::EntityManager::drawEntities(std::unique_ptr<sf::RenderWindow>& window_)
 {
-	window_.clear();
+	window_->clear();
 	for (auto& entity : _entities)
-		window_.draw(*entity);
-	window_.display();
+		window_->draw(*entity);
+	window_->display();
 }

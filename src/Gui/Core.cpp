@@ -10,11 +10,11 @@ void Core::loop()
 	{
 		sf::Time delta_time = clock.restart();
 		
-		if(_input_handler.handleInput())
+		if(_input_handler->handleInput())
 			return;
 
-		_entity_manager.updateEntities(delta_time.asSeconds());
-		_entity_manager.drawEntities(_window);
+		_entity_manager->updateEntities(delta_time.asSeconds());
+		_entity_manager->drawEntities(_window);
 	}
 }
 
