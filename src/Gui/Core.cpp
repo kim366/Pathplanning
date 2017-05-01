@@ -3,7 +3,7 @@
 namespace Gui
 {
 
-void Core::run()
+void Core::loop()
 {
 	sf::Clock clock;
 	while (true)

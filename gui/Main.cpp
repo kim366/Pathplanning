@@ -3,6 +3,6 @@
 int main()
 {
 	Gui::Core core;
-	core.run();
+	core.loop();
 	return 0;
 }

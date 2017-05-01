@@ -12,7 +12,7 @@ namespace Gui
 class Core
 {
 public:
-	void 				run();
+	void 				loop();
 
 private:
 	InputHandler		_input_handler{_window};
