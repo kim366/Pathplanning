@@ -1,4 +1,5 @@
 bld
 obj
+nts
 *.todone
 *.sublime-*
