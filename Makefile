@@ -1,8 +1,3 @@
-CXX := clang++
-CFLAGS := -Iinc -Wall -std=c++14
-SFML := F:/_DEV_LIBS/SFML
-CATCH := F:/_DEV_LIBS/catch
-
 # All credit for `rwildcard` to larskholte @ StackOverflow
 rwildcard = $(foreach d,$(wildcard $1*),$(call rwildcard,$d/,$2) $(filter $(subst *,%,$2),$d))
 
@@ -13,20 +8,20 @@ OBJ_TST := $(patsubst %.cpp, obj/%.o, $(TST))
 GUI := $(call rwildcard, gui/, *.cpp)
 OBJ_GUI := $(patsubst %.cpp, obj/%.o, $(GUI))
 
-SFML_LIB := -L$(SFML)/lib -lsfml-graphics -lsfml-window -lsfml-system
+SFML_LIB := -lsfml-graphics -lsfml-window -lsfml-system
 
 .PHONY: all
 
-all: $(OBJ_SRC) $(OBJ_TST) $(OBJ_GUI) bld/gui.exe bld/test.exe
+all: $(OBJ_SRC) $(OBJ_TST) $(OBJ_GUI) bld/gui bld/test
 
 $(OBJ_SRC): obj/%.o: %.cpp
-	@$(CXX) $(CFLAGS) -I$(SFML)/include $< -c -o $@
+	@$(CXX) $(CFLAGS) $(CXXFLAGS) -Iinc $< -c -o $@
 
 $(OBJ_TST): obj/%o: %cpp
-	@$(CXX) $(CFLAGS) -I$(CATCH) -I$(SFML)/include -c $< -o $@
+	@$(CXX) $(CFLAGS) $(CXXFLAGS) -Iinc -c $< -o $@
 
 $(OBJ_GUI): obj/%o: %cpp
-	@$(CXX) $(CFLAGS) -I$(SFML)/include $< -c -o $@
+	@$(CXX) $(CFLAGS) $(CXXFLAGS) -Iinc $< -c -o $@
 
 bld/gui.exe: $(OBJ_SRC) $(OBJ_GUI)
 	@$(CXX) $^ -o $@ $(SFML_LIB)
