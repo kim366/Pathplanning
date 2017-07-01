@@ -1,0 +1,12 @@
+dist: kylin
+language: cpp
+sudo: true
+os: "linux"
+compiler:
+  - clang
+  - gcc
+install:
+  - sudo apt-get install libsfml-dev
+
+script:
+  - make bld/gui
