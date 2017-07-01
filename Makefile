@@ -23,8 +23,8 @@ $(OBJ_TST): obj/%o: %cpp
 $(OBJ_GUI): obj/%o: %cpp
 	@$(CXX) $(CFLAGS) $(CXXFLAGS) -Iinc $< -c -o $@
 
-bld/gui.exe: $(OBJ_SRC) $(OBJ_GUI)
+bld/gui: $(OBJ_SRC) $(OBJ_GUI)
 	@$(CXX) $^ -o $@ $(SFML_LIB)
 
-bld/test.exe: $(OBJ_SRC) $(OBJ_TST)
+bld/test: $(OBJ_SRC) $(OBJ_TST)
 	@$(CXX) $^ -o $@ $(SFML_LIB)
