@@ -13,7 +13,7 @@ public:
 	explicit Wall(Orientation orientation_);
 
 private:
-	Orientation _orientation;
+	Orientation _orientation;	
 };
 
 #endif // WALL_HPP

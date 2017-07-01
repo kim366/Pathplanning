@@ -15,15 +15,13 @@ class EntityManager
 using EntityVec = std::vector<std::unique_ptr<Entity>>;
 
 public:
-	explicit		EntityManager(const Inputs& inputs_) : _inputs(inputs_) {} 
 	void 			addEntity(std::unique_ptr<Entity>&& entity_) { _entities.emplace_back(std::move(entity_)); }
 	const auto&		getEntities() const { return _entities; }
-	void 			updateEntities(float delta_time_);
+	void 			updateEntities(float delta_time_, const Inputs& inputs_);
 	void			drawEntities(std::unique_ptr<sf::RenderWindow>& window_);
 
 private:
 	EntityVec 		_entities;
-	const Inputs&	_inputs;
 };
 
 } // namespace Gui
