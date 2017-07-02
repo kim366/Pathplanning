@@ -1,14 +1,23 @@
-dist: kylin
+dist: trusty
 language: cpp
-sudo: true
+sudo: false
 os: "linux"
 compiler:
   - clang
   - gcc
 install:
+- if [ "$CXX" = "g++" ]; then export CXX="g++-6" CC="gcc-6"; fi
   - sudo apt-get install libsfml-dev
+addons:
+  apt:
+    sources:
+    - ubuntu-toolchain-r-test
+    packages:
+    - gcc-6
+    - g++-6
+    - clang
 env:
   - CFLAGS=-Wall
-  - CXXFLAGS=-std=c++14
+  - CXXFLAGS=-std=c++14 
 script:
   - make bld/gui
