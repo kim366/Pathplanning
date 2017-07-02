@@ -1,5 +1,5 @@
-bld
-obj
-nts
+bld/
+nts/
+*.o
 *.todone
 *.sublime-*
