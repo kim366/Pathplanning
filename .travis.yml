@@ -17,7 +17,6 @@ addons:
     - g++-6
     - clang
 env:
-  - CFLAGS=-Wall
-  - CXXFLAGS=-std=c++14 
+  - CFLAGS=-Wall CXXFLAGS=-std=c++14 
 script:
   - make bld/gui
