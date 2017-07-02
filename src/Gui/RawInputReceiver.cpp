@@ -51,12 +51,12 @@ namespace Gui
 		}
 	}
 
-	void RawInputReceiver::receiveInput(std::unique_ptr<sf::RenderWindow>& window_);
+	void RawInputReceiver::receiveInput(std::unique_ptr<sf::RenderWindow>& window_)
 	{
 		update_raw_inputs(_raw_inputs);
 
 		sf::Event event;
-		while (_window.pollEvent(event))
+		while (window_->pollEvent(event))
 		{
 			if (event.type == sf::Event::Closed || (event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::Escape))
 				_should_window_close = true;

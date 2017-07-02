@@ -4,6 +4,7 @@
 #include <utility>
 #include <memory>
 #include <experimental/optional>
+#include <SFML/Window/Event.hpp>
 #include <SFML/Graphics/RenderWindow.hpp>
 #include <Gui/RawInputs.hpp>
 
