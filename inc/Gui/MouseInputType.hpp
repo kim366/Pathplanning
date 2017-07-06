@@ -11,6 +11,7 @@ namespace MouseInputType
 
 enum class Event
 {
+	None,
 	Pressed,
 	Clicked,
 	Dropped
@@ -25,10 +26,8 @@ enum class State
 
 struct Button
 {
-			Button() : state(State::Released) {}
-	std::experimental::optional<Event>
-			event;
-	State 	state;
+	Event	event{Event::None};
+	State 	state{State::Released};
 };
 
 } // namespace InputType
