@@ -15,13 +15,13 @@ SFML_LIB := -lsfml-graphics -lsfml-window -lsfml-system
 all: $(OBJ_SRC) $(OBJ_TST) $(OBJ_GUI) bld/gui bld/test
 
 $(OBJ_SRC): obj/%.o: %.cpp
-	@$(CXX) $(CFLAGS) $(CXXFLAGS) -Iinc $< -c -o $@
+	@$(CXX) -g $(CFLAGS) $(CXXFLAGS) -Iinc $< -c -o $@
 
 $(OBJ_TST): obj/%o: %cpp
 	@$(CXX) $(CFLAGS) $(CXXFLAGS) -Iinc -c $< -o $@
 
 $(OBJ_GUI): obj/%o: %cpp
-	@$(CXX) $(CFLAGS) $(CXXFLAGS) -Iinc $< -c -o $@
+	@$(CXX) -g $(CFLAGS) $(CXXFLAGS) -Iinc $< -c -o $@
 
 bld/gui: $(OBJ_SRC) $(OBJ_GUI)
 	@$(CXX) $^ -o $@ $(SFML_LIB)
