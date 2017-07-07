@@ -3,7 +3,6 @@ language: cpp
 sudo: false
 os: "linux"
 compiler:
-  - clang
   - gcc
 install:
 - if [ "$CXX" = "g++" ]; then export CXX="g++-6" CC="gcc-6"; fi
@@ -14,7 +13,6 @@ addons:
     packages:
     - gcc-6
     - g++-6
-    - clang
     - libsfml-dev
 env:
   - CFLAGS=-Wall CXXFLAGS=-std=c++14 
