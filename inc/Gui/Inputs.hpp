@@ -13,17 +13,19 @@ namespace Gui
 
 class Inputs
 {
+	friend class InputHandler;
+
 private:
 	struct Event
 	{
 						Event(const Inputs& inputs_) : _inputs(inputs_) {}
-		bool 			pressed(sf::Mouse::Button button_);
-		bool			released(sf::Mouse::Button button_);
-		bool 			dropped(sf::Mouse::Button button_);
-		bool 			clicked(sf::Mouse::Button button_);
+		bool 			pressed(sf::Mouse::Button button_) const;
+		bool			released(sf::Mouse::Button button_) const;
+		bool 			dropped(sf::Mouse::Button button_) const;
+		bool 			clicked(sf::Mouse::Button button_) const;
 
-		bool 			pressed(sf::Keyboard::Key key_);
-		bool 			released(sf::Keyboard::Key key_);
+		bool 			pressed(sf::Keyboard::Key key_) const;
+		bool 			released(sf::Keyboard::Key key_) const;
 
 	private:
 		const Inputs&	_inputs;
@@ -32,12 +34,12 @@ private:
 	struct State
 	{
 						State(const Inputs& inputs_) : _inputs(inputs_) {}
-		bool 			released(sf::Mouse::Button button_);
-		bool 			pressed(sf::Mouse::Button button_);
-		bool 			dragged(sf::Mouse::Button button_);
+		bool 			released(sf::Mouse::Button button_) const;
+		bool 			pressed(sf::Mouse::Button button_) const;
+		bool 			dragged(sf::Mouse::Button button_) const;
 			
-		bool 			pressed(sf::Keyboard::Key key_);
-		bool 			released(sf::Keyboard::Key key_);
+		bool 			pressed(sf::Keyboard::Key key_) const;
+		bool 			released(sf::Keyboard::Key key_) const;
 
 	private:
 		const Inputs&	_inputs;
