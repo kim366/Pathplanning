@@ -57,8 +57,6 @@ namespace Gui
 		sf::Event event;
 		while (window_->pollEvent(event))
 		{
-			_should_window_close = should_window_close(event);
-
 			switch (event.type)
 			{
 				case sf::Event::KeyPressed:
@@ -71,6 +69,10 @@ namespace Gui
 				default:
 				handle_other_events(event, _raw_inputs);
 			}				
+
+			_should_window_close = should_window_close(event);
+			if (_should_window_close)
+				return;
 		}
 	}
 };

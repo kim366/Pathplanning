@@ -8,44 +8,63 @@
 namespace Gui
 {
 
+void reset_events(Inputs::MouseArr& mouse_, Inputs::KeyboardArr& keyboard_)
+{
+	for (auto& button : mouse_)
+		button.event = MouseInputType::Event::None;
+
+	for (auto& key : keyboard_)
+		key.event = RawInputType::Event::None;
+}
+
 bool within_threshold(sf::Vector2u vec_)
 {
 	return (std::pow(vec_.x, 2) + std::pow(vec_.y, 2) <= std::pow(cst::Input::threshold_drag, 2));
 }
 
-void InputHandler::handleInput(const RawInputs& raw_inputs_) // Translate RawInputs to Inputs
+void handle_mouse(RawInputs raw_inputs_, Inputs::MouseArr& mouse_, std::experimental::optional<Inputs::PressDown>& pressed_down_)
 {
 	for (auto button_idx{0}; button_idx < sf::Mouse::ButtonCount; ++button_idx)
 	{
-		if (raw_inputs_.mouse[button_idx].event == RawInputType::Event::Pressed)
+		// States
+		if (raw_inputs_.mouse[button_idx].state == RawInputType::State::Released) // Raw Released
 		{
-			_inputs._mouse[button_idx].event = MouseInputType::Event::Pressed;
-			_inputs._mouse[button_idx].state = MouseInputType::State::Pressed;
-			_inputs.pressed_down->cursor_position = raw_inputs_.cursor_position; // Save Cursor Position on Pressdown
+			mouse_[button_idx].state = MouseInputType::State::Released;
 		}
-		
-		if (raw_inputs_.mouse[button_idx].state == RawInputType::State::Released)
+		else if (raw_inputs_.mouse[button_idx].state == RawInputType::State::Pressed && mouse_[button_idx].state != MouseInputType::State::Dragged)
 		{
-			_inputs._mouse[button_idx].state = MouseInputType::State::Released;
-		}
-		else if (raw_inputs_.mouse[button_idx].state == RawInputType::State::Pressed && _inputs._mouse[button_idx].state != MouseInputType::State::Dragged)
-		{
-			if (within_threshold(raw_inputs_.cursor_position - _inputs.pressed_down->cursor_position))
-				_inputs._mouse[button_idx].state = MouseInputType::State::Pressed;
+			if (within_threshold(raw_inputs_.cursor_position - pressed_down_->cursor_position)) // Raw Pressed
+				mouse_[button_idx].state = MouseInputType::State::Pressed;
 			else
-				_inputs._mouse[button_idx].state = MouseInputType::State::Dragged;
+				mouse_[button_idx].state = MouseInputType::State::Dragged;
 		}
-		else if (raw_inputs_.mouse[button_idx].event == RawInputType::Event::Released)
-		{
-			if (_inputs._mouse[button_idx].state == MouseInputType::State::Dragged || (_inputs._mouse[button_idx].state == MouseInputType::State::Pressed
-				&& !within_threshold(raw_inputs_.cursor_position - _inputs.pressed_down->cursor_position)))
-				_inputs._mouse[button_idx].event = MouseInputType::Event::Dropped;
-			else if (_inputs._mouse[button_idx].state == MouseInputType::State::Pressed || _inputs._mouse[button_idx].state == MouseInputType::State::Pressed)
-				_inputs._mouse[button_idx].event = MouseInputType::Event::Clicked;
 
-			_inputs.pressed_down = {}; // TODO: Replace with _inputs.pressed_down.reset() in C++17
+		// Events
+		if (raw_inputs_.mouse[button_idx].event == RawInputType::Event::Pressed) // Raw Pressed
+		{
+			mouse_[button_idx].event = MouseInputType::Event::Pressed;
+			pressed_down_->cursor_position = raw_inputs_.cursor_position; // Save Cursor Position on Pressdown
+		}
+		else if (raw_inputs_.mouse[button_idx].event == RawInputType::Event::Released) // Raw Released
+		{
+			if (mouse_[button_idx].state == MouseInputType::State::Dragged)
+				mouse_[button_idx].event = MouseInputType::Event::Dropped;
+			else
+				mouse_[button_idx].event = MouseInputType::Event::Clicked;
+
+			pressed_down_ = {}; // TODO: Replace with _inputs.pressed_down.reset() in C++17
 		}
 	}
+}
+
+void InputHandler::handleInput(const RawInputs& raw_inputs_) // Translate RawInputs to Inputs
+{
+
+	reset_events(_inputs._mouse, _inputs._keyboard);
+
+	handle_mouse(raw_inputs_, _inputs._mouse, _inputs.pressed_down);
+	
+	_inputs._keyboard = raw_inputs_.keyboard;
 
 	_inputs.cursor_position = raw_inputs_.cursor_position;
 }

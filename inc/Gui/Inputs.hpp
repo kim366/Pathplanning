@@ -54,7 +54,7 @@ public:
 	
 
 	
-private:	
+public:	
 	struct PressDown
 	{
 		sf::Vector2u		cursor_position;
