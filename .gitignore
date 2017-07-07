@@ -1,5 +1,7 @@
-bld/
+gui
+tst
 nts/
+*.exe
 *.o
 *.todone
 *.sublime-*
