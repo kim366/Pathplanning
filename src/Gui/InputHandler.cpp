@@ -22,7 +22,7 @@ bool within_threshold(sf::Vector2u vec_)
 	return (std::pow(vec_.x, 2) + std::pow(vec_.y, 2) <= std::pow(cst::Input::threshold_drag, 2));
 }
 
-void handle_mouse(RawInputs raw_inputs_, Inputs::MouseArr& mouse_, std::experimental::optional<Inputs::PressDown>& pressed_down_)
+void handle_mouse(RawInputs raw_inputs_, Inputs::MouseArr& mouse_)
 {
 	for (auto button_idx{0}; button_idx < sf::Mouse::ButtonCount; ++button_idx)
 	{
@@ -33,7 +33,7 @@ void handle_mouse(RawInputs raw_inputs_, Inputs::MouseArr& mouse_, std::experime
 		}
 		else if (raw_inputs_.mouse[button_idx].state == RawInputType::State::Pressed && mouse_[button_idx].state != MouseInputType::State::Dragged)
 		{
-			if (within_threshold(raw_inputs_.cursor_position - pressed_down_->cursor_position)) // Raw Pressed
+			if (within_threshold(raw_inputs_.cursor_position - *mouse_[button_idx].pressed_down_cursor_position)) // Raw Pressed
 				mouse_[button_idx].state = MouseInputType::State::Pressed;
 			else
 				mouse_[button_idx].state = MouseInputType::State::Dragged;
@@ -43,7 +43,7 @@ void handle_mouse(RawInputs raw_inputs_, Inputs::MouseArr& mouse_, std::experime
 		if (raw_inputs_.mouse[button_idx].event == RawInputType::Event::Pressed) // Raw Pressed
 		{
 			mouse_[button_idx].event = MouseInputType::Event::Pressed;
-			pressed_down_->cursor_position = raw_inputs_.cursor_position; // Save Cursor Position on Pressdown
+			mouse_[button_idx].pressed_down_cursor_position = raw_inputs_.cursor_position; // Save Cursor Position on Pressdown
 		}
 		else if (raw_inputs_.mouse[button_idx].event == RawInputType::Event::Released) // Raw Released
 		{
@@ -52,7 +52,7 @@ void handle_mouse(RawInputs raw_inputs_, Inputs::MouseArr& mouse_, std::experime
 			else
 				mouse_[button_idx].event = MouseInputType::Event::Clicked;
 
-			pressed_down_ = {}; // TODO: Replace with _inputs.pressed_down.reset() in C++17
+			mouse_[button_idx].pressed_down_cursor_position = {}; // TODO: Replace with _mouse[button_idx].pressed_down_cursor_position.reset() in C++17
 		}
 	}
 }
@@ -62,7 +62,7 @@ void InputHandler::handleInput(const RawInputs& raw_inputs_) // Translate RawInp
 
 	reset_events(_inputs._mouse, _inputs._keyboard);
 
-	handle_mouse(raw_inputs_, _inputs._mouse, _inputs.pressed_down);
+	handle_mouse(raw_inputs_, _inputs._mouse);
 	
 	_inputs._keyboard = raw_inputs_.keyboard;
 

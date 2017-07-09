@@ -51,20 +51,9 @@ public:
 
 	Event			event{*this};
 	State 			state{*this};
-	
-
-	
-public:	
-	struct PressDown
-	{
-		sf::Vector2u		cursor_position;
-		sf::Mouse::Button 	button;
-	};
 
 public:
 	sf::Vector2u	cursor_position;
-	std::experimental::optional<PressDown>
-					pressed_down;
 
 private:
 	KeyboardArr		_keyboard;
