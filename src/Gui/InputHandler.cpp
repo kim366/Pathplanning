@@ -33,7 +33,8 @@ void handle_mouse(RawInputs raw_inputs_, Inputs::MouseArr& mouse_)
 		}
 		else if (raw_inputs_.mouse[button_idx].state == RawInputType::State::Pressed && mouse_[button_idx].state != MouseInputType::State::Dragged)
 		{
-			if (within_threshold(raw_inputs_.cursor_position - *mouse_[button_idx].pressed_down_cursor_position)) // Raw Pressed
+			if (mouse_[button_idx].pressed_down_cursor_position
+			&& within_threshold(raw_inputs_.cursor_position - *mouse_[button_idx].pressed_down_cursor_position)) // Raw Pressed
 				mouse_[button_idx].state = MouseInputType::State::Pressed;
 			else
 				mouse_[button_idx].state = MouseInputType::State::Dragged;
@@ -47,13 +48,15 @@ void handle_mouse(RawInputs raw_inputs_, Inputs::MouseArr& mouse_)
 		}
 		else if (raw_inputs_.mouse[button_idx].event == RawInputType::Event::Released) // Raw Released
 		{
-			if (mouse_[button_idx].state == MouseInputType::State::Dragged)
+			if (mouse_[button_idx].last_frame_state == MouseInputType::State::Dragged)
 				mouse_[button_idx].event = MouseInputType::Event::Dropped;
 			else
 				mouse_[button_idx].event = MouseInputType::Event::Clicked;
 
 			mouse_[button_idx].pressed_down_cursor_position = {}; // TODO: Replace with _mouse[button_idx].pressed_down_cursor_position.reset() in C++17
 		}
+
+		mouse_[button_idx].last_frame_state = mouse_[button_idx].state;
 	}
 }
 

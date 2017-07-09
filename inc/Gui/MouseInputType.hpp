@@ -30,6 +30,7 @@ struct Button
 	State 	state{State::Released};
 	std::experimental::optional<sf::Vector2u>
 			pressed_down_cursor_position; // Position at which *this* button was pressed
+	State 	last_frame_state{State::Released};
 };
 
 } // namespace InputType
