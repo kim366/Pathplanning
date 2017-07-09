@@ -7,6 +7,7 @@ namespace Gui
 Core::Core()
 {
 	_entity_manager->addEntity(std::make_unique<TestEntity>());
+	_window->setFramerateLimit(10);
 }
 
 void Core::loop()
