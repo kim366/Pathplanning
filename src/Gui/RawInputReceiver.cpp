@@ -16,13 +16,7 @@ namespace Gui
 		return (event_.type == sf::Event::Closed || (event_.type == sf::Event::KeyPressed && event_.key.code == sf::Keyboard::Escape));	 
 	}
 
-	void handle_other_events(const sf::Event& event_, RawInputs& raw_inputs_)
-	{
-		if (event_.type == sf::Event::MouseMoved)
-			raw_inputs_.cursor_position = {static_cast<unsigned>(event_.mouseMove.x), static_cast<unsigned>(event_.mouseMove.y)};
-	}
-
-	void handle_tactile_events(const sf::Event& event_, RawInputs& raw_inputs_)
+	void handle_events(const sf::Event& event_, RawInputs& raw_inputs_)
 	{
 		// Short Hand
 		auto& mouse_button{raw_inputs_.mouse[event_.mouseButton.button]};
@@ -48,6 +42,10 @@ namespace Gui
 			key.event = RawInputType::Event::Released;
 			key.state = RawInputType::State::Released;
 		}
+
+		// Non-Tactile Events
+		if (event_.type == sf::Event::MouseMoved)
+			raw_inputs_.cursor_position = {static_cast<unsigned>(event_.mouseMove.x), static_cast<unsigned>(event_.mouseMove.y)};
 	}
 
 	void RawInputReceiver::receiveInput(std::unique_ptr<sf::RenderWindow>& window_)
@@ -57,18 +55,7 @@ namespace Gui
 		sf::Event event;
 		while (window_->pollEvent(event))
 		{
-			switch (event.type)
-			{
-				case sf::Event::KeyPressed:
-				case sf::Event::KeyReleased:
-				case sf::Event::MouseButtonPressed:
-				case sf::Event::MouseButtonReleased:
-				handle_tactile_events(event, _raw_inputs);
-				break;
-
-				default:
-				handle_other_events(event, _raw_inputs);
-			}				
+			handle_events(event, _raw_inputs);			
 
 			_should_window_close = should_window_close(event);
 			if (_should_window_close)
