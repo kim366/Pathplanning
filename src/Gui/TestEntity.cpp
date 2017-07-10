@@ -19,14 +19,12 @@ void Gui::TestEntity::update(float delta_time_, const Inputs& inputs_)
 	if (inputs_.event.clicked(sf::Mouse::Left))
 		std::clog << "LMB clicked\t";
 
-	std::clog << "::";
-
 	if (inputs_.state.released(sf::Mouse::Left))
-		std::clog << "LMB released\n";
-	if (inputs_.state.pressed(sf::Mouse::Left))
-		std::clog << "LMB pressed\n";
+		std::clog << "::LMB released\n";
+	if (inputs_.state.pressed(sf::Mouse::Left) && !inputs_.state.dragged(sf::Mouse::Left))
+		std::clog << "::LMB pressed\n";
 	if (inputs_.state.dragged(sf::Mouse::Left))
-		std::clog << "LMB dragged\n";
+		std::clog << "::LMB dragged\n";
 
 }
 
