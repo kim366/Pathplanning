@@ -26,27 +26,25 @@ void handle_mouse(RawInputs raw_inputs_, Inputs::MouseArr& mouse_)
 {
 	for (auto button_idx{0}; button_idx < sf::Mouse::ButtonCount; ++button_idx)
 	{
-		// States
+		if (raw_inputs_.mouse[button_idx].event == RawInputType::Event::Pressed) // Raw Pressed
+		{
+			mouse_[button_idx].event = MouseInputType::Event::Pressed;
+			mouse_[button_idx].pressed_down_cursor_position = raw_inputs_.cursor_position; // Save Cursor Position on Pressdown
+		}
+
 		if (raw_inputs_.mouse[button_idx].state == RawInputType::State::Released) // Raw Released
 		{
 			mouse_[button_idx].state = MouseInputType::State::Released;
 		}
 		else if (raw_inputs_.mouse[button_idx].state == RawInputType::State::Pressed && mouse_[button_idx].state != MouseInputType::State::Dragged)
 		{
-			if (mouse_[button_idx].pressed_down_cursor_position
-			&& within_threshold(raw_inputs_.cursor_position - *mouse_[button_idx].pressed_down_cursor_position)) // Raw Pressed
+			if (within_threshold(raw_inputs_.cursor_position - *mouse_[button_idx].pressed_down_cursor_position)) // Raw Pressed
 				mouse_[button_idx].state = MouseInputType::State::Pressed;
 			else
 				mouse_[button_idx].state = MouseInputType::State::Dragged;
 		}
 
-		// Events
-		if (raw_inputs_.mouse[button_idx].event == RawInputType::Event::Pressed) // Raw Pressed
-		{
-			mouse_[button_idx].event = MouseInputType::Event::Pressed;
-			mouse_[button_idx].pressed_down_cursor_position = raw_inputs_.cursor_position; // Save Cursor Position on Pressdown
-		}
-		else if (raw_inputs_.mouse[button_idx].event == RawInputType::Event::Released) // Raw Released
+		if (raw_inputs_.mouse[button_idx].event == RawInputType::Event::Released) // Raw Released
 		{
 			if (mouse_[button_idx].last_frame_state == MouseInputType::State::Dragged)
 				mouse_[button_idx].event = MouseInputType::Event::Dropped;
