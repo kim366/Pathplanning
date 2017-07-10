@@ -11,14 +11,13 @@ class TestEntity : public Entity
 {
 public:
 					TestEntity();
-	virtual void 	update(float delta_time_, const Inputs& inputs_) override;
 
 private:
 	sf::CircleShape _shape{100.f};
 
 private:
-	virtual void 	draw(sf::RenderTarget& target_, sf::RenderStates states_) const override;
-	
+	virtual void 	update(float delta_time_, const Inputs& inputs_) override;
+	virtual void 	draw(sf::RenderTarget& target_, sf::RenderStates states_) const override;	
 };
 
 } // namespace Gui
