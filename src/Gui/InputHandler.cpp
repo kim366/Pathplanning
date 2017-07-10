@@ -65,7 +65,7 @@ void InputHandler::handleInput(const RawInputs& raw_inputs_) // Translate RawInp
 
 	handle_mouse(raw_inputs_, _inputs._mouse);
 	
-	_inputs._keyboard = raw_inputs_.keyboard;
+	_inputs._keyboard = std::move(raw_inputs_.keyboard);
 
 	_inputs.cursor_position = raw_inputs_.cursor_position;
 }
