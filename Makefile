@@ -21,7 +21,7 @@ $(OBJ_TST): obj/%o: %cpp
 	@$(CXX) $(CFLAGS) $(CXXFLAGS) -Iinc -c $< -o $@
 
 $(OBJ_GUI): obj/%o: %cpp
-	@$(CXX) -g $(CFLAGS) $(CXXFLAGS) -Iinc $< -c -o $@
+	@$(CXX) -g -O0 $(CFLAGS) $(CXXFLAGS) -Iinc $< -c -o $@
 
 bld/gui: $(OBJ_SRC) $(OBJ_GUI)
 	@$(CXX) $^ -o $@ $(SFML_LIB)
