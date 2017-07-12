@@ -1,5 +1,5 @@
-gui
-tst
+bld/gui
+bld/tst
 nts/
 *.exe
 *.o
