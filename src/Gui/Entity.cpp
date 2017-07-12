@@ -4,6 +4,6 @@ void Gui::Entity::draw(sf::RenderTarget& target_, sf::RenderStates states_) cons
 {
 }
 
-void Gui::Entity::~Entity()
+Gui::Entity::~Entity()
 {
 }
