@@ -12,7 +12,7 @@ public:
 				Edge(Node* node1_, Node* node2_);
 
 public:
-	unsigned 	weight;	
+	float 	weight;	
 
 private:
 	Node* _node1;
