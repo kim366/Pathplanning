@@ -14,6 +14,8 @@ public:
 			getWeight(Node* node1_, Node* node2_);
 	void 	connect(Node* node1_, Node* node2_);
 	void 	disconnect(Node* node1_, Node* node2_);
+	void	createNode(unsigned x_, unsigned y_);
+	void	deleteNode(Node* node_);
 
 private:
 	std::vector<std::unique_ptr<Node>>

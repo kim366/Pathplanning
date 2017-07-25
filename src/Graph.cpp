@@ -1,5 +1,6 @@
 #include <Graph.hpp>
 #include <algorithm>
+#include <SFML/System/Vector2.hpp>
 
 void Graph::connect(Node* node1_, Node* node2_)
 {	
@@ -28,4 +29,18 @@ std::experimental::optional<int> Graph::getWeight(Node* node1_, Node* node2_)
 		weight = found->second->weight;
 
 	return weight;
+}
+
+void Graph::createNode(unsigned x_, unsigned y_)
+{
+	_nodes.emplace_back(std::make_unique<Node>(sf::Vector2u{x_, y_}));
+}
+
+void Graph::deleteNode(Node* node_)
+{
+	// Delete Edges connected to node from Graph
+	for (auto& edge : node_->_edges)
+		_edges.erase(std::remove(begin(_edges), end(_edges), std::make_unique<Edge>(*edge.second)), end(_edges));
+
+	_nodes.erase(std::remove(begin(_nodes), end(_nodes), std::make_unique<Node>(*node_)), end(_nodes));
 }
