@@ -10,8 +10,8 @@ struct Node
 {
 							Node(sf::Vector2u position_) : _position(position_) {}
 
-	std::map<Node*, Edge*> 	_edges;
-	sf::Vector2u 			_position;	
+	std::map<Node*, Edge*> 	edges;
+	sf::Vector2u 			position;	
 };
 
 #endif // NODE_HPP
