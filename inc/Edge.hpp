@@ -2,21 +2,13 @@
 #define EDGE_HPP
 
 class Node;
-class Graph;
 
-class Edge
+struct Edge
 {
-	friend class Graph;
-
-public:
-				Edge(Node* node1_, Node* node2_);
-
-public:
+			Edge(Node* node1_, Node* node2_);
 	float 	weight;	
-
-private:
-	Node* _node1;
-	Node* _node2;
+	Node* 	_node1;
+	Node* 	_node2;
 	
 };
 
