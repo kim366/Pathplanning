@@ -20,7 +20,7 @@ void Graph::disconnect(Node* node1_, Node* node2_)
 	node2_->_edges.erase(node1_);
 }
 
-int Graph::getWeight(Node* node1_, Node* node2_)
+float Graph::getWeight(Node* node1_, Node* node2_)
 {
 	return node1_->_edges.find(node2_)->second->weight;
 }
