@@ -10,8 +10,7 @@
 class Graph
 {
 public:
-	std::experimental::optional<int>
-			getWeight(Node* node1_, Node* node2_);
+	int		getWeight(Node* node1_, Node* node2_); // Invokes undefined behavior if edge non-existant
 	void 	connect(Node* node1_, Node* node2_);
 	void 	disconnect(Node* node1_, Node* node2_);
 	Node*	createNode(unsigned x_, unsigned y_);

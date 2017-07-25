@@ -20,16 +20,9 @@ void Graph::disconnect(Node* node1_, Node* node2_)
 	node2_->_edges.erase(node1_);
 }
 
-std::experimental::optional<int> Graph::getWeight(Node* node1_, Node* node2_)
+int Graph::getWeight(Node* node1_, Node* node2_)
 {
-	std::experimental::optional<int> weight;
-
-	auto found{node1_->_edges.find(node2_)};
-
-	if (found != end(node1_->_edges))
-		weight = found->second->weight;
-
-	return weight;
+	return node1_->_edges.find(node2_)->second->weight;
 }
 
 Node* Graph::createNode(unsigned x_, unsigned y_)
