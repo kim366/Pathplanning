@@ -9,7 +9,7 @@ class Edge
 	friend class Graph;
 
 public:
-				Edge(Node* node1_, Node* node2_) : _node1(node1_), _node2(node2_) {}
+				Edge(Node* node1_, Node* node2_);
 
 public:
 	unsigned 	weight;	

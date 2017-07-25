@@ -1,5 +1,6 @@
 #include <Graph.hpp>
 #include <algorithm>
+#include <math.h>
 #include <SFML/System/Vector2.hpp>
 
 void Graph::connect(Node* node1_, Node* node2_)

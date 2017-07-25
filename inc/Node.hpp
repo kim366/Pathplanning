@@ -10,6 +10,7 @@ class Graph;
 class Node
 {
 	friend class Graph;
+	friend class Edge;
 
 public:
 	Node(sf::Vector2u position_) : _position(position_) {}
