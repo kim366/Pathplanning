@@ -31,9 +31,11 @@ std::experimental::optional<int> Graph::getWeight(Node* node1_, Node* node2_)
 	return weight;
 }
 
-void Graph::createNode(unsigned x_, unsigned y_)
+Node* Graph::createNode(unsigned x_, unsigned y_)
 {
 	_nodes.emplace_back(std::make_unique<Node>(sf::Vector2u{x_, y_}));
+
+	return _nodes.back().get();
 }
 
 void Graph::deleteNode(Node* node_)
