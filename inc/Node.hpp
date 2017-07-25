@@ -8,7 +8,7 @@ class Edge;
 
 struct Node
 {
-							Node(sf::Vector2u position_) : _position(position_) {}
+							Node(sf::Vector2u position_) : position(position_) {}
 
 	std::map<Node*, Edge*> 	edges;
 	sf::Vector2u 			position;	

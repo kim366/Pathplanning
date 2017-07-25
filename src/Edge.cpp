@@ -3,9 +3,9 @@
 #include <Node.hpp>
 
 Edge::Edge(Node* node1_, Node* node2_)
-	: _node1(node1_)
-	, _node2(node2_)
+	: node1(node1_)
+	, node2(node2_)
 {
-	weight = std::hypot(node1_->_position.x - node2_->_position.x,
-		node1_->_position.y - node2_->_position.y);
+	weight = std::hypot(node1_->position.x - node2_->position.x,
+		node1_->position.y - node2_->position.y);
 }
