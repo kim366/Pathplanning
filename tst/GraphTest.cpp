@@ -3,15 +3,22 @@
 
 Graph graph;
 
-TEST_CASE("Graph")
+SCENARIO("Graphs work properly")
 {
-	Graph graph;
+	Given("An empty Graph")
+	{
+		Graph graph;
 
-	auto* node1{graph.createNode(50, 100)};
-	auto* node2{graph.createNode(10, 20)};
-	graph.connect(node1, node2);
+		WHEN("Two Nodes are created and connected")
+		{	
+			auto* node1{graph.createNode(50, 100)};
+			auto* node2{graph.createNode(10, 20)};
+			graph.connect(node1, node2);
 
-	REQUIRE(graph.getWeight(node1, node2) == Approx(89.443f).epsilon(.01f));
-
-	graph.disconnect(node1, node2);
+			THEN("The Edge Weight is computed correctly")
+			{
+				REQUIRE(graph.getWeight(node1, node2) == Approx(89.443f).epsilon(.01f));
+			}
+		}
+	}
 }
