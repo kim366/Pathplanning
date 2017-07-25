@@ -5,7 +5,7 @@ Graph graph;
 
 SCENARIO("Graphs work properly")
 {
-	Given("An empty Graph")
+	GIVEN("An empty Graph")
 	{
 		Graph graph;
 
