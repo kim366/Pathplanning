@@ -17,6 +17,7 @@ public:
 	const auto&				getEdges() const { return _edges; }
 	const auto&				getPosition() const { return _position; }
 
+private:
 	std::map<Node*, Edge*> 	_edges;
 	sf::Vector2u 			_position;	
 };
