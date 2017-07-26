@@ -4,12 +4,20 @@
 #include <array>
 
 class Node;
+class Graph;
 
-struct Edge
+class Edge
 {
+	friend class Graph;
+public:
 							Edge(Node* node1_, Node* node2_);
-	float 					weight;	
-	std::array<Node*, 2> 	nodes;
+
+	const auto&				getNodes() const { return _nodes; }
+	float					getWeight() const { return _weight; }
+
+private:
+	float 					_weight;
+	std::array<Node*, 2> 	_nodes;
 	
 };
 

@@ -12,7 +12,7 @@ SCENARIO("Graphs work properly")
 		Node* node1;
 		Node* node2; 
 
-		WHEN("Two nodes get added to the Graph")
+		WHEN("Two Nodes get added to the Graph")
 		{
 			node1 = graph.createNode(50, 100);
 			node2 = graph.createNode(10, 20);
@@ -39,21 +39,21 @@ SCENARIO("Graphs work properly")
 				REQUIRE(graph.getWeight(node1, node2) == Approx(89.443f).epsilon(.01f));
 			}
 
-			THEN("Both nodes have the same edge Edge to each other")
+			THEN("Both Nodes have the same Edge to each other")
 			{
-				REQUIRE(node1->edges.size() == 1);
-				REQUIRE(node2->edges.size() == 1);
-				REQUIRE(node1->edges[node2] == node2->edges[node1]);
+				REQUIRE(node1->getEdges().size() == 1);
+				REQUIRE(node2->getEdges().size() == 1);
+				REQUIRE(node1->getEdges().at(node2) == node2->getEdges().at(node1));
 			}
 
 			THEN("The Edge has a Pointer to each Node")
 			{
-				REQUIRE(node1->edges.find(node2) != end(node1->edges));
-				REQUIRE(node2->edges.find(node1) != end(node1->edges));
+				REQUIRE(node1->getEdges().find(node2) != end(node1->getEdges()));
+				REQUIRE(node2->getEdges().find(node1) != end(node1->getEdges()));
 			}
 		}
 
-		WHEN("The nodes are connected again in reverse order")
+		WHEN("The Nodes are connected again in reverse order")
 		{
 			node1 = graph.createNode(50, 100);
 			node2 = graph.createNode(10, 20);
@@ -64,12 +64,12 @@ SCENARIO("Graphs work properly")
 			{
 				REQUIRE(graph.getWeight(node1, node2) == Approx(89.443f).epsilon(.01f));
 
-				REQUIRE(node1->edges.size() == 1);
-				REQUIRE(node2->edges.size() == 1);
-				REQUIRE(node1->edges[node2] == node2->edges[node1]);
+				REQUIRE(node1->getEdges().size() == 1);
+				REQUIRE(node2->getEdges().size() == 1);
+				REQUIRE(node1->getEdges().at(node2) == node2->getEdges().at(node1));
 
-				REQUIRE(node1->edges.find(node2) != end(node1->edges));
-				REQUIRE(node2->edges.find(node1) != end(node1->edges));
+				REQUIRE(node1->getEdges().find(node2) != end(node1->getEdges()));
+				REQUIRE(node2->getEdges().find(node1) != end(node1->getEdges()));
 			}
 		}
 
@@ -87,8 +87,8 @@ SCENARIO("Graphs work properly")
 
 			THEN("The Nodes have no connected Edges")
 			{
-				REQUIRE(node1->edges.size() == 0);
-				REQUIRE(node2->edges.size() == 0);
+				REQUIRE(node1->getEdges().size() == 0);
+				REQUIRE(node2->getEdges().size() == 0);
 			}
 		}
 

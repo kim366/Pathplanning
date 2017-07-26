@@ -5,13 +5,20 @@
 #include <SFML/System/Vector2.hpp>
 
 class Edge;
+class Graph;
 
-struct Node
+class Node
 {
-							Node(sf::Vector2u position_) : position(position_) {}
+	friend class Graph;
 
-	std::map<Node*, Edge*> 	edges;
-	sf::Vector2u 			position;	
+public:
+							Node(sf::Vector2u position_) : _position(position_) {}
+
+	const auto&				getEdges() const { return _edges; }
+	const auto&				getPosition() const { return _position; }
+
+	std::map<Node*, Edge*> 	_edges;
+	sf::Vector2u 			_position;	
 };
 
 #endif // NODE_HPP

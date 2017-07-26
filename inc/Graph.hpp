@@ -10,7 +10,7 @@
 class Graph
 {
 public:
-	float		getWeight(Node* node1_, Node* node2_); // Invokes undefined behavior if edge non-existant
+	float		getWeight(Node* node1_, Node* node2_);
 	void 		connect(Node* node1_, Node* node2_);
 	void 		disconnect(Node* node1_, Node* node2_);
 	Node*		createNode(unsigned x_, unsigned y_);
