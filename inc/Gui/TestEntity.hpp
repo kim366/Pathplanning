@@ -16,8 +16,8 @@ private:
 	sf::CircleShape _shape{100.f};
 
 private:
-	virtual void 	update(float delta_time_, const Inputs& inputs_) override;
-	virtual void 	draw(sf::RenderTarget& target_, sf::RenderStates states_) const override;	
+	void 			update(float delta_time_, const Inputs& inputs_) override;
+	void 			draw(sf::RenderTarget& target_, sf::RenderStates states_) const override;	
 };
 
 } // namespace Gui
