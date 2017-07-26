@@ -6,23 +6,20 @@
 void Graph::connect(Node* node1_, Node* node2_)
 {	
 	_edges.emplace_back(std::make_unique<Edge>(node1_, node2_));
-	node1_->_edges[node2_] = _edges.back().get();
-	node2_->_edges[node1_] = _edges.back().get();		
+	node1_->edges[node2_] = _edges.back().get();
+	node2_->edges[node1_] = _edges.back().get();		
 }
 
 void Graph::disconnect(Node* node1_, Node* node2_)
 {
-	// Erase-remove idiom 
-	_edges.erase(
-		std::remove(begin(_edges), end(_edges), std::make_unique<Edge>(*node1_->_edges[node2_])),
-		end(_edges));
-	node1_->_edges.erase(node2_);
-	node2_->_edges.erase(node1_);
+	_edges.erase(std::find_if(begin(_edges), end(_edges), [&] (auto& ptr_) { return ptr_.get() == node1_->edges[node2_]; }));
+	node1_->edges.erase(node2_);
+	node2_->edges.erase(node1_);
 }
 
 float Graph::getWeight(Node* node1_, Node* node2_)
 {
-	return node1_->_edges.find(node2_)->second->weight;
+	return node1_->edges[node2_]->weight;
 }
 
 Node* Graph::createNode(unsigned x_, unsigned y_)
@@ -35,8 +32,8 @@ Node* Graph::createNode(unsigned x_, unsigned y_)
 void Graph::deleteNode(Node* node_)
 {
 	// Delete Edges connected to node from Graph
-	for (auto& edge : node_->_edges)
-		_edges.erase(std::remove(begin(_edges), end(_edges), std::make_unique<Edge>(*edge.second)), end(_edges));
+	for (auto& edge : node_->edges)
+		_edges.erase(std::find_if(begin(_edges), end(_edges), [&] (const auto& ptr_) { return ptr_.get() == edge.second; }));
 
-	_nodes.erase(std::remove(begin(_nodes), end(_nodes), std::make_unique<Node>(*node_)), end(_nodes));
+	_nodes.erase(std::find_if(begin(_nodes), end(_nodes), [&] (const auto& ptr_) { return ptr_.get() == node_; }));
 }
