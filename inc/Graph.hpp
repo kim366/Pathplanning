@@ -12,6 +12,7 @@ class Graph
 public:
 	void 		connect(unsigned node1_index_, unsigned node2_index_);
 	void 		disconnect(unsigned node1_index_, unsigned node2_index_);
+
 	void		createNode(unsigned x_, unsigned y_);
 	void		deleteNode(unsigned node_index_);
 
