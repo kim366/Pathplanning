@@ -10,7 +10,6 @@
 class Graph
 {
 public:
-	float		getWeight(Node* node1_, Node* node2_);
 	void 		connect(unsigned node1_index_, unsigned node2_index_);
 	void 		disconnect(unsigned node1_index_, unsigned node2_index_);
 	void		createNode(unsigned x_, unsigned y_);

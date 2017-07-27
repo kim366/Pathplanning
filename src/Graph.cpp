@@ -23,11 +23,6 @@ void Graph::disconnect(unsigned node1_index_, unsigned node2_index_)
 	node2->_edges.erase(node1);
 }
 
-float Graph::getWeight(Node* node1_, Node* node2_)
-{
-	return node1_->_edges[node2_]->_weight;
-}
-
 void Graph::createNode(unsigned x_, unsigned y_)
 {
 	_nodes.emplace_back(std::make_unique<Node>(sf::Vector2u{x_, y_}));
