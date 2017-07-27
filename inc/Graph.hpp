@@ -14,7 +14,7 @@ public:
 	void 		connect(unsigned node1_index_, unsigned node2_index_);
 	void 		disconnect(unsigned node1_index_, unsigned node2_index_);
 	void		createNode(unsigned x_, unsigned y_);
-	void		deleteNode(Node* node_);
+	void		deleteNode(unsigned node_index_);
 
 	const auto& getNodes() { return _nodes; }
 	const auto& getEdges() { return _edges; }
