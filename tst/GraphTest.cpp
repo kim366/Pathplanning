@@ -6,16 +6,14 @@ Graph graph;
 
 SCENARIO("Graphs work properly")
 {
-	GIVEN("An empty Graph and two empty Node pointers")
+	GIVEN("An empty Graph")
 	{
 		Graph graph;
-		Node* node1;
-		Node* node2; 
 
 		WHEN("Two Nodes get added to the Graph")
 		{
-			node1 = graph.createNode(50, 100);
-			node2 = graph.createNode(10, 20);
+			graph.createNode(50, 100);
+			graph.createNode(10, 20);
 
 			THEN("The graph records exactly two Nodes")
 			{
@@ -25,9 +23,9 @@ SCENARIO("Graphs work properly")
 
 		WHEN("The two Nodes are connected")
 		{	
-			node1 = graph.createNode(50, 100);
-			node2 = graph.createNode(10, 20);
-			graph.connect(node1, node2);
+			graph.createNode(50, 100);
+			graph.createNode(10, 20);
+			graph.connect(0, 1);
 
 			THEN("The Graph has one Edge")
 			{
@@ -57,8 +55,8 @@ SCENARIO("Graphs work properly")
 		{
 			node1 = graph.createNode(50, 100);
 			node2 = graph.createNode(10, 20);
-			graph.connect(node1, node2);
-			graph.connect(node2, node1);
+			graph.connect(0, 1);
+			graph.connect(1, 0);
 				
 			THEN("Nothing changes")
 			{
@@ -77,8 +75,8 @@ SCENARIO("Graphs work properly")
 		{
 			node1 = graph.createNode(50, 100);
 			node2 = graph.createNode(10, 20);
-			graph.connect(node2, node1);
-			graph.disconnect(node1, node2);
+			graph.connect(1, 0);
+			graph.disconnect(0, 1);
 
 			THEN("The Graph records no Edge")
 			{

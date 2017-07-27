@@ -11,9 +11,9 @@ class Graph
 {
 public:
 	float		getWeight(Node* node1_, Node* node2_);
-	void 		connect(Node* node1_, Node* node2_);
-	void 		disconnect(Node* node1_, Node* node2_);
-	Node*		createNode(unsigned x_, unsigned y_);
+	void 		connect(unsigned node1_index_, unsigned node2_index_);
+	void 		disconnect(unsigned node1_index_, unsigned node2_index_);
+	void		createNode(unsigned x_, unsigned y_);
 	void		deleteNode(Node* node_);
 
 	const auto& getNodes() { return _nodes; }
