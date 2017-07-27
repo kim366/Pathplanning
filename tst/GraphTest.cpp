@@ -25,6 +25,10 @@ SCENARIO("Graphs work properly")
 		{	
 			graph.createNode(50, 100);
 			graph.createNode(10, 20);
+
+			auto* node2{graph.getNodes()[1].get()}; 
+			auto* node1{graph.getNodes()[0].get()}; 
+
 			graph.connect(0, 1);
 
 			THEN("The Graph has one Edge")
@@ -34,7 +38,7 @@ SCENARIO("Graphs work properly")
 
 			THEN("The Edge Weight is computed correctly")
 			{
-				REQUIRE(graph.getWeight(node1, node2) == Approx(89.443f).epsilon(.01f));
+				REQUIRE(node1->getEdges().at(node2)->getWeight() == Approx(89.443f).epsilon(.01f));
 			}
 
 			THEN("Both Nodes have the same Edge to each other")
@@ -53,14 +57,17 @@ SCENARIO("Graphs work properly")
 
 		WHEN("The Nodes are connected again in reverse order")
 		{
-			node1 = graph.createNode(50, 100);
-			node2 = graph.createNode(10, 20);
+			graph.createNode(50, 100);
+			graph.createNode(10, 20);
+			auto* node2{graph.getNodes()[1].get()}; 
+			auto* node1{graph.getNodes()[0].get()}; 
+
 			graph.connect(0, 1);
 			graph.connect(1, 0);
 				
 			THEN("Nothing changes")
 			{
-				REQUIRE(graph.getWeight(node1, node2) == Approx(89.443f).epsilon(.01f));
+				REQUIRE(node1->getEdges().at(node2)->getWeight() == Approx(89.443f).epsilon(.01f));
 
 				REQUIRE(node1->getEdges().size() == 1);
 				REQUIRE(node2->getEdges().size() == 1);
@@ -73,8 +80,12 @@ SCENARIO("Graphs work properly")
 
 		WHEN("The Nodes are disconnected")
 		{
-			node1 = graph.createNode(50, 100);
-			node2 = graph.createNode(10, 20);
+			graph.createNode(50, 100);
+			graph.createNode(10, 20);
+			
+			auto* node2{graph.getNodes()[1].get()}; 
+			auto* node1{graph.getNodes()[0].get()}; 
+
 			graph.connect(1, 0);
 			graph.disconnect(0, 1);
 
@@ -92,10 +103,11 @@ SCENARIO("Graphs work properly")
 
 		WHEN("The Nodes are deleted")
 		{
-			node1 = graph.createNode(50, 100);
-			node2 = graph.createNode(10, 20);
-			graph.deleteNode(node1);
-			graph.deleteNode(node2);
+			graph.createNode(50, 100);
+			graph.createNode(10, 20);
+
+			graph.deleteNode(0);
+			graph.deleteNode(0);
 
 			THEN("The Graph has no contents")
 			{
