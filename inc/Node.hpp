@@ -4,7 +4,6 @@
 #include <map>
 #include <SFML/System/Vector2.hpp>
 
-class Edge;
 class Graph;
 
 class Node
@@ -14,11 +13,11 @@ class Node
 public:
 							Node(sf::Vector2u position_) : _position(position_) {}
 
-	const auto&				getEdges() const { return _edges; }
+	const auto&				getWeight(const Node* node_) const { return _connections[node_]; }
 	const auto&				getPosition() const { return _position; }
 
 private:
-	std::map<Node*, Edge*> 	_edges;
+	std::map<Node*, float> 	_connections;
 	sf::Vector2u 			_position;	
 };
 
