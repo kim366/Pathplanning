@@ -2,7 +2,7 @@
 
 SCENARIO("Dijkstra's Algorithm finds the shortest path and expands the correct amount of nodes")
 {
-	GIVEN("A Graph with some Nodes and Edges and Pointers to Start & End Nodes")
+	GIVEN("A Graph with some Nodes and Edges and Pointers to Start & End Nodes and Dijkstra's Pathplanner Object")
 	// Image & Geogebra File: http://bit.ly/2v6fuJT
 	// Start Node in Green End Node in Red
 	// Shortest Path in Orange (400.67)
@@ -39,9 +39,11 @@ SCENARIO("Dijkstra's Algorithm finds the shortest path and expands the correct a
 	Node* start_node{graph.getNode(5)};
 	Node* end_node{graph.getNode(4)};
 
+	Dijkstra find_shortest_path;
+
 	WHEN("Dijkstra's Algorithm finds the shortest Path")
 	{
-		auto result{DijkstrasPathplanner(start_node, end_node)};
+		auto result{find_shortest_path(start_node, end_node)};
 
 		THEN("It finds the shortest Path")
 		{
