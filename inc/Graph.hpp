@@ -5,7 +5,6 @@
 #include <memory>
 #include <experimental/optional>
 #include <Node.hpp>
-#include <Edge.hpp>
 
 class Graph
 {
@@ -17,13 +16,10 @@ public:
 	void		deleteNode(unsigned node_index_);
 
 	const auto& getNodes() { return _nodes; }
-	const auto& getEdges() { return _edges; }
 
 private:
 	std::vector<std::unique_ptr<Node>>
 				_nodes;
-	std::vector<std::unique_ptr<Edge>>
-				_edges;	
 };
 
 #endif // GRAPH_HPP
