@@ -1,6 +1,11 @@
 #ifndef PATHPLANNER_HPP
 #define PATHPLANNER_HPP
 
+#include <vector>
+
+class Graph;
+class Node;
+
 class Pathplanner
 {
 public:
@@ -8,7 +13,7 @@ public:
 	virtual std::vector<Node*> 	findShortestPath(const Node* start_, const Node* end_);
 
 private:
-	virtual int 				evaluate(const Node* node_);
+	virtual bool 				evaluate(const Node* node_);
 	
 };
 

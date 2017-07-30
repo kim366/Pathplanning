@@ -1,4 +1,6 @@
 #include <catch.hpp>
+#include <Graph.hpp>
+#include <DijkstrasPathplanner.hpp>
 
 SCENARIO("Dijkstra's Algorithm finds the shortest path and expands the correct amount of nodes")
 {

@@ -11,14 +11,15 @@ class Node
 	friend class Graph;
 
 public:
-							Node(sf::Vector2u position_) : _position(position_) {}
+					Node(sf::Vector2u position_) : _position(position_) {}
 
-	const auto&				getWeight(const Node* node_) const { return _connections[node_]; }
-	const auto&				getPosition() const { return _position; }
+	const auto&		getWeight(const Node* node_) const { return _connections[const_cast<Node*>(node_)]; }
+	const auto&		getPosition() const { return _position; }
 
 private:
-	std::map<Node*, float> 	_connections;
-	sf::Vector2u 			_position;	
+	mutable std::map<Node*, float> 
+					_connections;
+	sf::Vector2u 	_position;	
 };
 
 #endif // NODE_HPP

@@ -8,11 +8,11 @@ void Graph::connect(unsigned node1_index_, unsigned node2_index_)
 	auto* node1{_nodes[node1_index_].get()};
 	auto* node2{_nodes[node2_index_].get()};
 
-	sf::Vector2i distance{node1_->getPosition() - node2_->getPosition()};
-	_weight = std::hypot(distance.x, distance.y);
+	sf::Vector2i distance{node1->getPosition() - node2->getPosition()};
+	auto weight{std::hypot(distance.x, distance.y)};
 
-	node1->_connections[node2] = _weight;
-	node2->_connections[node1] = _weight;		
+	node1->_connections[node2] = weight;
+	node2->_connections[node1] = weight;		
 }
 
 void Graph::disconnect(unsigned node1_index_, unsigned node2_index_)

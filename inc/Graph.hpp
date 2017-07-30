@@ -15,7 +15,7 @@ public:
 	void		createNode(unsigned x_, unsigned y_);
 	void		deleteNode(unsigned node_index_);
 
-	const auto& getNodes() { return _nodes; }
+	const auto* getNode(unsigned node_index_) { return &_nodes[node_index_]; }
 
 private:
 	std::vector<std::unique_ptr<Node>>
