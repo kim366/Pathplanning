@@ -6,8 +6,9 @@
 class AStarPathplanner : Pathplanner
 {
 public:
-	std::pair<std::vector<Node*>, unsigned>
-					operator()(const Node* start_, const Node* end_);
+
+	std::pair<std::vector<const Node*>, unsigned>
+			operator()(const Node* start_, const Node* end_) override;
 
 private:
 	bool	evaluate(const Node* node_) override;

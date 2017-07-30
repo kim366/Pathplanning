@@ -3,10 +3,21 @@
 #include <math.h>
 #include <SFML/System/Vector2.hpp>
 
-void Graph::connect(unsigned node1_index_, unsigned node2_index_)
+Graph::Graph(std::initializer_list<sf::Vector2i> node_positions_,
+	std::initializer_list<sf::Vector2i> node_indices_)
+{
+	for (auto& node_position : node_positions_)
+		_nodes.emplace_back(std::make_unique<Node>(static_cast<sf::Vector2u>(node_position)));
+
+	for (auto& node_indices : node_indices_)
+		connect(static_cast<sf::Vector2u>(node_indices));
+}
+
+
+void Graph::connect(sf::Vector2u node_indices_)
 {	
-	auto* node1{_nodes[node1_index_].get()};
-	auto* node2{_nodes[node2_index_].get()};
+	auto* node1{_nodes[node_indices_.x].get()};
+	auto* node2{_nodes[node_indices_.y].get()};
 
 	sf::Vector2i distance{node1->getPosition() - node2->getPosition()};
 	auto weight{std::hypot(distance.x, distance.y)};
@@ -15,18 +26,18 @@ void Graph::connect(unsigned node1_index_, unsigned node2_index_)
 	node2->_connections[node1] = weight;		
 }
 
-void Graph::disconnect(unsigned node1_index_, unsigned node2_index_)
+void Graph::disconnect(sf::Vector2u node_indices_)
 {
-	auto* node1{_nodes[node1_index_].get()};
-	auto* node2{_nodes[node2_index_].get()};
+	auto* node1{_nodes[node_indices_.x].get()};
+	auto* node2{_nodes[node_indices_.y].get()};
 
 	node1->_connections.erase(node2);
 	node2->_connections.erase(node1);
 }
 
-void Graph::createNode(unsigned x_, unsigned y_)
+void Graph::createNode(sf::Vector2u position_)
 {
-	_nodes.emplace_back(std::make_unique<Node>(sf::Vector2u{x_, y_}));
+	_nodes.emplace_back(std::make_unique<Node>(position_));
 }
 
 void Graph::deleteNode(unsigned node_index_)

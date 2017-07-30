@@ -3,7 +3,7 @@
 
 #include <AStarPathplanner.hpp>
 
-class DijkstraPathplanner : public AStarPathplanner
+class DijkstrasPathplanner : public AStarPathplanner
 {
 public:
 	

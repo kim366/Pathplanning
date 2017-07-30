@@ -9,11 +9,11 @@ class Node;
 class Pathplanner
 {
 public:
-								Pathplanner(const Graph&);
-	virtual std::vector<Node*> 	findShortestPath(const Node* start_, const Node* end_);
+	virtual std::pair<std::vector<const Node*>, unsigned>
+					operator()(const Node* start_, const Node* end_) = 0;
 
 private:
-	virtual bool 				evaluate(const Node* node_);
+	virtual bool 	evaluate(const Node* node_) = 0;
 	
 };
 
