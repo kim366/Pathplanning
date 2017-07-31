@@ -30,7 +30,7 @@ public:
 		New,
 		Open,
 		Closed
-	}						tag{Tag::New};
+	}				tag{Tag::New};
 };
 
 #endif // NODE_HPP
