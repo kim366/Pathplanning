@@ -8,7 +8,7 @@ class DijkstrasPathplanner : public AStarPathplanner
 public:
 
 private:
-	bool evaluate(const Node* node1_, const Node* node2_) override {};
+	bool evaluate(const Node* node1_, const Node* node2_) override;
 
 private:
 	
