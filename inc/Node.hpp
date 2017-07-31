@@ -23,6 +23,14 @@ private:
 					_connections;
 	sf::Vector2u 	_position;
 	Node*			_parent{nullptr};
+	
+public:
+	enum class Tag
+	{
+		New,
+		Open,
+		Closed
+	}						tag{Tag::New};
 };
 
 #endif // NODE_HPP
