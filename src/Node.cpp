@@ -5,7 +5,7 @@ const auto& Node::getWeight(const Node* node_) const
 	return _connections[const_cast<Node*>(node_)];
 }
 
-void Node::setParent(const Node* node_) const
+void Node::setParent(const Node* node_)
 {
 	if (!_parent && node_)
 	{
