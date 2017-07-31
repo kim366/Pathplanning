@@ -11,7 +11,7 @@ public:
 			operator()(const Node* start_, const Node* end_) override;
 
 private:
-	bool	evaluate(const Node* node_) override;
+	bool evaluate(const Node* node1_, const Node* node2_) override;
 };
 
 #endif // ASTAR_PATHPLANNER_HPP
