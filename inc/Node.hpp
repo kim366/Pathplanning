@@ -4,7 +4,6 @@
 #include <map>
 #include <SFML/System/Vector2.hpp>
 
-class Edge;
 class Graph;
 
 class Node
@@ -12,14 +11,26 @@ class Node
 	friend class Graph;
 
 public:
-							Node(sf::Vector2u position_) : _position(position_) {}
+					Node(sf::Vector2u position_) : _position(position_) {}
 
-	const auto&				getEdges() const { return _edges; }
-	const auto&				getPosition() const { return _position; }
+	const auto&		getWeight(const Node* node_) const;
+	const auto&		getPosition() const { return _position; }
+	const auto*		getParent() const { return _parent; }
+	void			setParent(const Node* node_);
 
 private:
-	std::map<Node*, Edge*> 	_edges;
-	sf::Vector2u 			_position;	
+	mutable std::map<Node*, float>
+					_connections;
+	sf::Vector2u 	_position;
+	const Node*		_parent{nullptr};
+	
+public:
+	enum class Tag
+	{
+		New,
+		Open,
+		Closed
+	}				tag{Tag::New};
 };
 
 #endif // NODE_HPP

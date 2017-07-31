@@ -3,27 +3,27 @@
 
 #include <vector>
 #include <memory>
+#include <initializer_list>
 #include <experimental/optional>
 #include <Node.hpp>
-#include <Edge.hpp>
 
 class Graph
 {
 public:
-	void 		connect(unsigned node1_index_, unsigned node2_index_);
-	void 		disconnect(unsigned node1_index_, unsigned node2_index_);
+				Graph(std::initializer_list<sf::Vector2i> node_positions_,
+					std::initializer_list<sf::Vector2i> node_indices_);
 
-	void		createNode(unsigned x_, unsigned y_);
+				void		createNode(sf::Vector2u position_);
 	void		deleteNode(unsigned node_index_);
 
-	const auto& getNodes() { return _nodes; }
-	const auto& getEdges() { return _edges; }
+	void 		connect(sf::Vector2u node_indices_);
+	void 		disconnect(sf::Vector2u node_indices_);
+
+	const auto* getNode(unsigned node_index_) { return _nodes[node_index_].get(); }
 
 private:
 	std::vector<std::unique_ptr<Node>>
 				_nodes;
-	std::vector<std::unique_ptr<Edge>>
-				_edges;	
 };
 
 #endif // GRAPH_HPP
