@@ -10,10 +10,11 @@
 class Graph
 {
 public:
+				Graph() {}
 				Graph(std::initializer_list<sf::Vector2i> node_positions_,
 					std::initializer_list<sf::Vector2i> node_indices_);
 
-				void		createNode(sf::Vector2u position_);
+	void		createNode(sf::Vector2u position_);
 	void		deleteNode(unsigned node_index_);
 
 	void 		connect(sf::Vector2u node_indices_);
