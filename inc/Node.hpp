@@ -13,13 +13,16 @@ class Node
 public:
 					Node(sf::Vector2u position_) : _position(position_) {}
 
-	const auto&		getWeight(const Node* node_) const { return _connections[const_cast<Node*>(node_)]; }
+	const auto&		getWeight(const Node* node_) const;
 	const auto&		getPosition() const { return _position; }
+	const auto*		getParent() const { return _parent; }
+	void			setParent(const Node* node_) const;
 
 private:
-	mutable std::map<Node*, float> 
+	mutable std::map<Node*, float>
 					_connections;
-	sf::Vector2u 	_position;	
+	sf::Vector2u 	_position;
+	Node*			_parent{nullptr};
 };
 
 #endif // NODE_HPP
