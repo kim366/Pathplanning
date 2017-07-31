@@ -42,8 +42,8 @@ SCENARIO("Dijkstra's Algorithm finds the shortest path and expands the correct a
 			}
 		};
 
-		const Node* start_node{graph.getNode(5)};
-		const Node* end_node{graph.getNode(4)};
+		const Node* start_node{graph.getNode(B)};
+		const Node* end_node{graph.getNode(F)};
 
 		DijkstrasPathplanner find_shortest_path;
 
