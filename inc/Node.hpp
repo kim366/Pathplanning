@@ -24,16 +24,14 @@ private:
 	sf::Vector2u 		_position;
 
 public:
-	const Node*			parent{nullptr};
-	float				value{0};
-	
-public:
 	enum class Tag
 	{
 		New,
 		Open,
 		Closed
-	}				tag{Tag::New};
+	}					tag{Tag::New};
+	const Node*			parent{nullptr};
+	float				value{0};	
 };
 
 #endif // NODE_HPP
