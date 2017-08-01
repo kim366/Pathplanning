@@ -16,15 +16,16 @@ public:
 	
 	const auto&			getWeight() const;
 	const auto&			getPosition() const { return _position; }
-	const auto*			getParent() const { return _parent; }
-	void				setParent(const Node* node_);
 	std::vector<Node*>	expand();
 
 private:
 	mutable std::map<Node*, float>
 						_connections;
 	sf::Vector2u 		_position;
-	const Node*			_parent{nullptr};
+
+public:
+	const Node*			parent{nullptr};
+	float				value{0};
 	
 public:
 	enum class Tag

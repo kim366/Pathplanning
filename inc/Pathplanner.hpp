@@ -16,14 +16,14 @@ public:
 	virtual			~Pathplanner() = 0;
 
 protected:
-	virtual bool	evaluate(const Node* node1_, const Node* node2_) = 0;
+	virtual float	evaluate(const Node* node_) = 0;
 
 protected:
 	std::priority_queue<Node*, std::vector<Node*>,
-		std::function<bool(const Node*, const Node*)>>
-					_open_set{[this] (const Node* node1_, const Node* node2_)
-						{ return evaluate(node1_, node2_); }};
-	
+		std::function<bool(Node*, Node*)>>
+					_open_set{[] (Node* x_, Node* y_)
+						{ return x_->value > y_->value; }};
+
 };
 
 #endif // PATHPLANNER_HPP
