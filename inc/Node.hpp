@@ -11,18 +11,18 @@ class Node
 	friend class Graph;
 
 public:
-					Node(sf::Vector2u position_) : _position(position_) {}
-
-	const auto&		getWeight(const Node* node_) const;
-	const auto&		getPosition() const { return _position; }
-	const auto*		getParent() const { return _parent; }
-	void			setParent(const Node* node_);
+						Node(sf::Vector2u position_) : _position(position_) {}
+	
+	const auto&			getWeight() const;
+	const auto&			getPosition() const { return _position; }
+	const auto*			getParent() const { return _parent; }
+	void				setParent(const Node* node_);
 
 private:
 	mutable std::map<Node*, float>
-					_connections;
-	sf::Vector2u 	_position;
-	const Node*		_parent{nullptr};
+						_connections;
+	sf::Vector2u 		_position;
+	const Node*			_parent{nullptr};
 	
 public:
 	enum class Tag

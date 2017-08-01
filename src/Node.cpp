@@ -1,8 +1,8 @@
 #include <Node.hpp>
 
-const auto& Node::getWeight(const Node* node_) const
+const auto& Node::getWeight() const
 {
-	return _connections[const_cast<Node*>(node_)];
+	return _connections[const_cast<Node*>(_parent)];
 }
 
 void Node::setParent(const Node* node_)
@@ -12,3 +12,4 @@ void Node::setParent(const Node* node_)
 		_parent = node_;
 	}
 }
+
