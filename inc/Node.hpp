@@ -17,6 +17,7 @@ public:
 	const auto&			getPosition() const { return _position; }
 	const auto*			getParent() const { return _parent; }
 	void				setParent(const Node* node_);
+	std::vector<Node*>	expand();
 
 private:
 	mutable std::map<Node*, float>

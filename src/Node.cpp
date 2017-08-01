@@ -13,3 +13,14 @@ void Node::setParent(const Node* node_)
 	}
 }
 
+std::vector<Node*> Node::expand()
+{
+	std::vector<Node*> expanded_nodes;
+
+	for (auto& connection : _connections)
+		nodes.push_back(connection.first);
+
+	nodes.erase(std::find(begin(nodes), end(nodes), _parent));
+
+	return expanded_nodes;
+}
