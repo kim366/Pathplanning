@@ -2,6 +2,7 @@
 #define NODE_HPP
 
 #include <map>
+#include <vector>
 #include <SFML/System/Vector2.hpp>
 
 class Graph;

@@ -1,4 +1,5 @@
 #include <Node.hpp>
+#include <algorithm>
 
 const auto& Node::getWeight() const
 {
@@ -18,9 +19,9 @@ std::vector<Node*> Node::expand()
 	std::vector<Node*> expanded_nodes;
 
 	for (auto& connection : _connections)
-		nodes.push_back(connection.first);
+		expanded_nodes.push_back(connection.first);
 
-	nodes.erase(std::find(begin(nodes), end(nodes), _parent));
+	expanded_nodes.erase(std::find(begin(expanded_nodes), end(expanded_nodes), _parent));
 
 	return expanded_nodes;
 }
