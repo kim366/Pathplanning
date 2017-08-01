@@ -21,7 +21,7 @@ protected:
 protected:
 	std::priority_queue<Node*, std::vector<Node*>,
 		std::function<bool(Node*, Node*)>>
-					_open_set{[] (Node* x_, Node* y_)
+					_open{[] (Node* x_, Node* y_)
 						{ return x_->value > y_->value; }};
 
 };
