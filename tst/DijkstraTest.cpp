@@ -53,13 +53,14 @@ SCENARIO("Dijkstra's Algorithm finds the shortest path and expands the correct a
 
 			THEN("It finds the shortest Path")
 			{
-				std::vector<const Node*> target_vec{{graph.getNode(B), graph.getNode(D), graph.getNode(F)}};
-				REQUIRE(result.first == target_vec);
+				REQUIRE(result);
+				std::vector<const Node*> target_path{{graph.getNode(B), graph.getNode(D), graph.getNode(F)}};
+				CHECK(result->first == target_path);
 			}
 
 			THEN("It expands the correct Number of Nodes")
 			{
-				REQUIRE(result.second == 7); // expands all nodes
+				CHECK(result->second == 7); // expands all nodes
 			}
 		}
 	}

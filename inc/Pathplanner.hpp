@@ -13,7 +13,7 @@ class Pathplanner
 {
 public:
 	virtual std::experimental::optional<std::pair<std::vector<const Node*>, unsigned>>
-					operator()(Node* start_, Node* end_) = 0;
+					operator()(const Node* start_, const Node* end_) = 0;
 	virtual			~Pathplanner() = 0;
 
 protected:

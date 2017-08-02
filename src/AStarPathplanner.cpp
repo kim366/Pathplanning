@@ -1,7 +1,7 @@
 #include <AStarPathplanner.hpp>
 
 std::experimental::optional<std::pair<std::vector<const Node*>, unsigned>>
-	AStarPathplanner::operator()(Node* start_, Node* end_)
+	AStarPathplanner::operator()(const Node* start_, const Node* end_)
 {
 	_start = start_;
 	_end = end_;
@@ -9,7 +9,7 @@ std::experimental::optional<std::pair<std::vector<const Node*>, unsigned>>
 	std::vector<const Node*> found_path;
 	unsigned amount_of_expanded_nodes;
 
-	_open.push(start_);
+	_open.push(const_cast<Node*>(start_));
 	
 	while (!_open.empty())
 	{
