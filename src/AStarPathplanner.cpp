@@ -3,6 +3,9 @@
 std::experimental::optional<std::pair<std::vector<const Node*>, unsigned>>
 	AStarPathplanner::operator()(const Node* start_, const Node* end_)
 {
+	_start = start_;
+	_end = end_;
+
 	std::vector<const Node*> found_path;
 	unsigned amount_of_expanded_nodes;
 
