@@ -7,11 +7,11 @@ class AStarPathplanner : Pathplanner
 {
 public:
 
-	std::pair<std::vector<const Node*>, unsigned>
-			operator()(const Node* start_, const Node* end_) override;
+	std::experimental::optional<std::pair<std::vector<const Node*>, unsigned>>
+			operator()(Node* start_, Node* end_) override;
 
 private:
-	bool evaluate(const Node* node1_, const Node* node2_) override;
+	float	evaluate(const Node* to_evaluate_, const Node* based_on_) override;
 };
 
 #endif // ASTAR_PATHPLANNER_HPP

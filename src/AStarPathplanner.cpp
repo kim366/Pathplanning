@@ -1,7 +1,7 @@
 #include <AStarPathplanner.hpp>
 
 std::experimental::optional<std::pair<std::vector<const Node*>, unsigned>>
-	AStarPathplanner::operator()(const Node* start_, const Node* end_)
+	AStarPathplanner::operator()(Node* start_, Node* end_)
 {
 	_start = start_;
 	_end = end_;
@@ -64,6 +64,6 @@ std::experimental::optional<std::pair<std::vector<const Node*>, unsigned>>
 	return {};  // No connection between Start and End nodes
 }
 
-float AStarPathplanner::evaluate(const Node* node_)
+float AStarPathplanner::evaluate(const Node* to_evaluate_, const Node* based_on_)
 {
 }

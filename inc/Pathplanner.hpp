@@ -4,6 +4,7 @@
 #include <vector>
 #include <queue>
 #include <functional>
+#include <experimental/optional>
 #include <Node.hpp>
 
 class Graph;
@@ -11,12 +12,12 @@ class Graph;
 class Pathplanner
 {
 public:
-	virtual std::pair<std::vector<const Node*>, unsigned>
-					operator()(const Node* start_, const Node* end_) = 0;
+	virtual std::experimental::optional<std::pair<std::vector<const Node*>, unsigned>>
+					operator()(Node* start_, Node* end_) = 0;
 	virtual			~Pathplanner() = 0;
 
 protected:
-	virtual float	evaluate(const Node* node_) = 0;
+	virtual float	evaluate(const Node* to_evaluate_, const Node* based_on_) = 0;
 
 protected:
 	const std::function<bool(Node*, Node*)>
