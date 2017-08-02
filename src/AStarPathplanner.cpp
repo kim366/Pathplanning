@@ -34,29 +34,13 @@ std::experimental::optional<std::pair<std::vector<const Node*>, unsigned>>
 
 		for (auto* successor : successors)
 		{
-			if (successor->tag == Node::Tag::New)
-			{
-				successor->parent = current;
-				successor->value = evaluate(successor, current);
-				_open.push(successor);
-				successor->tag = Node::Tag::Open;
-			}
-			else if (float new_value{evaluate(successor, current)} < successor.value)
+			float new_value{evaluate(successor, current)};
+			if (successor->tag == Node::Tag::New != new_value < successor->value)
 			{
 				successor->parent = current;
 				successor->value = new_value;
-			}	
-
-			if (successor->tag == Node::Tag::Closed)
-			{
-				for (auto* descendant : successor->expand())
-				{
-					if (float new_value{evaluate(descendant, successor)} < descendant.value)
-					{
-						descendant->parent = current;
-						descendant->value = new_value;
-					}
-				}
+				_open.push(successor);
+				successor->tag = Node::Tag::Open;
 			}
 		}
 	}
