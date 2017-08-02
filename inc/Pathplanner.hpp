@@ -28,9 +28,8 @@ protected:
 						return x_->value > y_->value;
 					}};
 					
-	std::priority_queue<Node*, std::vector<Node*>,
-		std::function<bool(Node*, Node*)>>
-					_open{};
+	std::priority_queue<Node*, std::vector<Node*>, decltype(_compare)>
+					_open{_compare};
 	const Node*		_start;
 	const Node*		_end;
 };
