@@ -11,19 +11,19 @@ std::experimental::optional<std::pair<std::vector<const Node*>, unsigned>>
 
 	_open.push(start_);
 	
-	while (!open.empty())
+	while (!_open.empty())
 	{
-		Node* current{open.top()};
-		open.pop();
+		Node* current{_open.top()};
+		_open.pop();
 		current->tag = Node::Tag::Closed;
 
 		if (current == end_)
 		{
-			Node* trace{current};
-			while (trace.parent != nullptr)
+			const Node* trace{current};
+			while (trace->parent != nullptr)
 			{
 				found_path.push_back(trace);
-				trace = trace.parent;
+				trace = trace->parent;
 			}
 
 			return std::experimental::make_optional(
@@ -35,7 +35,7 @@ std::experimental::optional<std::pair<std::vector<const Node*>, unsigned>>
 		for (auto* successor : successors)
 		{
 			float new_value{evaluate(successor, current)};
-			if (successor->tag == Node::Tag::New != new_value < successor->value)
+			if ((successor->tag == Node::Tag::New) != (new_value < successor->value))
 			{
 				successor->parent = current;
 				successor->value = new_value;
