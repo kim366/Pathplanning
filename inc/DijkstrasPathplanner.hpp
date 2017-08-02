@@ -8,7 +8,7 @@ class DijkstrasPathplanner : public AStarPathplanner
 public:
 
 private:
-	float evaluate(const Node* to_evaluate_, const Node* based_on_) override;
+	float evaluate(Node* to_evaluate_, Node* based_on_) override;
 
 private:
 	

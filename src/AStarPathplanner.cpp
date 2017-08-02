@@ -64,6 +64,6 @@ std::experimental::optional<std::pair<std::vector<const Node*>, unsigned>>
 	return {};  // No connection between Start and End nodes
 }
 
-float AStarPathplanner::evaluate(const Node* to_evaluate_, const Node* based_on_)
+float AStarPathplanner::evaluate(Node* to_evaluate_, Node* based_on_)
 {
 }
