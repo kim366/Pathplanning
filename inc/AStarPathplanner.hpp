@@ -3,7 +3,7 @@
 
 #include <Pathplanner.hpp>
 
-class AStarPathplanner : Pathplanner
+class AStarPathplanner : public Pathplanner
 {
 public:
 

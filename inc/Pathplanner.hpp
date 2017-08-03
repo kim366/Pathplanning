@@ -18,6 +18,7 @@ public:
 
 protected:
 	virtual float	evaluate(Node* to_evaluate_, Node* based_on_) = 0;
+	float			cost(const Node* from_, const Node* to_) const;
 
 protected:
 	const std::function<bool(Node*, Node*)>
