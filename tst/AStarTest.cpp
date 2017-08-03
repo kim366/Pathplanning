@@ -70,7 +70,7 @@ SCENARIO("A* finds the shortest path and expands the correct amount of nodes")
 
 			THEN("It examines fewer Nodes than Dijkstra's Pathplanner")
 			{
-				CHECK(result->second < 6);
+				CHECK(result->second < 7);
 			}
 		}
 	}
