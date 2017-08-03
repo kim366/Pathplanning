@@ -4,9 +4,6 @@
 #include <AStarPathplanner.hpp>
 #include <Heuristics.hpp>
 
-class DijkstrasPathplanner : public AStarPathplanner<None>
-{
-
-};
+using DijkstrasPathplanner = AStarPathplanner<None>;
 
 #endif // DIJKSTRAS_PATHPLANNER_HPP
