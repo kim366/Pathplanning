@@ -56,4 +56,7 @@ std::experimental::optional<std::pair<std::vector<const Node*>, unsigned>>
 
 float AStarPathplanner::evaluate(Node* to_evaluate_, Node* based_on_)
 {
+	float to_start_value{based_on_->value + cost(to_evaluate_, based_on_)};
+	float heuristic_value{heuristic(to_evaluate_)};
+	return to_start_value + heuristic_value(to_evaluate_, _end);
 }
