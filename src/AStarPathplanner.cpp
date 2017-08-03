@@ -8,7 +8,7 @@ std::experimental::optional<std::pair<std::vector<const Node*>, unsigned>>
 	_end = end_;
 
 	std::vector<const Node*> found_path;
-	unsigned amount_of_expanded_nodes;
+	auto amount_of_expanded_nodes{0u};
 
 	_open.push(const_cast<Node*>(start_));
 	
@@ -38,6 +38,9 @@ std::experimental::optional<std::pair<std::vector<const Node*>, unsigned>>
 		for (auto* successor : successors)
 		{
 			float new_value{evaluate(successor, current)};
+			if (successor->tag == Node::Tag::New)
+				++amount_of_expanded_nodes;
+
 			if ((successor->tag == Node::Tag::New) != (new_value < successor->value))
 			{
 				successor->parent = current;
