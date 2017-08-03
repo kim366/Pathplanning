@@ -9,7 +9,8 @@ enum
 
 SCENARIO("Dijkstra's Algorithm finds the shortest path and expands the correct amount of nodes")
 {
-	GIVEN("A Graph with some Nodes and Edges and Pointers to Start & End Nodes and Dijkstra's Pathplanner Object")
+	GIVEN("A Graph with some Nodes and Edges and Pointers to Start & End Nodes \
+		and Dijkstra's Pathplanner Object")
 	{
 		// Image & Geogebra File: http://bit.ly/2v6fuJT
 		// Start Node in Green End Node in Red
@@ -54,9 +55,15 @@ SCENARIO("Dijkstra's Algorithm finds the shortest path and expands the correct a
 			THEN("It finds the shortest Path")
 			{
 				REQUIRE(result);
-				CHECK(result->first.front() == start_node);
-				CHECK(result->first.back() == end_node);
-				std::vector<const Node*> target_path{{graph.getNode(B), graph.getNode(D), graph.getNode(F)}};
+				INFO('A' << graph.getNode(A));
+				INFO('B' << graph.getNode(B));
+				INFO('C' << graph.getNode(C));
+				INFO('D' << graph.getNode(D));
+				INFO('E' << graph.getNode(E));
+				INFO('F' << graph.getNode(F));
+				INFO('G' << graph.getNode(G));
+				std::vector<const Node*>
+					target_path{graph.getNode(B), graph.getNode(D), graph.getNode(F)};
 				CHECK(result->first == target_path);
 			}
 
