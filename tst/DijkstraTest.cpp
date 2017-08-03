@@ -16,7 +16,6 @@ SCENARIO("Dijkstra's Algorithm finds the shortest path and expands the correct a
 		// Start Node in Green End Node in Red
 		// Shortest Path in Orange (400.67)
 
-
 		Graph graph
 		{
 			{
@@ -48,7 +47,7 @@ SCENARIO("Dijkstra's Algorithm finds the shortest path and expands the correct a
 
 		DijkstrasPathplanner find_shortest_path;
 
-		WHEN("Dijkstra's Algorithm finds the shortest Path")
+		WHEN("Dijkstra's Algorithm attempts to find the shortest Path")
 		{
 			auto result{find_shortest_path(start_node, end_node)};
 
