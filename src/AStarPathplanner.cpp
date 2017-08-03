@@ -20,8 +20,6 @@ std::experimental::optional<std::pair<std::vector<const Node*>, unsigned>>
 
 		if (current == end_)
 		{
-			++amount_of_examined_nodes;
-
 			const Node* trace{current};
 			while (trace)
 			{
