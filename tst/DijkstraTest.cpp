@@ -54,6 +54,8 @@ SCENARIO("Dijkstra's Algorithm finds the shortest path and expands the correct a
 			THEN("It finds the shortest Path")
 			{
 				REQUIRE(result);
+				CHECK(result->first.front() == start_node);
+				CHECK(result->first.back() == end_node);
 				std::vector<const Node*> target_path{{graph.getNode(B), graph.getNode(D), graph.getNode(F)}};
 				CHECK(result->first == target_path);
 			}

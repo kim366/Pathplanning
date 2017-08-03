@@ -1,4 +1,5 @@
 #include <AStarPathplanner.hpp>
+#include <algorithm>
 
 std::experimental::optional<std::pair<std::vector<const Node*>, unsigned>>
 	AStarPathplanner::operator()(const Node* start_, const Node* end_)
@@ -20,11 +21,13 @@ std::experimental::optional<std::pair<std::vector<const Node*>, unsigned>>
 		if (current == end_)
 		{
 			const Node* trace{current};
-			while (trace->parent != nullptr)
+			while (trace)
 			{
 				found_path.push_back(trace);
 				trace = trace->parent;
 			}
+
+			std::reverse(begin(found_path), end(found_path));
 
 			return std::experimental::make_optional(
 			 	std::make_pair(found_path, amount_of_expanded_nodes));
