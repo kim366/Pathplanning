@@ -1,9 +1,9 @@
 #include <Node.hpp>
 #include <algorithm>
 
-const float Node::getWeight() const
+const float Node::getWeight(const Node* to_) const
 {
-	return _connections[const_cast<Node*>(parent)];
+	return _connections[const_cast<Node*>(to_)];
 }
 
 std::vector<Node*> Node::expand()

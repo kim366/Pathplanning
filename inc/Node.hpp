@@ -14,7 +14,7 @@ class Node
 public:
 						Node(sf::Vector2u position_) : _position(position_) {}
 	
-	const float			getWeight() const;
+	const float			getWeight(const Node* to_) const;
 	const auto&			getPosition() const { return _position; }
 	std::vector<Node*>	expand();
 
