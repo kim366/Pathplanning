@@ -2,16 +2,11 @@
 #define DIJKSTRAS_PATHPLANNER_HPP
 
 #include <AStarPathplanner.hpp>
+#include <Heuristics.hpp>
 
-class DijkstrasPathplanner : public AStarPathplanner
+class DijkstrasPathplanner : public AStarPathplanner<None>
 {
-public:
 
-private:
-	float evaluate(Node* to_evaluate_, Node* based_on_) override;
-
-private:
-	
 };
 
 #endif // DIJKSTRAS_PATHPLANNER_HPP

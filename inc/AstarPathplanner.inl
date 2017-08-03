@@ -1,8 +1,8 @@
-#include <AStarPathplanner.hpp>
 #include <algorithm>
 
+template<typename H>
 std::experimental::optional<std::pair<std::vector<const Node*>, unsigned>>
-	AStarPathplanner::operator()(const Node* start_, const Node* end_)
+	AStarPathplanner<H>::operator()(const Node* start_, const Node* end_)
 {
 	_start = start_;
 	_end = end_;
@@ -54,9 +54,10 @@ std::experimental::optional<std::pair<std::vector<const Node*>, unsigned>>
 	return {};  // No connection between Start and End nodes
 }
 
-float AStarPathplanner::evaluate(Node* to_evaluate_, Node* based_on_)
+template<typename H>
+float AStarPathplanner<H>::evaluate(Node* to_evaluate_, Node* based_on_)
 {
 	float to_start_value{based_on_->value + cost(to_evaluate_, based_on_)};
-	float heuristic_value{heuristic(to_evaluate_)};
-	return to_start_value + heuristic_value(to_evaluate_, _end);
+	float heuristic_value{_heuristic(to_evaluate_)};
+	return to_start_value + heuristic_value;
 }

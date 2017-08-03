@@ -3,6 +3,7 @@
 #include <catch.hpp>
 #include <Graph.hpp>
 #include <AStarPathplanner.hpp>
+#include <Heuristics.hpp>
 
 enum
 {
@@ -47,12 +48,11 @@ SCENARIO("A* finds the shortest path and expands the correct amount of nodes")
 		const Node* start_node{graph.getNode(B)};
 		const Node* end_node{graph.getNode(F)};
 
-		AStarPathplanner find_shortest_path;
+		AStarPathplanner<Euclidean> find_shortest_path;
 
 		WHEN("A* attempts to find the shortest Path")
 		{
 			auto result{find_shortest_path(start_node, end_node)};
-
 			THEN("It finds the shortest Path")
 			{
 				REQUIRE(result);
