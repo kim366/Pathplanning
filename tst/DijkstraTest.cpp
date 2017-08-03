@@ -60,9 +60,9 @@ SCENARIO("Dijkstra's Algorithm finds the shortest path and expands the correct a
 				CHECK(result->first == target_path);
 			}
 
-			THEN("It expands the correct Number of Nodes")
+			THEN("It examines the correct Number of Nodes")
 			{
-				CHECK(result->second == 6); // actually doesn't expand all nodes
+				CHECK(result->second == 7); // examines all nodes
 			}
 		}
 	}

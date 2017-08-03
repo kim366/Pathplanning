@@ -8,7 +8,7 @@ std::experimental::optional<std::pair<std::vector<const Node*>, unsigned>>
 	_end = end_;
 
 	std::vector<const Node*> found_path;
-	auto amount_of_expanded_nodes{0u};
+	auto amount_of_examined_nodes{0u};
 
 	_open.push(const_cast<Node*>(start_));
 	
@@ -20,6 +20,8 @@ std::experimental::optional<std::pair<std::vector<const Node*>, unsigned>>
 
 		if (current == end_)
 		{
+			++amount_of_examined_nodes;
+
 			const Node* trace{current};
 			while (trace)
 			{
@@ -30,7 +32,7 @@ std::experimental::optional<std::pair<std::vector<const Node*>, unsigned>>
 			std::reverse(begin(found_path), end(found_path));
 
 			return std::experimental::make_optional(
-			 	std::make_pair(found_path, amount_of_expanded_nodes));
+			 	std::make_pair(found_path, amount_of_examined_nodes));
 		}
 
 		auto successors{current->expand()};
@@ -39,7 +41,7 @@ std::experimental::optional<std::pair<std::vector<const Node*>, unsigned>>
 		{
 			float new_value{evaluate(successor, current)};
 			if (successor->tag == Node::Tag::New)
-				++amount_of_expanded_nodes;
+				++amount_of_examined_nodes;
 
 			if ((successor->tag == Node::Tag::New) != (new_value < successor->value))
 			{
