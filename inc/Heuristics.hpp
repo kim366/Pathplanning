@@ -13,11 +13,10 @@ protected:
 	const Node* 	_end;
 };
 
-class Euclidean : public Heuristic
+struct Euclidean : public Heuristic
 {
 	using Heuristic::Heuristic;
 
-public:
 	float operator()(const Node* node_) const override
 	{
 		sf::Vector2f distance{_end->getPosition() - node_->getPosition()}; 
@@ -25,11 +24,10 @@ public:
 	}
 };
 
-class None : public Heuristic
+struct None : public Heuristic
 {
 	using Heuristic::Heuristic;
 
-public:
 	float operator()(const Node* node_) const override
 	{
 		return 0.f;
