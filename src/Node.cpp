@@ -1,5 +1,12 @@
 #include <Node.hpp>
 #include <algorithm>
+#include <Pathplanner.hpp>
+
+Node::Node(sf::Vector2u position_)
+	: _position(position_)
+	, tag(Pathplanner::Tag::New)
+{
+}
 
 const float Node::getWeight(const Node* to_) const
 {

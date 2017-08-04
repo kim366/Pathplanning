@@ -8,8 +8,6 @@
 #include <experimental/optional>
 #include <Node.hpp>
 
-class Graph;
-
 class Pathplanner
 {
 public:
@@ -34,6 +32,14 @@ protected:
 					_open{_compare};
 	const Node*		_start;
 	const Node*		_end;
+
+public:
+	enum Tag
+	{
+		New,
+		Open,
+		Closed
+	};
 };
 
 #endif // PATHPLANNER_HPP

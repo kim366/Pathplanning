@@ -16,7 +16,7 @@ std::experimental::optional<std::pair<std::vector<const Node*>, std::set<const N
 	{
 		Node* current{_open.top()};
 		_open.pop();
-		current->tag = Node::Tag::Closed;
+		current->tag = Closed;
 		examined_nodes.insert(current);
 
 		if (current == end_)
@@ -39,15 +39,15 @@ std::experimental::optional<std::pair<std::vector<const Node*>, std::set<const N
 		for (auto* successor : successors)
 		{
 			float new_value{evaluate(successor, current)};
-			if ((successor->tag == Node::Tag::New) != (new_value < successor->value))
+			if ((successor->tag == New) != (new_value < successor->value))
 			{
 				successor->parent = current;
 				successor->value = new_value;
 				
-				if (successor->tag != Node::Tag::Open)
+				if (successor->tag != Open)
 				{
 					_open.push(successor);
-					successor->tag = Node::Tag::Open;
+					successor->tag = Open;
 				}
 			}
 		}
