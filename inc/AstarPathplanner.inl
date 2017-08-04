@@ -43,8 +43,12 @@ std::experimental::optional<std::pair<std::vector<const Node*>, unsigned>>
 			{
 				successor->parent = current;
 				successor->value = new_value;
-				_open.push(successor);
-				successor->tag = Node::Tag::Open;
+				
+				if (successor->tag != Node::Tag::Open)
+				{
+					_open.push(successor);
+					successor->tag = Node::Tag::Open;
+				}
 			}
 		}
 	}
