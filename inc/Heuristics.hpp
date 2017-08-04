@@ -6,11 +6,11 @@
 class Heuristic
 {
 public:
-					Heuristic(const Node* end_) : _end(end_) {}
+					Heuristic(const Node*& end_) : _end(end_) {}
 	virtual float 	operator()(const Node* node_) const = 0;
 
 protected:
-	const Node* 	_end;
+	const Node*& 	_end;
 };
 
 struct Euclidean : public Heuristic
