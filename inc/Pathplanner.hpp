@@ -3,6 +3,7 @@
 
 #include <vector>
 #include <queue>
+#include <set>
 #include <functional>
 #include <experimental/optional>
 #include <Node.hpp>
@@ -12,7 +13,7 @@ class Graph;
 class Pathplanner
 {
 public:
-	virtual std::experimental::optional<std::pair<std::vector<const Node*>, unsigned>>
+	virtual std::experimental::optional<std::pair<std::vector<const Node*>, std::set<const Node*>>>
 					operator()(const Node* start_, const Node* end_) = 0;
 	virtual			~Pathplanner() = 0;
 

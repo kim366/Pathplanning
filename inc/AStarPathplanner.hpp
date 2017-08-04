@@ -7,7 +7,7 @@ template<typename H>
 class AStarPathplanner : public Pathplanner
 {
 public:
-	std::experimental::optional<std::pair<std::vector<const Node*>, unsigned>>
+	std::experimental::optional<std::pair<std::vector<const Node*>, std::set<const Node*>>>
 			operator()(const Node* start_, const Node* end_) override;
 
 private:

@@ -1,14 +1,14 @@
 #include <algorithm>
 
 template<typename H>
-std::experimental::optional<std::pair<std::vector<const Node*>, unsigned>>
+std::experimental::optional<std::pair<std::vector<const Node*>, std::set<const Node*>>>
 	AStarPathplanner<H>::operator()(const Node* start_, const Node* end_)
 {
 	_start = start_;
 	_end = end_;
 
 	std::vector<const Node*> found_path;
-	auto amount_of_examined_nodes{-1};
+	std::set<const Node*> examined_nodes;
 
 	_open.push(const_cast<Node*>(start_));
 	
@@ -17,7 +17,7 @@ std::experimental::optional<std::pair<std::vector<const Node*>, unsigned>>
 		Node* current{_open.top()};
 		_open.pop();
 		current->tag = Node::Tag::Closed;
-		++amount_of_examined_nodes;
+		examined_nodes.insert(current);
 
 		if (current == end_)
 		{
@@ -31,7 +31,7 @@ std::experimental::optional<std::pair<std::vector<const Node*>, unsigned>>
 			std::reverse(begin(found_path), end(found_path));
 
 			return std::experimental::make_optional(
-			 	std::make_pair(found_path, amount_of_examined_nodes));
+			 	std::make_pair(found_path, examined_nodes));
 		}
 
 		auto successors{current->expand()};
