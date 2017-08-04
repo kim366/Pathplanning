@@ -18,7 +18,7 @@ public:
 	virtual			~Pathplanner() = 0;
 
 protected:
-	virtual float	evaluate(Node* to_evaluate_, Node* based_on_) = 0;
+	virtual float	evaluate(const Node* to_evaluate_, const Node* based_on_) const = 0;
 	float			cost(const Node* from_, const Node* to_) const;
 
 protected:

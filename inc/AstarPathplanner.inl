@@ -57,7 +57,7 @@ std::experimental::optional<std::pair<std::vector<const Node*>, std::set<const N
 }
 
 template<typename H>
-float AStarPathplanner<H>::evaluate(Node* to_evaluate_, Node* based_on_)
+float AStarPathplanner<H>::evaluate(const Node* to_evaluate_, const Node* based_on_) const
 {
 	float to_start_value{based_on_->value + cost(to_evaluate_, based_on_)};
 	float heuristic_value{_heuristic(to_evaluate_)};
