@@ -1,6 +1,4 @@
 #include <catch.hpp>
-
-#include <catch.hpp>
 #include <Graph.hpp>
 #include <AStarPathplanner.hpp>
 #include <Heuristics.hpp>
@@ -70,7 +68,7 @@ SCENARIO("A* finds the shortest path and expands the correct amount of nodes")
 
 			THEN("It examines fewer Nodes than Dijkstra's Pathplanner")
 			{
-				CHECK(result->second < 7);
+				CHECK(result->second.size() < 7);
 			}
 		}
 	}
