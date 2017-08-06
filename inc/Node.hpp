@@ -27,7 +27,7 @@ private:
 public:
 	int					tag;
 	const Node*			parent{nullptr};
-	auto				value{0.f};	
+	float				value{0.f};	
 };
 
 #endif // NODE_HPP
