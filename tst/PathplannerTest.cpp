@@ -91,4 +91,66 @@ SCENARIO("Dijkstra's Algorithm finds the shortest path and expands the correct a
 			}
 		}
 	}
+
+	GIVEN("A nonempty Graph with disconnected Nodes \
+		and Pointers to Start & End Nodes and Pathplanner Objects")
+	{
+		Graph graph
+		{
+			{
+				{168, 123},
+				{172, 70},
+				{106, 255},
+				{402, 40},
+				{363, 271},
+				{483, 188},
+				{306, 164}
+			},
+			{
+				{C, E},
+				{C, A},
+				{E, A},
+				{E, G},
+				{A, G},
+				{A, B},
+				{G, B},
+				{G, D},
+				{B, D}
+			}
+		};
+
+		const Node* start_node{graph.getNode(B)};
+		const Node* end_node{graph.getNode(F)};
+
+		DijkstrasPathplanner dijkstra_find_shortest_path;
+		AStarPathplanner<Euclidean> astar_find_shortest_path;
+
+		INFO('A' << graph.getNode(A));
+		INFO('B' << graph.getNode(B));
+		INFO('C' << graph.getNode(C));
+		INFO('D' << graph.getNode(D));
+		INFO('E' << graph.getNode(E));
+		INFO('F' << graph.getNode(F));
+		INFO('G' << graph.getNode(G));
+
+		WHEN("Dijkstra's Algorithm attempts to find the shortest Path")
+		{
+			auto result{dijkstra_find_shortest_path(start_node, end_node)};
+
+			THEN("It terminates unsuccessfully")
+			{
+				REQUIRE(!result);
+			}
+		}
+
+		WHEN("A* attempts to find the shortest Path")
+		{
+			auto result{astar_find_shortest_path(start_node, end_node)};
+
+			THEN("It terminates unsuccessfully")
+			{
+				REQUIRE(!result);
+			}
+		}
+	}
 }
