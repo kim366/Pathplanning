@@ -4,7 +4,7 @@
 
 Node::Node(sf::Vector2u position_)
 	: _position(position_)
-	, tag(Pathplanner::Tag::New)
+	, tag(Pathplanner::New)
 {
 }
 
