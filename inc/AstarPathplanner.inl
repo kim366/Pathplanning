@@ -7,7 +7,6 @@ std::experimental::optional<std::pair<std::vector<const Node*>, std::set<const N
 	_start = start_;
 	_end = end_;
 
-	std::vector<const Node*> found_path;
 	std::set<const Node*> examined_nodes;
 
 	_open.push(const_cast<Node*>(start_));
@@ -21,6 +20,8 @@ std::experimental::optional<std::pair<std::vector<const Node*>, std::set<const N
 
 		if (current == end_)
 		{
+			std::vector<const Node*> found_path;
+			
 			const Node* trace{current};
 			while (trace)
 			{
