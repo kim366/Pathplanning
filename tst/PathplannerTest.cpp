@@ -65,13 +65,13 @@ SCENARIO("Dijkstra's Algorithm finds the shortest path and expands the correct a
 
 			THEN("It finds the shortest Path")
 			{
-				REQUIRE(result);
-				CHECK(result->first == target_path);
+				REQUIRE(result.first);
+				CHECK(result.first == target_path);
 			}
 
 			THEN("It examines the correct Number of Nodes")
 			{
-				CHECK(result->second.size() == 7); // examines all nodes
+				CHECK(result.second.size() == 7); // examines all nodes
 			}
 		}
 
@@ -81,13 +81,13 @@ SCENARIO("Dijkstra's Algorithm finds the shortest path and expands the correct a
 
 			THEN("It finds the shortest Path")
 			{
-				REQUIRE(result);
-				CHECK(result->first == target_path);
+				REQUIRE(result.first);
+				CHECK(result.first == target_path);
 			}
 
 			THEN("It examines fewer Nodes than Dijkstra's Pathplanner")
 			{
-				CHECK(result->second.size() < 7); // examines all nodes
+				CHECK(result.second.size() < 7); // examines all nodes
 			}
 		}
 	}
@@ -139,7 +139,7 @@ SCENARIO("Dijkstra's Algorithm finds the shortest path and expands the correct a
 
 			THEN("It terminates unsuccessfully")
 			{
-				REQUIRE(!result);
+				REQUIRE(!result.first);
 			}
 		}
 
@@ -149,7 +149,7 @@ SCENARIO("Dijkstra's Algorithm finds the shortest path and expands the correct a
 
 			THEN("It terminates unsuccessfully")
 			{
-				REQUIRE(!result);
+				REQUIRE(!result.first);
 			}
 		}
 	}
