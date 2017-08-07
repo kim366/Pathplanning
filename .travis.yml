@@ -4,6 +4,8 @@ sudo: false
 os: "linux"
 compiler:
   - gcc
+install:
+- export CXX="g++-6"
 addons:
   apt:
     sources:
@@ -12,6 +14,6 @@ addons:
     - g++-6
     - libsfml-dev
 env:
-  - CFLAGS=-Wall CXXFLAGS=-std=c++14 CXX=g++-6
+  - CFLAGS=-Wall CXXFLAGS=-std=c++14
 script:
   - make bld/gui
