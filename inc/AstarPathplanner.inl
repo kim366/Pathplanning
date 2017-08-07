@@ -31,8 +31,7 @@ std::pair<std::experimental::optional<std::vector<const Node*>>, std::set<const 
 
 			std::reverse(begin(found_path), end(found_path));
 
-			return std::make_pair(
-							std::experimental::make_optional(found_path), examined_nodes);
+			return {{found_path}, examined_nodes};
 		}
 
 		auto successors{current->expand()};
@@ -54,7 +53,7 @@ std::pair<std::experimental::optional<std::vector<const Node*>>, std::set<const 
 		}
 	}
 
-	return std::make_pair(std::experimental::optional<std::vector<const Node*>>{}, examined_nodes);  // No connection between Start and End nodes
+	return {{}, examined_nodes};  // No connection between Start and End nodes
 }
 
 template<typename H>
