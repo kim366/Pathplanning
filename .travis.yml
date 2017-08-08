@@ -3,7 +3,7 @@ language: cpp
 sudo: false
 os: "linux"
 compiler:
-  - gcc
+- gcc
 addons:
   apt:
     sources:
@@ -12,11 +12,11 @@ addons:
     - g++-6
     - libsfml-dev
 env:
-  - CFLAGS=-Wall CXXFLAGS=-std=c++14
+- CFLAGS=-Wall CXXFLAGS=-std=c++14
 install:
 - export CXX="g++-6"
 before_script:
-  - curl "https://raw.githubusercontent.com/philsquared/Catch/master/single_include/catch.hpp" -o inc/catch.hpp 
+- curl "https://raw.githubusercontent.com/philsquared/Catch/master/single_include/catch.hpp" -o inc/catch.hpp 
 script:
-  - make bld/gui
-  - make bld/test
+- make bld/gui
+- make bld/test
