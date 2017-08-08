@@ -4,8 +4,6 @@ sudo: false
 os: "linux"
 compiler:
   - gcc
-install:
-- export CXX="g++-6"
 addons:
   apt:
     sources:
@@ -15,5 +13,10 @@ addons:
     - libsfml-dev
 env:
   - CFLAGS=-Wall CXXFLAGS=-std=c++14
+install:
+- export CXX="g++-6"
+before_script:
+  - curl https://raw.githubusercontent.com/philsquared/Catch/master/single_include/catch.hpp
 script:
   - make bld/gui
+  - make bld/test
