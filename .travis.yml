@@ -16,9 +16,7 @@ env:
 install:
 - export CXX="g++-6"
 before_script:
-  - cd inc
-  - curl https://raw.githubusercontent.com/philsquared/Catch/master/single_include/catch.hpp
-  - cd ..
+  - curl -K https://raw.githubusercontent.com/philsquared/Catch/master/single_include/catch.hpp >> inc/catch.hpp 
 script:
   - make bld/gui
   - make bld/test
