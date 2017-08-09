@@ -1,4 +1,4 @@
-dist: trusty
+dist: zesty
 language: cpp
 sudo: false
 os: "linux"
@@ -7,8 +7,9 @@ compiler:
 addons:
   apt:
     sources:
-    - sourceline: 'ppa:jonathonf/gcc-7.1'
+    - sourceline: 'ppa:ubuntu-toolchain-r/test'
     packages:
+    - gcc-7
     - g++-7
     - libsfml-dev
 env:
