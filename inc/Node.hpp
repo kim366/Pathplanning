@@ -1,7 +1,7 @@
 #ifndef NODE_HPP
 #define NODE_HPP
 
-#include <map>
+#include <unordered_map>
 #include <vector>
 #include <SFML/System/Vector2.hpp>
 
@@ -20,7 +20,7 @@ public:
 	std::vector<Node*>	expand();
 
 private:
-	std::map<Node*, float>
+	std::unordered_map<Node*, float>
 						_connections;
 	sf::Vector2u 		_position;
 

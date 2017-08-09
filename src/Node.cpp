@@ -10,7 +10,9 @@ Node::Node(sf::Vector2u position_)
 
 const float Node::getWeight(const Node* to_) const
 {
-	return _connections[const_cast<Node*>(to_)];
+	if (auto found = _connections.find(const_cast<Node*>(to_)) != end(_connections))
+		return found;
+	return std::numeric_limits<float>::infinity();
 }
 
 std::vector<Node*> Node::expand()
