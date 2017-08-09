@@ -4,15 +4,14 @@ sudo: false
 os: "linux"
 compiler:
 - gcc
-addons:
-  apt:
-    sources:
-    - ubuntu-toolchain-r-test
-    packages:
-    - gcc-7
-    - libsfml-dev
 env:
 - CFLAGS=-Wall CXXFLAGS=-std=c++17
+before_install:
+- sudo apt-get -qq update
+- sudo add-apt-repository ppa:ubuntu-toolchain-r/test -y
+- sudo apt-get -qq update
+- sudo apt-get install -y gcc-7
+- sudo apt-get install -y libsfml-dev
 install:
 - export CXX="g++-7"
 before_script:
