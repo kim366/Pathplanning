@@ -20,7 +20,7 @@ public:
 	void 		connect(sf::Vector2u node_indices_);
 	void 		disconnect(sf::Vector2u node_indices_);
 
-	const auto* getNode(unsigned node_index_) { return _nodes[node_index_].get(); }
+	auto* 		getNode(unsigned node_index_) { return _nodes[node_index_].get(); }
 
 protected:
 	std::vector<std::unique_ptr<Node>>

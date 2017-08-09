@@ -16,7 +16,7 @@ Graph::Graph(std::initializer_list<sf::Vector2i> node_positions_,
 
 void Graph::connect(sf::Vector2u node_indices_)
 {	
-	auto* node1{_nodes[node_indices_.x].g`et()};
+	auto* node1{_nodes[node_indices_.x].get()};
 	auto* node2{_nodes[node_indices_.y].get()};
 
 	sf::Vector2i distance{node1->getPosition() - node2->getPosition()};
