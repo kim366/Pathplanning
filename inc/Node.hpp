@@ -20,7 +20,7 @@ public:
 	std::vector<Node*>	expand();
 
 private:
-	mutable std::map<Node*, float>
+	std::map<Node*, float>
 						_connections;
 	sf::Vector2u 		_position;
 
