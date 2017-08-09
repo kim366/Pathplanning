@@ -10,8 +10,9 @@ Node::Node(sf::Vector2u position_)
 
 const float Node::getWeight(const Node* to_) const
 {
-	if (auto found = _connections.find(const_cast<Node*>(to_)) != end(_connections))
-		return found;
+	auto found{_connections.find(const_cast<Node*>(to_))};
+	if (found != end(_connections))
+		return found->second;
 	return std::numeric_limits<float>::infinity();
 }
 
