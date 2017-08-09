@@ -2,7 +2,7 @@
 #include <algorithm>
 #include <Pathplanner.hpp>
 
-Node::Node(sf::Vector2u position_)
+Node::Node(sf::Vector2f position_)
 	: _position(position_)
 	, tag(Pathplanner::New)
 {

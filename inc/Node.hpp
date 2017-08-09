@@ -13,7 +13,7 @@ class Node
 	friend class Graph;
 
 public:
-						Node(sf::Vector2u position_);
+						Node(sf::Vector2f position_);
 	
 	const float			getWeight(const Node* to_) const;
 	const auto&			getPosition() const { return _position; }
@@ -22,7 +22,7 @@ public:
 private:
 	std::unordered_map<Node*, float>
 						_connections;
-	sf::Vector2u 		_position;
+	sf::Vector2f 		_position;
 
 public:
 	int					tag;
