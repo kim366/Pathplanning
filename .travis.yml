@@ -7,7 +7,7 @@ compiler:
 addons:
   apt:
     sources:
-    - jonathonf
+    - sourceline: 'ppa:jonathonf/gcc-7.1'
     packages:
     - g++-7
     - libsfml-dev
