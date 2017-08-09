@@ -1,7 +1,7 @@
 #ifndef GUI_INPUT_HANDLER_HPP
 #define GUI_INPUT_HANDLER_HPP
 
-#include <experimental/optional>
+#include <optional>
 #include <SFML/Graphics/RenderWindow.hpp>
 #include <SFML/Window/Event.hpp>
 #include <Gui/Inputs.hpp>
@@ -18,7 +18,7 @@ public:
 
 private:
 	Inputs 					_inputs;
-	std::experimental::optional<sf::Event>
+	std::optional<sf::Event>
 							_unhandled_queued_event;
 };
 

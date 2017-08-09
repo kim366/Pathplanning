@@ -7,14 +7,14 @@ compiler:
 addons:
   apt:
     sources:
-    - ubuntu-toolchain-r-test
+    - jonathonf
     packages:
-    - g++-6
+    - g++-7
     - libsfml-dev
 env:
-- CFLAGS=-Wall CXXFLAGS=-std=c++14
+- CFLAGS=-Wall CXXFLAGS=-std=c++17
 install:
-- export CXX="g++-6"
+- export CXX="g++-7"
 before_script:
 - curl "https://raw.githubusercontent.com/philsquared/Catch/master/single_include/catch.hpp" -o inc/catch.hpp 
 script:

@@ -1,7 +1,7 @@
 #ifndef GUI_RAW_INPUT_TYPE_HPP
 #define GUI_RAW_INPUT_TYPE_HPP
 
-#include <experimental/optional>
+#include <optional>
 #include <SFML/Window/Event.hpp>
 
 namespace Gui

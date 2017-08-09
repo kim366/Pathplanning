@@ -1,7 +1,7 @@
 #include <algorithm>
 
 template<typename H>
-std::pair<std::experimental::optional<std::vector<const Node*>>, std::set<const Node*>>
+std::pair<std::optional<std::vector<const Node*>>, std::set<const Node*>>
 	AStarPathplanner<H>::operator()(const Node* start_, const Node* end_)
 {
 	_start = start_;
