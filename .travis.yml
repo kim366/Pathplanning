@@ -1,4 +1,4 @@
-dist: zesty
+dist: artful
 language: cpp
 sudo: false
 os: "linux"
@@ -10,7 +10,6 @@ addons:
     - ubuntu-toolchain-r-test
     packages:
     - gcc-7
-    - g++-7
     - libsfml-dev
 env:
 - CFLAGS=-Wall CXXFLAGS=-std=c++17
