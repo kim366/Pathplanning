@@ -10,6 +10,8 @@ Various Pathplanning Algorithms Derived off Dijkstra's in mulitple situations vi
 
 ## Build Instructions
 
+For Building a C++17 compiler is necessary (for example g++ 7.1 or Clang 4). The [MinGW-w64 fork](https://sourceforge.net/projects/mingw-w64) comes with g++ 7.1 and works for building this project.
+
 Install SFML as shown in the [Getting Started section](https://www.sfml-dev.org/tutorials/2.1/#getting-started) of the SFML tutorial page.
 
 On Windows also add the path of the `include` folder into the `CPLUS_INCLUDE_PATH` environment variable and the path to the `lib` folder into the `LIBRARY_PATH` environment variable if using Clang or gcc with MinGW.
