@@ -37,12 +37,6 @@ SCENARIO("Eight-connected graphs")
 	const Node* node_0_0{grid.getNode(0)};
 	const Node* node_1_2{grid.getNode(7)};
 	const Node* node_0_2{grid.getNode(2)};
-
-	// for (auto i{0u}; i < 25; ++i)
-	// 	std::cout << i << ":\t" << grid.getNode(i) << '\n'; 
-
-	// for (auto& successor : node_0_0->expand())
-	// 	std::cout << successor << ", ";
 	
 	SECTION("The nodes have the correct amount of connections")
 	{
