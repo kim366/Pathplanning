@@ -58,7 +58,16 @@ unsigned Grid::toIndex(sf::Vector2u coordinate_)
 	return _size * coordinate_.y + coordinate_.x;
 }
 
-sf::Vector2u Grid::toCoordinate(unsigned index_)
+sf::Vector2u Grid::toCoordinate(int index_)
 {
+	unsigned x{0}, y{0};
+	while (index_ >= static_cast<int>(_size))
+	{
+		index_ -= _size;
+		++y;
+	}
 
+	x = index_;
+
+	return {x, y};
 }
