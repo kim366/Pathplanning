@@ -6,9 +6,9 @@ TEST_CASE("Four-connected graphs")
 {
 	Grid grid{5};
 
-	const Node* node_0_0{grid.getNode(0)};
-	const Node* node_1_2{grid.getNode(7)};
-	const Node* node_0_2{grid.getNode(2)};
+	const Node* node_0_0{grid.getNode(grid.toIndex({0, 0}))};
+	const Node* node_1_2{grid.getNode(grid.toIndex({1, 2}))};
+	const Node* node_0_2{grid.getNode(grid.toIndex({0, 2}))};
 
 	SECTION("The nodes have the correct amount of connections")
 	{
@@ -34,9 +34,9 @@ SCENARIO("Eight-connected graphs")
 {
 	Grid grid{5, true};
 
-	const Node* node_0_0{grid.getNode(0)};
-	const Node* node_1_2{grid.getNode(7)};
-	const Node* node_0_2{grid.getNode(2)};
+	const Node* node_0_0{grid.getNode(grid.toIndex({0, 0}))};
+	const Node* node_1_2{grid.getNode(grid.toIndex({1, 2}))};
+	const Node* node_0_2{grid.getNode(grid.toIndex({0, 2}))};
 	
 	SECTION("The nodes have the correct amount of connections")
 	{
@@ -63,6 +63,7 @@ TEST_CASE("Index/Coordinate Conversion")
 	{
 		CHECK(grid.toIndex({3, 4}) == 23);
 		CHECK(grid.toIndex({0, 0}) == 0);
+		CHECK(grid.toIndex({0, 2}) == 10);
 		CHECK(grid.toIndex({3, 1}) == 8);	
 	}
 
