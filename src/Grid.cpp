@@ -31,53 +31,53 @@ Grid::Grid(unsigned size_, bool eight_connected_)
 
 				if (direction == 0)
 				{
-					if (toCoordinate(current_node_index).y == 0)
+					if (y_coordinate == 0)
 						continue;
 					neighbor_node_index -= _size;
 				}
 				else if (direction == 1)
 				{
-					if (toCoordinate(current_node_index).x == _size)
+					if (x_coordinate == _size)
 						continue;
 					++neighbor_node_index;
 				}
 				else if (direction == 2)
 				{
-					if (toCoordinate(current_node_index).y == _size)
+					if (y_coordinate == _size)
 						continue;
 					neighbor_node_index += _size;
 				}
 				else if (direction == 3)
 				{
-					if (toCoordinate(current_node_index).x == 0)
+					if (x_coordinate == 0)
 						continue;
 					--neighbor_node_index;
 				}
 				else if (direction == 4)
 				{
-					if (toCoordinate(current_node_index).x == 0 ||
-						toCoordinate(current_node_index).y == 0)
+					if (x_coordinate == 0 ||
+						y_coordinate == 0)
 						continue;
 					--neighbor_node_index -= _size;
 				}
 				else if (direction == 5)
 				{
-					if (toCoordinate(current_node_index).x == 0 ||
-						toCoordinate(current_node_index).y == _size)
+					if (x_coordinate == 0 ||
+						y_coordinate == _size)
 						continue;
 					--neighbor_node_index += _size;
 				}
 				else if (direction == 6)
 				{
-					if (toCoordinate(current_node_index).x == _size ||
-						toCoordinate(current_node_index).y == 0)
+					if (x_coordinate == _size ||
+						y_coordinate == 0)
 						continue;
 					++neighbor_node_index -= _size;
 				}
 				else if (direction == 7)
 				{
-					if (toCoordinate(current_node_index).x == _size ||
-						toCoordinate(current_node_index).y == _size)
+					if (x_coordinate == _size ||
+						y_coordinate == _size)
 						continue;
 					++neighbor_node_index += _size;
 				}
