@@ -16,8 +16,8 @@ Graph::Graph(std::initializer_list<sf::Vector2i> node_positions_,
 
 void Graph::connect(sf::Vector2u node_indices_)
 {	
-	auto* node1{_nodes[node_indices_.x].get()};
-	auto* node2{_nodes[node_indices_.y].get()};
+	auto* node1{getNode(node_indices_.x)};
+	auto* node2{getNode(node_indices_.y)};
 
 	sf::Vector2i distance{node1->getPosition() - node2->getPosition()};
 	auto weight{std::hypot(distance.x, distance.y)};
@@ -28,8 +28,8 @@ void Graph::connect(sf::Vector2u node_indices_)
 
 void Graph::disconnect(sf::Vector2u node_indices_)
 {
-	auto* node1{_nodes[node_indices_.x].get()};
-	auto* node2{_nodes[node_indices_.y].get()};
+	auto* node1{getNode(node_indices_.x)};
+	auto* node2{getNode(node_indices_.y)};
 
 	node1->_connections.erase(node2);
 	node2->_connections.erase(node1);
@@ -42,6 +42,6 @@ void Graph::createNode(sf::Vector2f position_)
 
 void Graph::deleteNode(unsigned node_index_)
 {
-	auto* node{_nodes[node_index_].get()};
+	auto* node{getNode(node_index_)};
 	_nodes.erase(std::find_if(begin(_nodes), end(_nodes), [&] (const auto& ptr_) { return ptr_.get() == node; }));
 }
