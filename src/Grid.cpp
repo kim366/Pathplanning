@@ -53,12 +53,12 @@ Grid::Grid(unsigned size_, bool eight_connected_)
 	}
 }
 
-Grid::toIndex(sf::Vector2u coordinate_)
+unsigned Grid::toIndex(sf::Vector2u coordinate_)
 {
 	return _size * coordinate_.y + coordinate_.x;
 }
 
-Grid::toCoordinate(unsigned index_)
+sf::Vector2u Grid::toCoordinate(unsigned index_)
 {
 
 }

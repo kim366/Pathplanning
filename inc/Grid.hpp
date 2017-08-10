@@ -9,8 +9,8 @@ public:
 					Grid(unsigned size_, bool eight_connected_ = false);
 
 private:
-					toIndex(sf::Vector2u coordinate_);
-					toCoordinate(unsigned index_);
+	unsigned		toIndex(sf::Vector2u coordinate_);
+	sf::Vector2u	toCoordinate(unsigned index_);
 
 private:
 	sf::Vector2u 	_size;
