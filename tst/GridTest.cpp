@@ -6,9 +6,9 @@ TEST_CASE("Four-connected graphs")
 {
 	Grid grid{5};
 
-	Node* node_0_0{grid.getNode(0)};
-	Node* node_1_2{grid.getNode(7)};
-	Node* node_0_2{grid.getNode(2)};
+	const Node* node_0_0{grid.getNode(0)};
+	const Node* node_1_2{grid.getNode(7)};
+	const Node* node_0_2{grid.getNode(2)};
 
 	SECTION("The nodes have the correct amount of connections")
 	{
@@ -34,9 +34,9 @@ SCENARIO("Eight-connected graphs")
 {
 	Grid grid{5, true};
 
-	Node* node_0_0{grid.getNode(0)};
-	Node* node_1_2{grid.getNode(7)};
-	Node* node_0_2{grid.getNode(2)};
+	const Node* node_0_0{grid.getNode(0)};
+	const Node* node_1_2{grid.getNode(7)};
+	const Node* node_0_2{grid.getNode(2)};
 
 	// for (auto i{0u}; i < 25; ++i)
 	// 	std::cout << i << ":\t" << grid.getNode(i) << '\n'; 

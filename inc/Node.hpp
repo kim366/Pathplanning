@@ -17,7 +17,7 @@ public:
 	
 	const float			getWeight(const Node* to_) const;
 	const auto&			getPosition() const { return _position; }
-	std::vector<Node*>	expand();
+	std::vector<Node*>	expand() const;
 
 private:
 	std::unordered_map<Node*, float>
