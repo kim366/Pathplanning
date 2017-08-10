@@ -7,21 +7,21 @@
 Grid::Grid(unsigned size_, bool eight_connected_)
 	: _size(size_)
 {
-	_nodes.reserve(std::pow(size_, 2));
+	_nodes.reserve(std::pow(_size, 2));
 
 	float total_size{Gui::cst::Window::size - 2 * Gui::cst::Graph::node_radius};
 	
-	for (auto y_coordinate{0u}; y_coordinate < size_; ++y_coordinate)
+	for (auto y_coordinate{0u}; y_coordinate < _size; ++y_coordinate)
 	{
-		for (auto x_coordinate{0u}; x_coordinate < size_; ++x_coordinate)
+		for (auto x_coordinate{0u}; x_coordinate < _size; ++x_coordinate)
 		{
-			createNode({(x_coordinate / size_) * total_size, (y_coordinate / size_) * total_size});
+			createNode({(x_coordinate / _size) * total_size, (y_coordinate / _size) * total_size});
 		}
 	}
 
-	for (auto y_coordinate{0u}; y_coordinate < size_; ++y_coordinate)
+	for (auto y_coordinate{0u}; y_coordinate < _size; ++y_coordinate)
 	{
-		for (auto x_coordinate{0u}; x_coordinate < size_; ++x_coordinate)
+		for (auto x_coordinate{0u}; x_coordinate < _size; ++x_coordinate)
 		{
 			unsigned current_node_index{toIndex({x_coordinate, y_coordinate})};
 
@@ -30,24 +30,62 @@ Grid::Grid(unsigned size_, bool eight_connected_)
 				unsigned neighbor_node_index{current_node_index};
 
 				if (direction == 0)
-					neighbor_node_index -= size_;
+				{
+					if (toCoordinate(current_node_index).y == 0)
+						continue;
+					neighbor_node_index -= _size;
+				}
 				else if (direction == 1)
+				{
+					if (toCoordinate(current_node_index).x == _size)
+						continue;
 					++neighbor_node_index;
+				}
 				else if (direction == 2)
-					neighbor_node_index += size_;
+				{
+					if (toCoordinate(current_node_index).y == _size)
+						continue;
+					neighbor_node_index += _size;
+				}
 				else if (direction == 3)
+				{
+					if (toCoordinate(current_node_index).x == 0)
+						continue;
 					--neighbor_node_index;
+				}
 				else if (direction == 4)
-					--neighbor_node_index -= size_;
+				{
+					if (toCoordinate(current_node_index).x == 0 ||
+						toCoordinate(current_node_index).y == 0)
+						continue;
+					--neighbor_node_index -= _size;
+				}
 				else if (direction == 5)
-					--neighbor_node_index += size_;
+				{
+					if (toCoordinate(current_node_index).x == 0 ||
+						toCoordinate(current_node_index).y == _size)
+						continue;
+					--neighbor_node_index += _size;
+				}
 				else if (direction == 6)
-					++neighbor_node_index -= size_;
+				{
+					if (toCoordinate(current_node_index).x == _size ||
+						toCoordinate(current_node_index).y == 0)
+						continue;
+					++neighbor_node_index -= _size;
+				}
 				else if (direction == 7)
-					++neighbor_node_index += size_;
+				{
+					if (toCoordinate(current_node_index).x == _size ||
+						toCoordinate(current_node_index).y == _size)
+						continue;
+					++neighbor_node_index += _size;
+				}
 
-				if (neighbor_node_index >= 0 && neighbor_node_index < _nodes.size())
-					connect({current_node_index, neighbor_node_index});
+				if (neighbor_node_index < 0 || neighbor_node_index >= _nodes.size())
+					continue;
+
+				connect({current_node_index, neighbor_node_index});
 			}
 		}
 	}

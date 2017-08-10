@@ -60,7 +60,6 @@ SCENARIO("Eight-connected graphs can be generated correctly")
 		{
 				auto node_0_2_successors{node_0_2->expand()};
 				REQUIRE(std::find(begin(node_0_2_successors), end(node_0_2_successors), node_1_2) != end(node_0_2_successors));
-				REQUIRE(std::find(begin(node_0_2_successors), end(node_0_2_successors), node_0_0) != end(node_0_2_successors));
 
 				auto node_1_2_successors{node_1_2->expand()};
 				REQUIRE(std::find(begin(node_1_2_successors), end(node_1_2_successors), node_0_2) != end(node_1_2_successors));

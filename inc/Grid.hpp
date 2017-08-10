@@ -11,10 +11,7 @@ public:
 	sf::Vector2u	toCoordinate(int index_);
 
 private:
-	bool			isOnEdge(unsigned index_, int direction_);
-
-private:
-	unsigned	 	_size;
+	const unsigned	_size;
 };
 
 #endif // GRID_HPP
