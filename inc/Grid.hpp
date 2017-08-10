@@ -6,7 +6,7 @@
 class Grid : public Graph
 {
 public:
-	Grid(unsigned size_);
+	Grid(unsigned size_, bool eight_connected = false);
 
 private:
 	

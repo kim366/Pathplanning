@@ -4,7 +4,7 @@
 #include <Consts.hpp>
 #include <Gui/Consts.hpp>
 
-Grid::Grid(unsigned size_)
+Grid::Grid(unsigned size_, bool eight_connected)
 {
 	_nodes.reserve(std::pow(size_, 2));
 
@@ -24,7 +24,7 @@ Grid::Grid(unsigned size_)
 		{
 			unsigned current_node_index{size_ * x_coordinate + y_coordinate};
 
-			for (auto direction{0u}; direction < 4; ++direction)
+			for (auto direction{0u}; direction < (eight_connected ? 8 : 4); ++direction)
 			{
 				unsigned neighbor_node_index{current_node_index};
 
@@ -36,6 +36,14 @@ Grid::Grid(unsigned size_)
 					neighbor_node_index += size_;
 				else if (direction == 3)
 					--neighbor_node_index;
+				else if (direction == 4)
+					--neighbor_node_index -= size_;
+				else if (direction == 5)
+					--neighbor_node_index += size_;
+				else if (direction == 6)
+					++neighbor_node_index -= size_;
+				else if (direction == 7)
+					++neighbor_node_index += size_;
 
 				if (neighbor_node_index >= 0 && neighbor_node_index < _nodes.size())
 				connect({current_node_index, neighbor_node_index});
