@@ -4,7 +4,8 @@
 #include <Consts.hpp>
 #include <Gui/Consts.hpp>
 
-Grid::Grid(unsigned size_, bool eight_connected)
+Grid::Grid(unsigned size_, bool eight_connected_)
+	: _size(size_)
 {
 	_nodes.reserve(std::pow(size_, 2));
 
@@ -22,9 +23,9 @@ Grid::Grid(unsigned size_, bool eight_connected)
 	{
 		for (auto x_coordinate{0u}; x_coordinate < size_; ++x_coordinate)
 		{
-			unsigned current_node_index{size_ * x_coordinate + y_coordinate};
+			unsigned current_node_index{toIndex({x_coordinate, y_coordinate})};
 
-			for (auto direction{0u}; direction < (eight_connected ? 8 : 4); ++direction)
+			for (auto direction{0u}; direction < (eight_connected_ ? 8 : 4); ++direction)
 			{
 				unsigned neighbor_node_index{current_node_index};
 
@@ -46,8 +47,18 @@ Grid::Grid(unsigned size_, bool eight_connected)
 					++neighbor_node_index += size_;
 
 				if (neighbor_node_index >= 0 && neighbor_node_index < _nodes.size())
-				connect({current_node_index, neighbor_node_index});
+					connect({current_node_index, neighbor_node_index});
 			}
 		}
 	}
+}
+
+Grid::toIndex(sf::Vector2u coordinate_)
+{
+	return _size * coordinate_.y + coordinate_.x;
+}
+
+Grid::toCoordinate(unsigned index_)
+{
+
 }
