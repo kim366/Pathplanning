@@ -37,13 +37,13 @@ Grid::Grid(unsigned size_, bool eight_connected_)
 				}
 				else if (direction == 1)
 				{
-					if (x_coordinate == _size)
+					if (x_coordinate == _size - 1)
 						continue;
 					++neighbor_node_index;
 				}
 				else if (direction == 2)
 				{
-					if (y_coordinate == _size)
+					if (y_coordinate == _size - 1)
 						continue;
 					neighbor_node_index += _size;
 				}
@@ -63,21 +63,21 @@ Grid::Grid(unsigned size_, bool eight_connected_)
 				else if (direction == 5)
 				{
 					if (x_coordinate == 0 ||
-						y_coordinate == _size)
+						y_coordinate == _size - 1)
 						continue;
 					--neighbor_node_index += _size;
 				}
 				else if (direction == 6)
 				{
-					if (x_coordinate == _size ||
+					if (x_coordinate == _size - 1 ||
 						y_coordinate == 0)
 						continue;
 					++neighbor_node_index -= _size;
 				}
 				else if (direction == 7)
 				{
-					if (x_coordinate == _size ||
-						y_coordinate == _size)
+					if (x_coordinate == _size - 1 ||
+						y_coordinate == _size - 1)
 						continue;
 					++neighbor_node_index += _size;
 				}
