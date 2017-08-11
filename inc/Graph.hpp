@@ -6,8 +6,9 @@
 #include <initializer_list>
 #include <optional>
 #include <Node.hpp>
+#include <Gui/Entity.hpp>
 
-class Graph
+class Graph : public Gui::Entity
 {
 public:
 				Graph() {}
@@ -21,6 +22,10 @@ public:
 	void 		disconnect(sf::Vector2u node_indices_);
 
 	auto* 		getNode(unsigned node_index_) { return _nodes[node_index_].get(); }
+
+protected:
+	void 		draw(sf::RenderTarget& target_, sf::RenderStates states_) const override;
+	void		update(float delta_time_, const Gui::Inputs& inputs_) override;
 
 protected:
 	std::vector<std::unique_ptr<Node>>

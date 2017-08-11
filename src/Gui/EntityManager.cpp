@@ -9,7 +9,7 @@ void Gui::EntityManager::updateEntities(float delta_time_, const Inputs& inputs_
 
 void Gui::EntityManager::drawEntities(std::unique_ptr<sf::RenderWindow>& window_)
 {
-	window_->clear();
+	window_->clear(sf::Color::White);
 	for (auto& entity : _entities)
 		window_->draw(*entity);
 	window_->display();

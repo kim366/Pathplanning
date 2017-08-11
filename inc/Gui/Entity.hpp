@@ -2,6 +2,7 @@
 #define GUI_ENTITY_HPP
 
 #include <SFML/Graphics/Drawable.hpp>
+#include <SFML/Graphics/RenderTarget.hpp>
 #include <Gui/Inputs.hpp>
 
 class EntityManager;
@@ -13,6 +14,7 @@ class Entity : sf::Drawable
 {
 	friend class EntityManager;
 
+protected:
 	virtual void update(float delta_time_, const Inputs& inputs_) = 0;
 
 public:

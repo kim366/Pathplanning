@@ -1,12 +1,13 @@
 #include <Gui/Core.hpp>
-#include <Gui/TestEntity.hpp>
+#include <Graph.hpp>
+#include <Grid.hpp>
 
 namespace Gui
 {
 
 Core::Core()
 {
-	_entity_manager->addEntity(std::make_unique<TestEntity>());
+	_entity_manager->addEntity(std::unique_ptr<Grid>{new Grid{5}});
 	_window->setFramerateLimit(10);
 }
 
