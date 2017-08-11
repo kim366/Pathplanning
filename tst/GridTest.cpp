@@ -9,11 +9,14 @@ TEST_CASE("Four-connected graphs")
 	const Node* node_0_0{grid.getNode(grid.toIndex({0, 0}))};
 	const Node* node_1_2{grid.getNode(grid.toIndex({1, 2}))};
 	const Node* node_0_2{grid.getNode(grid.toIndex({0, 2}))};
+	const Node* node_4_4{grid.getNode(grid.toIndex({4, 4}))};
 
 	SECTION("The nodes have the correct amount of connections")
 	{
 		REQUIRE(node_0_0->expand().size() == 2);
 		REQUIRE(node_1_2->expand().size() == 4);
+		REQUIRE(node_0_2->expand().size() == 3);
+		REQUIRE(node_4_4->expand().size() == 2);
 	}
 
 	SECTION("The correct nodes are connected")
@@ -37,12 +40,15 @@ SCENARIO("Eight-connected graphs")
 	const Node* node_0_0{grid.getNode(grid.toIndex({0, 0}))};
 	const Node* node_1_2{grid.getNode(grid.toIndex({1, 2}))};
 	const Node* node_0_2{grid.getNode(grid.toIndex({0, 2}))};
-	
+	const Node* node_4_4{grid.getNode(grid.toIndex({4, 4}))};
+
 	SECTION("The nodes have the correct amount of connections")
 	{
 		REQUIRE(node_0_0->expand().size() == 3);
 		REQUIRE(node_1_2->expand().size() == 8);
 		REQUIRE(node_0_2->expand().size() == 5);
+		REQUIRE(node_4_4->expand().size() == 3);
+
 	}
 
 	SECTION("The correct nodes are connected")
