@@ -13,22 +13,22 @@ TEST_CASE("Four-connected graphs")
 
 	SECTION("The nodes have the correct amount of connections")
 	{
-		REQUIRE(node_0_0->expand().size() == 2);
-		REQUIRE(node_1_2->expand().size() == 4);
-		REQUIRE(node_0_2->expand().size() == 3);
-		REQUIRE(node_4_4->expand().size() == 2);
+		CHECK(node_0_0->expand().size() == 2);
+		CHECK(node_1_2->expand().size() == 4);
+		CHECK(node_0_2->expand().size() == 3);
+		CHECK(node_4_4->expand().size() == 2);
 	}
 
 	SECTION("The correct nodes are connected")
 	{
 		{
 			auto successors{node_0_2->expand()};
-			REQUIRE(std::find(begin(successors), end(successors), node_1_2) != end(successors));
+			CHECK(std::find(begin(successors), end(successors), node_1_2) != end(successors));
 		}
 
 		{
 			auto successors{node_1_2->expand()};
-			REQUIRE(std::find(begin(successors), end(successors), node_0_2) != end(successors));
+			CHECK(std::find(begin(successors), end(successors), node_0_2) != end(successors));
 		}
 	}
 }
@@ -44,20 +44,20 @@ SCENARIO("Eight-connected graphs")
 
 	SECTION("The nodes have the correct amount of connections")
 	{
-		REQUIRE(node_0_0->expand().size() == 3);
-		REQUIRE(node_1_2->expand().size() == 8);
-		REQUIRE(node_0_2->expand().size() == 5);
-		REQUIRE(node_4_4->expand().size() == 3);
+		CHECK(node_0_0->expand().size() == 3);
+		CHECK(node_1_2->expand().size() == 8);
+		CHECK(node_0_2->expand().size() == 5);
+		CHECK(node_4_4->expand().size() == 3);
 
 	}
 
 	SECTION("The correct nodes are connected")
 	{
 			auto node_0_2_successors{node_0_2->expand()};
-			REQUIRE(std::find(begin(node_0_2_successors), end(node_0_2_successors), node_1_2) != end(node_0_2_successors));
+			CHECK(std::find(begin(node_0_2_successors), end(node_0_2_successors), node_1_2) != end(node_0_2_successors));
 
 			auto node_1_2_successors{node_1_2->expand()};
-			REQUIRE(std::find(begin(node_1_2_successors), end(node_1_2_successors), node_0_2) != end(node_1_2_successors));
+			CHECK(std::find(begin(node_1_2_successors), end(node_1_2_successors), node_0_2) != end(node_1_2_successors));
 	}
 }
 
