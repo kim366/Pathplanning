@@ -9,20 +9,22 @@ Grid::Grid(unsigned size_, bool eight_connected_)
 {
 	_nodes.reserve(std::pow(_size, 2));
 
-	float total_size{Gui::cst::Window::size - 2 * Gui::cst::Graph::node_radius};
+	auto total_size{Gui::cst::Window::size - 2 * Gui::cst::Graph::node_radius};
 	
 	for (auto y_coordinate{0u}; y_coordinate < _size; ++y_coordinate)
 	{
 		for (auto x_coordinate{0u}; x_coordinate < _size; ++x_coordinate)
 		{
-			createNode({(x_coordinate / _size) * total_size, (y_coordinate / _size) * total_size});
+			float x_window_coordinate{(static_cast<float>(x_coordinate) / (_size - 1)) * total_size + Gui::cst::Graph::node_radius};
+			float y_window_coordinate{(static_cast<float>(y_coordinate) / (_size - 1)) * total_size + Gui::cst::Graph::node_radius};
+			createNode({x_window_coordinate, y_window_coordinate});
 		}
 	}
 
 	for (auto y_coordinate{0u}; y_coordinate < _size; ++y_coordinate)
 	{
 		for (auto x_coordinate{0u}; x_coordinate < _size; ++x_coordinate)
-		{
+		{	
 			unsigned current_node_index{toIndex({x_coordinate, y_coordinate})};
 
 			for (auto direction{0u}; direction < (eight_connected_ ? 8 : 4); ++direction)
