@@ -21,15 +21,13 @@ TEST_CASE("Four-connected graphs")
 
 	SECTION("The correct nodes are connected")
 	{
-		{
-			auto successors{node_0_2->expand()};
-			CHECK(std::find(begin(successors), end(successors), node_1_2) != end(successors));
-		}
+		auto node_0_2_successors{node_0_2->expand()};
+		CHECK(std::find(begin(node_0_2_successors), 
+			end(node_0_2_successors), node_1_2) != end(node_0_2_successors));
 
-		{
-			auto successors{node_1_2->expand()};
-			CHECK(std::find(begin(successors), end(successors), node_0_2) != end(successors));
-		}
+		auto node_1_2_successors{node_1_2->expand()};
+		CHECK(std::find(begin(node_1_2_successors),
+			end(node_1_2_successors), node_0_2) != end(node_1_2_successors));
 	}
 }
 
@@ -53,11 +51,13 @@ SCENARIO("Eight-connected graphs")
 
 	SECTION("The correct nodes are connected")
 	{
-			auto node_0_2_successors{node_0_2->expand()};
-			CHECK(std::find(begin(node_0_2_successors), end(node_0_2_successors), node_1_2) != end(node_0_2_successors));
+		auto node_0_2_successors{node_0_2->expand()};
+		CHECK(std::find(begin(node_0_2_successors), 
+			end(node_0_2_successors), node_1_2) != end(node_0_2_successors));
 
-			auto node_1_2_successors{node_1_2->expand()};
-			CHECK(std::find(begin(node_1_2_successors), end(node_1_2_successors), node_0_2) != end(node_1_2_successors));
+		auto node_1_2_successors{node_1_2->expand()};
+		CHECK(std::find(begin(node_1_2_successors),
+			end(node_1_2_successors), node_0_2) != end(node_1_2_successors));
 	}
 }
 
