@@ -7,7 +7,10 @@ namespace Gui
 
 Core::Core()
 {
-	_entity_manager->addEntity(std::unique_ptr<Grid>{new Grid{5}});
+	auto grid{std::make_unique<Grid>(5, true)};
+	grid->disconnect({2, 3});
+	grid->disconnect({grid->toIndex({2,0}), grid->toIndex({3,1})});
+	_entity_manager->addEntity(std::move(grid));
 	_window->setFramerateLimit(10);
 }
 

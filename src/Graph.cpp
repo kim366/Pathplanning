@@ -18,24 +18,28 @@ Graph::Graph(std::initializer_list<sf::Vector2i> node_positions_,
 
 
 void Graph::connect(sf::Vector2u node_indices_)
-{	
-	auto* node1{getNode(node_indices_.x)};
-	auto* node2{getNode(node_indices_.y)};
-
-	sf::Vector2i distance{node1->getPosition() - node2->getPosition()};
-	auto weight{std::hypot(distance.x, distance.y)};
-
-	node1->_connections[node2] = weight;
-	node2->_connections[node1] = weight;		
+{
+	connect(getNode(node_indices_.x), getNode(node_indices_.y));
 }
 
 void Graph::disconnect(sf::Vector2u node_indices_)
 {
-	auto* node1{getNode(node_indices_.x)};
-	auto* node2{getNode(node_indices_.y)};
+	disconnect(getNode(node_indices_.x), getNode(node_indices_.y));
+}
 
-	node1->_connections.erase(node2);
-	node2->_connections.erase(node1);
+void Graph::connect(Node* node1_, Node* node2_)
+{
+	sf::Vector2i distance{node1_->getPosition() - node2_->getPosition()};
+	auto weight{std::hypot(distance.x, distance.y)};
+
+	node1_->_connections[node2_] = weight;
+	node2_->_connections[node1_] = weight;
+}
+
+void Graph::disconnect(Node* node1_, Node* node2_)
+{
+	node1_->_connections.erase(node2_);
+	node2_->_connections.erase(node1_);
 }
 
 void Graph::createNode(sf::Vector2f position_)
@@ -75,7 +79,10 @@ void Graph::draw(sf::RenderTarget& target_, sf::RenderStates states_) const
 		sf::CircleShape visualized_node{Gui::cst::Graph::node_radius};
 		visualized_node.setOrigin(Gui::cst::Graph::node_radius, Gui::cst::Graph::node_radius);
 		visualized_node.setPosition(node->getPosition());
-		visualized_node.setFillColor({173, 72, 87});
+		if (_selected_node && node.get() == _selected_node)
+			visualized_node.setFillColor(sf::Color::Blue);
+		else
+			visualized_node.setFillColor({173, 72, 87});
 
 		target_.draw(visualized_node);
 	}
@@ -83,4 +90,30 @@ void Graph::draw(sf::RenderTarget& target_, sf::RenderStates states_) const
 
 void Graph::update(float delta_time_, const Gui::Inputs& inputs_)
 {
+	if (inputs_.event.clicked(sf::Mouse::Left))
+	{
+		auto found{std::find_if(begin(_nodes), end(_nodes), [=] (auto& node_)
+		{
+			sf::Vector2f distance{static_cast<sf::Vector2f>(inputs_.cursor_position) - node_->getPosition()};
+			return std::hypot(distance.x, distance.y) <= Gui::cst::Graph::node_radius;
+		})};
+
+		if (found != end(_nodes))
+		{
+			if (!_selected_node)
+				_selected_node = found->get();
+			else
+			{
+				if (!std::isinf((*found)->getWeight(*_selected_node)))
+					disconnect(found->get(), *_selected_node);
+				else if (_selected_node != found->get())
+					connect(found->get(), *_selected_node);
+
+				_selected_node.reset();
+			}
+		}
+		else
+			_selected_node.reset();
+	}
+	
 }
