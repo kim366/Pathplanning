@@ -8,7 +8,7 @@ OBJ_TST := $(patsubst %.cpp, obj/%.o, $(TST))
 GUI := $(call rwildcard, gui/, *.cpp)
 OBJ_GUI := $(patsubst %.cpp, obj/%.o, $(GUI))
 
-SFML_LIB := -lsfml-graphics -lsfml-window -lsfml-system
+SFML_LIB := -lsfml-graphics-d -lsfml-window-d -lsfml-system-d
 
 .PHONY: all
 
