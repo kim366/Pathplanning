@@ -1,4 +1,3 @@
-#include <iostream>
 #include <Gui/AStarVisualizer.hpp>
 #include <Graph.hpp>
 
@@ -31,8 +30,6 @@ void AStarVisualizer::update(float delta_time_, const Inputs& inputs_)
 		if (_result.first)
 			for (auto& node_on_path : *_result.first)
 				const_cast<Node*>(node_on_path)->status = Node::OnPath;
-
-		std::cout << _result.first->size() << ", " << _result.second.size() << '\n';
 	}
 	
 }
