@@ -28,7 +28,7 @@ namespace Graph
 {
 
 const auto 			node_radius{10.f};
-const auto 			edge_width{.901 * node_radius};
+const auto 			edge_width{.901f * node_radius};
 
 } // namespace Graph
 
