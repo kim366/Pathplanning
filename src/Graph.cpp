@@ -78,10 +78,15 @@ void Graph::draw(sf::RenderTarget& target_, sf::RenderStates states_) const
 	{
 		sf::CircleShape visualized_node{Gui::cst::Graph::node_radius};
 		visualized_node.setOrigin(Gui::cst::Graph::node_radius, Gui::cst::Graph::node_radius);
-		visualized_node.setPosition(node->getPosition());
+		visualized_node.setPosition(node->getPosition());a
+		
 		if (_selected_node && node.get() == _selected_node)
-			visualized_node.setFillColor(sf::Color::Blue);
-		else if (node->status == Node::OnPath)
+		{
+			visualized_node.setOutlineThickness(-4.f);
+			visualized_node.setOutlineColor(sf::Color::Blue);
+		}
+
+		if (node->status == Node::OnPath)
 			visualized_node.setFillColor(sf::Color::Magenta);
 		else if (node->status == Node::Expanded)
 			visualized_node.setFillColor(sf::Color::Green);
