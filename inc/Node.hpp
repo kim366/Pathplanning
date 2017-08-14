@@ -29,6 +29,12 @@ public:
 	int					tag;
 	const Node*			parent{nullptr};
 	float				value{0.f};	
+	enum Status
+	{
+		Standard,
+		OnPath,
+		Expanded
+	}					status;
 };
 
 #endif // NODE_HPP

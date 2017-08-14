@@ -1,11 +1,22 @@
 #include <algorithm>
+#include <Graph.hpp>
 
 template<typename H>
 std::pair<std::optional<std::vector<const Node*>>, std::set<const Node*>>
-	AStarPathplanner<H>::operator()(const Node* start_, const Node* end_)
+	AStarPathplanner<H>::operator()(Graph& graph_, const Node* start_, const Node* end_)
 {
 	_start = start_;
 	_end = end_;
+
+	for (auto& node : graph_)
+	{
+		node->tag = New;
+		node->parent = nullptr;
+		node->value = 0.f;
+	}
+ 
+	while (!_open.empty())
+		_open.pop();
 
 	std::set<const Node*> examined_nodes;
 

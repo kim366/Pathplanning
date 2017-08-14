@@ -50,7 +50,7 @@ void Graph::createNode(sf::Vector2f position_)
 void Graph::deleteNode(unsigned node_index_)
 {
 	auto* node{getNode(node_index_)};
-	_nodes.erase(std::find_if(begin(_nodes), end(_nodes), [&] (const auto& ptr_) { return ptr_.get() == node; }));
+	_nodes.erase(std::find_if(_nodes.begin(), _nodes.end(), [&] (const auto& ptr_) { return ptr_.get() == node; }));
 }
 
 void Graph::draw(sf::RenderTarget& target_, sf::RenderStates states_) const
@@ -81,6 +81,10 @@ void Graph::draw(sf::RenderTarget& target_, sf::RenderStates states_) const
 		visualized_node.setPosition(node->getPosition());
 		if (_selected_node && node.get() == _selected_node)
 			visualized_node.setFillColor(sf::Color::Blue);
+		else if (node->status == Node::OnPath)
+			visualized_node.setFillColor(sf::Color::Magenta);
+		else if (node->status == Node::Expanded)
+			visualized_node.setFillColor(sf::Color::Green);
 		else
 			visualized_node.setFillColor({173, 72, 87});
 
@@ -92,13 +96,13 @@ void Graph::update(float delta_time_, const Gui::Inputs& inputs_)
 {
 	if (inputs_.event.clicked(sf::Mouse::Left))
 	{
-		auto found{std::find_if(begin(_nodes), end(_nodes), [=] (auto& node_)
+		auto found{std::find_if(_nodes.begin(), _nodes.end(), [=] (auto& node_)
 		{
 			sf::Vector2f distance{static_cast<sf::Vector2f>(inputs_.cursor_position) - node_->getPosition()};
 			return std::hypot(distance.x, distance.y) <= Gui::cst::Graph::node_radius;
 		})};
 
-		if (found != end(_nodes))
+		if (found != _nodes.end())
 		{
 			if (!_selected_node)
 				_selected_node = found->get();

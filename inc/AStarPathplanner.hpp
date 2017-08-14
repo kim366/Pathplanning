@@ -8,7 +8,7 @@ class AStarPathplanner : public Pathplanner
 {
 public:
 	std::pair<std::optional<std::vector<const Node*>>, std::set<const Node*>>
-			operator()(const Node* start_, const Node* end_) override;
+			operator()(Graph& graph_, const Node* start_, const Node* end_) override;
 
 private:
 	float	evaluate(const Node* to_evaluate_, const Node* based_on_) const override;

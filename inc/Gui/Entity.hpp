@@ -15,7 +15,8 @@ class Entity : sf::Drawable
 	friend class EntityManager;
 
 protected:
-	virtual void update(float delta_time_, const Inputs& inputs_) = 0;
+	void 			draw(sf::RenderTarget& target_, sf::RenderStates states_) const override;	
+	virtual void 	update(float delta_time_, const Inputs& inputs_) = 0;
 
 public:
 	~Entity() = 0;

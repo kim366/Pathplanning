@@ -26,6 +26,9 @@ public:
 
 	auto* 		getNode(unsigned node_index_) { return _nodes[node_index_].get(); }
 
+	auto 		begin() { return _nodes.begin(); }
+	auto		end() { return _nodes.end(); }
+
 protected:
 	void 		draw(sf::RenderTarget& target_, sf::RenderStates states_) const override;
 	void		update(float delta_time_, const Gui::Inputs& inputs_) override;

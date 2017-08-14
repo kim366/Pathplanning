@@ -1,6 +1,7 @@
 #include <Gui/Core.hpp>
 #include <Graph.hpp>
 #include <Grid.hpp>
+#include <Gui/AStarVisualizer.hpp>
 
 namespace Gui
 {
@@ -8,9 +9,9 @@ namespace Gui
 Core::Core()
 {
 	auto grid{std::make_unique<Grid>(5, true)};
-	grid->disconnect({2, 3});
-	grid->disconnect({grid->toIndex({2,0}), grid->toIndex({3,1})});
+	auto astar_visualizer{std::make_unique<AStarVisualizer>(*grid, grid->getNode(grid->toIndex({0, 4})), grid->getNode(grid->toIndex({4, 0})))};
 	_entity_manager->addEntity(std::move(grid));
+	_entity_manager->addEntity(std::move(astar_visualizer));
 	_window->setFramerateLimit(10);
 }
 
