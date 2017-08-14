@@ -49,11 +49,14 @@ std::pair<std::optional<std::vector<const Node*>>, std::set<const Node*>>
 
 		for (auto* successor : successors)
 		{
-			float new_value{evaluate(successor, current)};
-			if ((successor->tag == New) != (new_value < successor->value))
+			auto new_value{evaluate(successor, current)};
+			float combined_value{new_value.first + new_value.second};
+			if ((successor->tag == New) != (combined_value < successor->value))
 			{
 				successor->parent = current;
-				successor->value = new_value;
+				successor->to_start_value = new_value.first;
+				successor->heuristic_value = new_value.second;
+				successor->value = combined_value;
 				
 				if (successor->tag != Open)
 				{
@@ -68,9 +71,9 @@ std::pair<std::optional<std::vector<const Node*>>, std::set<const Node*>>
 }
 
 template<typename H>
-float AStarPathplanner<H>::evaluate(const Node* to_evaluate_, const Node* based_on_) const
+std::pair<float, float> AStarPathplanner<H>::evaluate(const Node* to_evaluate_, const Node* based_on_) const
 {
-	float to_start_value{based_on_->value + cost(to_evaluate_, based_on_)};
+	float to_start_value{based_on_->to_start_value + cost(to_evaluate_, based_on_)};
 	float heuristic_value{_heuristic(to_evaluate_)};
-	return to_start_value + heuristic_value;
+	return {to_start_value, heuristic_value};
 }

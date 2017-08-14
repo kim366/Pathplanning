@@ -29,6 +29,8 @@ public:
 	int					tag;
 	const Node*			parent{nullptr};
 	float				value{0.f};	
+	float				heuristic_value{0.f};
+	float				to_start_value{0.f};
 	enum Status
 	{
 		Standard,

@@ -11,7 +11,8 @@ public:
 			operator()(Graph& graph_, const Node* start_, const Node* end_) override;
 
 private:
-	float	evaluate(const Node* to_evaluate_, const Node* based_on_) const override;
+	std::pair<float, float>
+			evaluate(const Node* to_evaluate_, const Node* based_on_) const override;
 	H 		_heuristic{_end};
 };
 
