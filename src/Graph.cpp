@@ -78,7 +78,7 @@ void Graph::draw(sf::RenderTarget& target_, sf::RenderStates states_) const
 	{
 		sf::CircleShape visualized_node{Gui::cst::Graph::node_radius};
 		visualized_node.setOrigin(Gui::cst::Graph::node_radius, Gui::cst::Graph::node_radius);
-		visualized_node.setPosition(node->getPosition());a
+		visualized_node.setPosition(node->getPosition());
 		
 		if (_selected_node && node.get() == _selected_node)
 		{
