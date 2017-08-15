@@ -55,23 +55,52 @@ void Graph::deleteNode(unsigned node_index_)
 
 void Graph::draw(sf::RenderTarget& target_, sf::RenderStates states_) const
 {
+	using std::begin;
+	using std::end;
+
+	auto visualize_edge{[=] (const auto& node1_, const auto& node2_, sf::Color color_) -> sf::RectangleShape
+	{
+		sf::Vector2f distance{node2_->getPosition() - node1_->getPosition()};
+		sf::RectangleShape visualized_edge{{std::hypot(distance.x, distance.y), Gui::cst::Graph::edge_width}};
+		visualized_edge.setOrigin(0, Gui::cst::Graph::edge_width / 2);
+		visualized_edge.setPosition(node1_->getPosition());
+		visualized_edge.setFillColor(color_);
+		visualized_edge.setRotation(std::atan(distance.y / distance.x) * 180u / 3.1415926f);
+
+		if (distance.x < 0)
+			visualized_edge.rotate(180);
+
+		return visualized_edge;
+	}};
+
 	for (const auto& node : _nodes)
 	{
 		for (auto& connection : node->getConnections())
+			target_.draw(visualize_edge(node, connection.first, {222, 228, 223}));
+	}
+
+	{
+		bool should_draw_path_edges{true};
+		std::vector<sf::RectangleShape> path_edges;
+
+		for (const auto& node : _nodes)
 		{
-			sf::RectangleShape visualized_edge{{connection.second, Gui::cst::Graph::edge_width}};
-			visualized_edge.setOrigin(0, Gui::cst::Graph::edge_width / 2);
-			visualized_edge.setPosition(node->getPosition());
-			visualized_edge.setFillColor({160, 164, 161});
+			if (node->status == Node::OnPath && node->parent)
+			{
+				if (node->getConnections().find(const_cast<Node*>(node->parent)) != end(node->getConnections()))
+					path_edges.push_back(visualize_edge(node, node->parent, {160, 164, 161}));
+				else
+				{
+					should_draw_path_edges = false;
+					break;
+				}
+			}
 
-			sf::Vector2f distance{connection.first->getPosition() - node->getPosition()};
-			visualized_edge.setRotation(std::atan(distance.y / distance.x) * 180u / 3.1415926f);
-
-			if (distance.x < 0)
-				visualized_edge.rotate(180);
-
-			target_.draw(visualized_edge);
 		}
+		
+		if (should_draw_path_edges)
+			for (auto& path_edge : path_edges)
+				target_.draw(std::move(path_edge));
 	}
 
 	for (const auto& node : _nodes)
@@ -87,9 +116,9 @@ void Graph::draw(sf::RenderTarget& target_, sf::RenderStates states_) const
 		}
 
 		if (node->status == Node::OnPath)
-			visualized_node.setFillColor(sf::Color::Magenta);
-		else if (node->status == Node::Expanded)
 			visualized_node.setFillColor(sf::Color::Green);
+		else if (node->status == Node::Expanded)
+			visualized_node.setFillColor(sf::Color::Magenta);
 		else
 			visualized_node.setFillColor({173, 72, 87});
 
