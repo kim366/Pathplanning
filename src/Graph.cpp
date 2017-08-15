@@ -97,7 +97,7 @@ void Graph::draw(sf::RenderTarget& target_, sf::RenderStates states_) const
 			}
 
 		}
-		
+
 		if (should_draw_path_edges)
 			for (auto& path_edge : path_edges)
 				target_.draw(std::move(path_edge));
@@ -111,14 +111,14 @@ void Graph::draw(sf::RenderTarget& target_, sf::RenderStates states_) const
 		
 		if (_selected_node && node.get() == _selected_node)
 		{
-			visualized_node.setOutlineThickness(-4.f);
-			visualized_node.setOutlineColor(sf::Color::Blue);
+			visualized_node.setOutlineThickness(-2.5f);
+			visualized_node.setOutlineColor(sf::Color{186, 182, 96});
 		}
 
 		if (node->status == Node::OnPath)
-			visualized_node.setFillColor(sf::Color::Green);
+			visualized_node.setFillColor(sf::Color{39, 96, 122});
 		else if (node->status == Node::Expanded)
-			visualized_node.setFillColor(sf::Color::Magenta);
+			visualized_node.setFillColor(sf::Color{91, 201, 249});
 		else
 			visualized_node.setFillColor({173, 72, 87});
 
