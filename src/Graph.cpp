@@ -75,7 +75,7 @@ void Graph::draw(sf::RenderTarget& target_, sf::RenderStates states_) const
 
 	for (const auto& node : _nodes)
 	{
-		for (auto& connection : node->getConnections())
+		for (auto& connection : node->_connections)
 			target_.draw(visualize_edge(node, connection.first, {222, 228, 223}));
 	}
 
@@ -87,7 +87,7 @@ void Graph::draw(sf::RenderTarget& target_, sf::RenderStates states_) const
 		{
 			if (node->status == Node::OnPath && node->parent)
 			{
-				if (node->getConnections().find(const_cast<Node*>(node->parent)) != end(node->getConnections()))
+				if (node->_connections.find(const_cast<Node*>(node->parent)) != end(node->_connections))
 					path_edges.push_back(visualize_edge(node, node->parent, {160, 164, 161}));
 				else
 				{

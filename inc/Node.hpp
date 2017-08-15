@@ -17,7 +17,6 @@ public:
 	
 	const float			getWeight(const Node* to_) const;
 	const auto&			getPosition() const { return _position; }
-	const auto&			getConnections() const { return _connections; }
 	std::vector<Node*>	expand() const;
 
 private:
