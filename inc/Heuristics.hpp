@@ -6,11 +6,11 @@
 class Heuristic
 {
 public:
-					Heuristic(const Node*& end_) : _end(end_) {}
+					Heuristic(const Node*& goal_) : _goal(goal_) {}
 	virtual float 	operator()(const Node* node_) const = 0;
 
 protected:
-	const Node*& 	_end;
+	const Node*& 	_goal;
 };
 
 struct Euclidean : public Heuristic
@@ -19,7 +19,7 @@ struct Euclidean : public Heuristic
 
 	float operator()(const Node* node_) const override
 	{
-		sf::Vector2f distance{_end->getPosition() - node_->getPosition()}; 
+		sf::Vector2f distance{_goal->getPosition() - node_->getPosition()}; 
 		return std::hypot(distance.x, distance.y);
 	}
 };

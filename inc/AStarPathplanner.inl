@@ -3,10 +3,10 @@
 
 template<typename H>
 std::pair<std::optional<std::vector<const Node*>>, std::set<const Node*>>
-	AStarPathplanner<H>::operator()(Graph& graph_, const Node* start_, const Node* end_)
+	AStarPathplanner<H>::operator()(Graph& graph_, const Node* start_, const Node* goal_)
 {
 	_start = start_;
-	_end = end_;
+	_goal = goal_;
 
 	for (auto& node : graph_)
 	{
@@ -29,7 +29,7 @@ std::pair<std::optional<std::vector<const Node*>>, std::set<const Node*>>
 		current->tag = Closed;
 		examined_nodes.insert(current);
 
-		if (current == end_)
+		if (current == goal_)
 		{
 			std::vector<const Node*> found_path;
 			

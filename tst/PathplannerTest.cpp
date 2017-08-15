@@ -42,8 +42,8 @@ SCENARIO("Dijkstra's Algorithm finds the shortest path and expands the correct a
 			}
 		};
 
-		const Node* start_node{graph.getNode(B)};
-		const Node* end_node{graph.getNode(F)};
+		const Node* start{graph.getNode(B)};
+		const Node* goal{graph.getNode(F)};
 
 		DijkstrasPathplanner dijkstra_find_shortest_path;
 		AStarPathplanner<Euclidean> astar_find_shortest_path;
@@ -61,7 +61,7 @@ SCENARIO("Dijkstra's Algorithm finds the shortest path and expands the correct a
 
 		WHEN("Dijkstra's Algorithm attempts to find the shortest Path")
 		{
-			auto result{dijkstra_find_shortest_path(graph, start_node, end_node)};
+			auto result{dijkstra_find_shortest_path(graph, start, goal)};
 
 			THEN("It finds the shortest Path")
 			{
@@ -77,7 +77,7 @@ SCENARIO("Dijkstra's Algorithm finds the shortest path and expands the correct a
 
 		WHEN("A* attempts to find the shortest Path")
 		{
-			auto result{astar_find_shortest_path(graph, start_node, end_node)};
+			auto result{astar_find_shortest_path(graph, start, goal)};
 
 			THEN("It finds the shortest Path")
 			{
@@ -119,8 +119,8 @@ SCENARIO("Dijkstra's Algorithm finds the shortest path and expands the correct a
 			}
 		};
 
-		const Node* start_node{graph.getNode(B)};
-		const Node* end_node{graph.getNode(F)};
+		const Node* start{graph.getNode(B)};
+		const Node* goal{graph.getNode(F)};
 
 		DijkstrasPathplanner dijkstra_find_shortest_path;
 		AStarPathplanner<Euclidean> astar_find_shortest_path;
@@ -135,7 +135,7 @@ SCENARIO("Dijkstra's Algorithm finds the shortest path and expands the correct a
 
 		WHEN("Dijkstra's Algorithm attempts to find the shortest Path")
 		{
-			auto result{dijkstra_find_shortest_path(graph, start_node, end_node)};
+			auto result{dijkstra_find_shortest_path(graph, start, goal)};
 
 			THEN("It terminates unsuccessfully")
 			{
@@ -145,7 +145,7 @@ SCENARIO("Dijkstra's Algorithm finds the shortest path and expands the correct a
 
 		WHEN("A* attempts to find the shortest Path")
 		{
-			auto result{astar_find_shortest_path(graph, start_node, end_node)};
+			auto result{astar_find_shortest_path(graph, start, goal)};
 
 			THEN("It terminates unsuccessfully")
 			{

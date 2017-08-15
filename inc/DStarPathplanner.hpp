@@ -5,7 +5,7 @@ class DStarPathplanner
 {
 public:
 	std::pair<std::optional<std::vector<const Node*>>, std::set<const Node*>>
-			operator()(const Node* start_, const Node* end_) override;
+			operator()(const Node* start_, const Node* goal_) override;
 
 private:
 	float 	processState();
