@@ -11,7 +11,13 @@ public:
 	sf::Vector2u	toCoordinate(int index_);
 
 private:
+	float 			_total_size;
 	const unsigned	_size;
+
+public:
+	const bool		eight_connected;
+	const unsigned	unit;
+	const unsigned	diagonal_unit;
 };
 
 #endif // GRID_HPP

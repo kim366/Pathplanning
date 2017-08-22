@@ -3,12 +3,12 @@
 
 template<typename H>
 std::pair<std::optional<std::vector<const Node*>>, std::set<const Node*>>
-	AStarPathplanner<H>::operator()(Graph& graph_, const Node* start_, const Node* goal_)
+	AStarPathplanner<H>::operator()(const Node* start_, const Node* goal_)
 {
 	_start = start_;
 	_goal = goal_;
 
-	for (auto& node : graph_)
+	for (auto& node : _graph)
 	{
 		node->tag = New;
 		node->parent = nullptr;

@@ -45,8 +45,8 @@ SCENARIO("Dijkstra's Algorithm finds the shortest path and expands the correct a
 		const Node* start{graph.getNode(B)};
 		const Node* goal{graph.getNode(F)};
 
-		DijkstrasPathplanner dijkstra_find_shortest_path;
-		AStarPathplanner<Euclidean> astar_find_shortest_path;
+		DijkstrasPathplanner dijkstra_find_shortest_path{graph};
+		AStarPathplanner<Euclidean> astar_find_shortest_path{graph};
 
 		INFO('A' << graph.getNode(A));
 		INFO('B' << graph.getNode(B));
@@ -61,7 +61,7 @@ SCENARIO("Dijkstra's Algorithm finds the shortest path and expands the correct a
 
 		WHEN("Dijkstra's Algorithm attempts to find the shortest Path")
 		{
-			auto result{dijkstra_find_shortest_path(graph, start, goal)};
+			auto result{dijkstra_find_shortest_path(start, goal)};
 
 			THEN("It finds the shortest Path")
 			{
@@ -77,7 +77,7 @@ SCENARIO("Dijkstra's Algorithm finds the shortest path and expands the correct a
 
 		WHEN("A* attempts to find the shortest Path")
 		{
-			auto result{astar_find_shortest_path(graph, start, goal)};
+			auto result{astar_find_shortest_path(start, goal)};
 
 			THEN("It finds the shortest Path")
 			{
@@ -122,8 +122,8 @@ SCENARIO("Dijkstra's Algorithm finds the shortest path and expands the correct a
 		const Node* start{graph.getNode(B)};
 		const Node* goal{graph.getNode(F)};
 
-		DijkstrasPathplanner dijkstra_find_shortest_path;
-		AStarPathplanner<Euclidean> astar_find_shortest_path;
+		DijkstrasPathplanner dijkstra_find_shortest_path{graph};
+		AStarPathplanner<Euclidean> astar_find_shortest_path{graph};
 
 		INFO('A' << graph.getNode(A));
 		INFO('B' << graph.getNode(B));
@@ -135,7 +135,7 @@ SCENARIO("Dijkstra's Algorithm finds the shortest path and expands the correct a
 
 		WHEN("Dijkstra's Algorithm attempts to find the shortest Path")
 		{
-			auto result{dijkstra_find_shortest_path(graph, start, goal)};
+			auto result{dijkstra_find_shortest_path(start, goal)};
 
 			THEN("It terminates unsuccessfully")
 			{
@@ -145,7 +145,7 @@ SCENARIO("Dijkstra's Algorithm finds the shortest path and expands the correct a
 
 		WHEN("A* attempts to find the shortest Path")
 		{
-			auto result{astar_find_shortest_path(graph, start, goal)};
+			auto result{astar_find_shortest_path(start, goal)};
 
 			THEN("It terminates unsuccessfully")
 			{
@@ -154,3 +154,4 @@ SCENARIO("Dijkstra's Algorithm finds the shortest path and expands the correct a
 		}
 	}
 }
+

@@ -1,16 +1,19 @@
 #ifndef HEURISITICS_HPP
 #define HEURISITICS_HPP
 
+#include <assert.h>
 #include <math.h>
+#include <Grid.hpp>
 
 class Heuristic
 {
 public:
-					Heuristic(const Node*& goal_) : _goal(goal_) {}
+					Heuristic(Graph& graph_, const Node*& goal_) : _goal(goal_), _graph(graph_) {}
 	virtual float 	operator()(const Node* node_) const = 0;
 
 protected:
 	const Node*& 	_goal;
+	const Graph&	_graph;
 };
 
 struct Euclidean : public Heuristic
@@ -31,6 +34,37 @@ struct None : public Heuristic
 	float operator()(const Node* node_) const override
 	{
 		return 0.f;
+	}
+};
+
+struct Manhattan : public Heuristic
+{
+	using Heuristic::Heuristic;
+
+	float operator()(const Node* node_) const override
+	{
+		auto grid{dynamic_cast<const Grid*>(&_graph)};
+		assert(grid);
+
+		sf::Vector2f distance{_goal->getPosition() - node_->getPosition()};
+
+		return grid->unit * (distance.x + distance.y);
+	}
+};
+
+struct Octile : public Heuristic
+{
+	using Heuristic::Heuristic;
+
+	float operator()(const Node* node_) const override
+	{
+		auto grid{dynamic_cast<const Grid*>(&_graph)};
+		assert(grid);
+		assert(grid->eight_connected);
+
+		sf::Vector2f distance{_goal->getPosition() - node_->getPosition()};
+
+		return grid->unit * std::max(distance.x, distance.y) + grid->diagonal_unit * std::min(distance.x, distance.y);
 	}
 };
 

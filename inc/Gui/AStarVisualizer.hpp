@@ -17,13 +17,13 @@ private:
 	virtual void 	update(float delta_time_, const Inputs& inputs_) override;
 
 private:
-	AStarPathplanner<Euclidean>
-					_find_shortest_path;
+	Graph&			_graph;
+	AStarPathplanner<Octile>
+					_find_shortest_path{_graph};
 	std::pair<std::optional<std::vector<const Node*>>, std::set<const Node*>>
 					_result;
 	const Node*		_begin;
 	const Node*		_goal;
-	Graph&			_graph;
 };
 
 } // namespace Gui

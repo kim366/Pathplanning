@@ -12,7 +12,7 @@ class Pathplanner
 {
 public:
 	virtual std::pair<std::optional<std::vector<const Node*>>, std::set<const Node*>>
-					operator()(Graph& graph_, const Node* start_, const Node* goal_) = 0;
+					operator()(const Node* start_, const Node* goal_) = 0;
 	virtual			~Pathplanner() = 0;
 
 protected:
