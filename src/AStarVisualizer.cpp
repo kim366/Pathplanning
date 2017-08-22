@@ -4,9 +4,9 @@
 namespace Gui
 {
 
-AStarVisualizer::AStarVisualizer(Graph& graph_, const Node* begin_, const Node* goal_)
+AStarVisualizer::AStarVisualizer(Graph& graph_, const Node* start_, const Node* goal_)
 	: _graph(graph_)
-	, _begin(begin_)
+	, _start(start_)
 	, _goal(goal_)
 {
 }
@@ -22,7 +22,7 @@ void AStarVisualizer::update(float delta_time_, const Inputs& inputs_)
 			for (auto& node_on_path : *_result.first)
 				const_cast<Node*>(node_on_path)->status = Node::Standard;
 	
-		_result = _find_shortest_path(_begin, _goal);
+		_result = _find_shortest_path(_start, _goal);
 
 		for (auto& expanded_node : _result.second)
 			const_cast<Node*>(expanded_node)->status = Node::Expanded;
