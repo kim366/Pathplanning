@@ -48,6 +48,8 @@ struct Manhattan : public Heuristic
 
 		sf::Vector2f distance{_goal->getPosition() - node_->getPosition()};
 
+		distance = {std::abs(distance.x), std::abs(distance.y)};
+
 		return grid->unit * (distance.x + distance.y);
 	}
 };
@@ -64,7 +66,9 @@ struct Octile : public Heuristic
 
 		sf::Vector2f distance{_goal->getPosition() - node_->getPosition()};
 
-		return grid->unit * std::max(distance.x, distance.y) + grid->diagonal_unit * std::min(distance.x, distance.y);
+		distance = {std::abs(distance.x), std::abs(distance.y)};
+
+		return grid->unit * std::max(distance.x, distance.y) + (grid->diagonal_unit - 1) * std::min(distance.x, distance.y);
 	}
 };
 
