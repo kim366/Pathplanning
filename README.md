@@ -9,13 +9,26 @@ Various Pathplanning Algorithms Derived off Dijkstra's in mulitple situations vi
 [Catch Unit Testing Library](https://github.com/philsquared/Catch)
 
 ## Build Instructions
+For Building cmake and a C++17 compiler is necessary (for example g++ 7.1 or Clang 4). The [MinGW-w64 fork](https://sourceforge.net/projects/mingw-w64) comes with g++ 7.1 and works for building this project.
 
-For Building a C++17 compiler is necessary (for example g++ 7.1 or Clang 4). The [MinGW-w64 fork](https://sourceforge.net/projects/mingw-w64) comes with g++ 7.1 and works for building this project.
+[Download SFML ](https://www.sfml-dev.org/download/sfml/2.4.2/) for your compiler and place it within the project's root directory.
 
-Install SFML as shown in the [Getting Started section](https://www.sfml-dev.org/tutorials/2.1/#getting-started) of the SFML tutorial page.
+```
+md build
+cd build
+cmake ..
+```
 
-On Windows also add the path of the `include` folder into the `CPLUS_INCLUDE_PATH` environment variable and the path to the `lib` folder into the `LIBRARY_PATH` environment variable if using Clang or gcc with MinGW.
+And then invoke the appropriate command for your build system. Which may be `make`, `ninja` or opening the generated Visual Studio project file. A binary named "gui" will be generated.
 
-Download the [Catch Single Include File](https://github.com/philsquared/Catch/blob/master/single_include/catch.hpp) and put the path to the contatining folder into the `CPLUS_INCLUDE_PATH` environment variable (separated by a semicolon). If using Visual Studio, add the file into the project properties.
+Full example using MinGW:
 
-In order to compile the repository simply type `make bld/gui` to build the gui application and `make bld/test` to build the unit tests. If using MinGW, do `mingw32-make` instead of `make`.
+```
+md build
+cd build
+cmake -G "MinGW Makefiles" ..
+mingw32-make
+```
+
+### Build Tests
+To build tests first download the (Catch single include)[https://github.com/philsquared/Catch/blob/master/single_include] and place it as "catch.hpp" into the include folder. Then add `-DBUILD_TESTS=ON` when invoking cmake. The additional "tests" binary will be generated.
