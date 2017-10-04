@@ -4,9 +4,9 @@
 Various Pathplanning Algorithms Derived off Dijkstra's in multiple situations visualized by SFML
 
 ## Dependencies
-[SFML Graphics Library](https://github.com/SFML/SFML)
+* [SFML Graphics Library](https://github.com/SFML/SFML)
 
-[Catch Unit Testing Library](https://github.com/philsquared/Catch)
+* [Catch Unit Testing Library](https://github.com/philsquared/Catch)
 
 ## Build Instructions
 For Building cmake and a C++17 compiler is necessary (for example g++ 7.1 or Clang 4). The [MinGW-w64 fork](https://sourceforge.net/projects/mingw-w64) comes with g++ 7.1 and works for building this project.
