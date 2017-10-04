@@ -31,4 +31,4 @@ mingw32-make
 ```
 
 ### Build Tests
-To build tests first download the (Catch single include)[https://github.com/philsquared/Catch/blob/master/single_include] and place it as "catch.hpp" into the include folder. Then add `-DBUILD_TESTS=ON` when invoking cmake. The additional "tests" binary will be generated.
+To build tests first download the [Catch single include](https://github.com/philsquared/Catch/blob/master/single_include) and place it as "catch.hpp" into the include folder. Then add `-DBUILD_TESTS=ON` when invoking cmake. The additional "tests" binary will be generated.
