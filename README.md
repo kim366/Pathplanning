@@ -5,7 +5,6 @@ Various Pathplanning Algorithms Derived off Dijkstra's in multiple situations vi
 
 ## Dependencies
 * [SFML Graphics Library](https://github.com/SFML/SFML)
-
 * [Catch Unit Testing Library](https://github.com/philsquared/Catch)
 
 ## Build Instructions
