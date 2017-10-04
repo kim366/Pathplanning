@@ -1,6 +1,5 @@
-bld/gui
-bld/tst
 nts/
+build/
 *.exe
 *.o
 *.todone
