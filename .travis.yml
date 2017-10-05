@@ -1,19 +1,19 @@
 language: cpp
 compiler:
-- gcc
+  - gcc
 sudo: required
 os: "linux"
 arch:
   packages:
-  - gcc
-  - cmake
-  - sfml
+    - gcc
+    - cmake
+    - sfml
   script:
-  - make
+    - make
 before_script:
-- curl "https://raw.githubusercontent.com/philsquared/Catch/master/single_include/catch.hpp" -o include/catch.hpp 
-- mkdir build
-- cd build
-- cmake -DBUILD_TESTS=ON ..
+  - curl "https://raw.githubusercontent.com/philsquared/Catch/master/single_include/catch.hpp" -o include/catch.hpp 
+  - mkdir build
+  - cd build
+  - cmake -DBUILD_TESTS=ON ..
 script:
-- "curl -s https://raw.githubusercontent.com/mikkeloscar/arch-travis/master/arch-travis.sh | bash"
+  - "curl -s https://raw.githubusercontent.com/mikkeloscar/arch-travis/master/arch-travis.sh | bash"
