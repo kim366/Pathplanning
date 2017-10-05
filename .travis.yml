@@ -4,8 +4,6 @@ compiler:
 sudo: required
 os: "linux"
 arch:
-  repos:
-  - Community
   packages:
   - gcc
   - cmake
