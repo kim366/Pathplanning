@@ -10,10 +10,10 @@ Various Pathplanning Algorithms Derived off Dijkstra's in multiple situations vi
 ## Build Instructions
 For Building cmake and a C++17 compiler is necessary (for example g++ 7.1 or Clang 4). The [MinGW-w64 fork](https://sourceforge.net/projects/mingw-w64) comes with g++ 7.1 and works for building this project.
 
-[Download SFML ](https://www.sfml-dev.org/download/sfml/2.4.2/) for your compiler and place it within the project's root directory.
+[Download SFML](https://www.sfml-dev.org/download/sfml/2.4.2/) for your compiler and place it within the project's root directory.
 
 ```
-md build
+mkdir build
 cd build
 cmake ..
 ```
@@ -23,7 +23,7 @@ And then invoke the appropriate command for your build system. Which may be `mak
 Full example using MinGW:
 
 ```
-md build
+mkdir build
 cd build
 cmake -G "MinGW Makefiles" ..
 mingw32-make
