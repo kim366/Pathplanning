@@ -3,7 +3,7 @@ project(pathplanning)
 
 set(CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/cmake/Modules")
 
-find_package(SFML 2.4 COMPONENTS system window graphics REQUIRED)
+find_package(SFML 2 COMPONENTS system window graphics REQUIRED)
 
 include_directories(include ${SFML_INCLUDE_DIR})
 aux_source_directory(src sources)
