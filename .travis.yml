@@ -1,21 +1,19 @@
-dist: artful
 language: cpp
-sudo: required
-os: "linux"
 compiler:
 - gcc
-env:
-- CFLAGS=-Wall CXXFLAGS=-std=c++17
-before_install:
-- sudo apt-get -qq update
-- sudo add-apt-repository ppa:ubuntu-toolchain-r/test -y
-- sudo apt-get -qq update
-- sudo apt-get install -y gcc-7 g++-7
-- sudo apt-get install -y libsfml-dev
-install:
-- export CXX="g++-7"
+sudo: required
+os: "linux"
+arch:
+  repos:
+  - Community
+  packages:
+  - gcc
+  - cmake
 before_script:
-- curl "https://raw.githubusercontent.com/philsquared/Catch/master/single_include/catch.hpp" -o inc/catch.hpp 
+- "curl -s https://raw.githubusercontent.com/mikkeloscar/arch-travis/master/arch-travis.sh | bash"
+- curl "https://raw.githubusercontent.com/philsquared/Catch/master/single_include/catch.hpp" -o include/catch.hpp 
+- mkdir build
+- cd build
+- cmake -DBUILD_TESTS=ON ..
 script:
-- make bld/gui
-- make bld/test
+- make
