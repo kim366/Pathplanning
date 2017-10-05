@@ -4,6 +4,8 @@ compiler:
 sudo: required
 os: "linux"
 arch:
+  repos:
+    - community=http://mirror.cs.umn.edu/arch/community/os
   packages:
     - gcc
     - cmake
