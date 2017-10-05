@@ -7,11 +7,12 @@ arch:
   packages:
   - gcc
   - cmake
+  script:
+  - make
 before_script:
-- "curl -s https://raw.githubusercontent.com/mikkeloscar/arch-travis/master/arch-travis.sh | bash"
 - curl "https://raw.githubusercontent.com/philsquared/Catch/master/single_include/catch.hpp" -o include/catch.hpp 
 - mkdir build
 - cd build
 - cmake -DBUILD_TESTS=ON ..
 script:
-- make
+- "curl -s https://raw.githubusercontent.com/mikkeloscar/arch-travis/master/arch-travis.sh | bash"
