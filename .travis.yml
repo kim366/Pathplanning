@@ -4,8 +4,6 @@ compiler:
 sudo: required
 os: "linux"
 arch:
-  repos:
-    - community=http://mirror.clarkson.edu/archlinux/community/os
   packages:
     - gcc
     - cmake
