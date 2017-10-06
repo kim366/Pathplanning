@@ -5,17 +5,17 @@ sudo: required
 os: "linux"
 arch:
   repos:
-    - community=http://mirror.cs.umn.edu/arch/community/os
+    - community=http://mirror.clarkson.edu/archlinux/community/os
   packages:
     - gcc
     - cmake
     - sfml
   script:
+    - mkdir build
+    - cd build
+    - cmake -DBUILD_TESTS=ON ..
     - make
 before_script:
   - curl "https://raw.githubusercontent.com/philsquared/Catch/master/single_include/catch.hpp" -o include/catch.hpp 
-  - mkdir build
-  - cd build
-  - cmake -DBUILD_TESTS=ON ..
 script:
   - "curl -s https://raw.githubusercontent.com/mikkeloscar/arch-travis/master/arch-travis.sh | bash"
