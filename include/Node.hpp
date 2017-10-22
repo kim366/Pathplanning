@@ -34,7 +34,7 @@ public:
 	{
 		Standard,
 		OnPath,
-		Expanded
+		Examined
 	}					status;
 };
 

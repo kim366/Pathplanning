@@ -120,7 +120,7 @@ void Graph::draw(sf::RenderTarget& target_, sf::RenderStates states_) const
 
 		if (node->status == Node::OnPath)
 			visualized_node.setFillColor(sf::Color{39, 96, 122});
-		else if (node->status == Node::Expanded)
+		else if (node->status == Node::Examined)
 			visualized_node.setFillColor(sf::Color{91, 201, 249});
 		else
 			visualized_node.setFillColor({173, 72, 87});
