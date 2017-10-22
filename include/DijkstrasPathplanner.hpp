@@ -1,9 +1,7 @@
-#ifndef DIJKSTRAS_PATHPLANNER_HPP
-#define DIJKSTRAS_PATHPLANNER_HPP
+#pragma once
 
 #include <AStarPathplanner.hpp>
 #include <Heuristics.hpp>
 
 using DijkstrasPathplanner = AStarPathplanner<None>;
 
-#endif // DIJKSTRAS_PATHPLANNER_HPP

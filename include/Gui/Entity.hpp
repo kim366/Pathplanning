@@ -1,5 +1,4 @@
-#ifndef GUI_ENTITY_HPP
-#define GUI_ENTITY_HPP
+#pragma once
 
 #include <SFML/Graphics/Drawable.hpp>
 #include <SFML/Graphics/RenderTarget.hpp>
@@ -24,4 +23,4 @@ public:
 
 } // namespace Gui
 
-#endif // GUI_ENTITY_HPP
+

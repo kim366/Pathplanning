@@ -1,5 +1,4 @@
-#ifndef ASTAR_PATHPLANNER_HPP
-#define ASTAR_PATHPLANNER_HPP
+#pragma once
 
 #include <Pathplanner.hpp>
 
@@ -20,4 +19,3 @@ private:
 
 #include <AStarPathplanner.inl>
 
-#endif // ASTAR_PATHPLANNER_HPP

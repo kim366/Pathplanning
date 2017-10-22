@@ -1,5 +1,4 @@
-#ifndef GRAPH_HPP
-#define GRAPH_HPP
+#pragma once
 
 #include <vector>
 #include <memory>
@@ -42,4 +41,3 @@ private:
 				_selected_node;
 };
 
-#endif // GRAPH_HPP

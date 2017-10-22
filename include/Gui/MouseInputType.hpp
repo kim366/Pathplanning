@@ -1,5 +1,4 @@
-#ifndef GUI_MOUSE_INPUT_TYPE_HPP
-#define GUI_MOUSE_INPUT_TYPE_HPP
+#pragma once
 
 #include <optional>
 
@@ -37,4 +36,4 @@ struct Button
 
 } // namespace Gui
 
-#endif // MOUSE_STATE_HPP
+

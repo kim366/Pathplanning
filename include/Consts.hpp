@@ -1,5 +1,4 @@
-#ifndef CONSTS_HPP
-#define CONSTS_HPP
+#pragma once
 
 namespace cst
 {
@@ -14,4 +13,4 @@ const auto	wall_width{6.f};
 
 } // namespace cst
 
-#endif // CONSTS_HPP
+

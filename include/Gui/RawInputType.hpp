@@ -1,5 +1,4 @@
-#ifndef GUI_RAW_INPUT_TYPE_HPP
-#define GUI_RAW_INPUT_TYPE_HPP
+#pragma once
 
 #include <optional>
 #include <SFML/Window/Event.hpp>
@@ -33,4 +32,4 @@ struct Button
 
 } // namespace Gui
 
-#endif // GUI_RAW_INPUT_TYPE_HPP
+

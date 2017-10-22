@@ -1,5 +1,4 @@
-#ifndef GUI_INPUTS_HPP
-#define GUI_INPUTS_HPP
+#pragma once
 
 #include <array>
 #include <Gui/RawInputType.hpp>
@@ -63,4 +62,4 @@ private:
 
 } // namespace Gui
 
-#endif // GUI_INPUTS_HPP
+

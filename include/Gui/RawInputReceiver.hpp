@@ -1,5 +1,4 @@
-#ifndef GUI_RAW_INPUT_RECEIVER_HPP
-#define GUI_RAW_INPUT_RECEIVER_HPP
+#pragma once
 
 #include <utility>
 #include <memory>
@@ -26,4 +25,4 @@ private:
 
 } // namespace Gui
 
-#endif // GUI_RAW_INPUT_RECEIVER_HPP
+

@@ -1,5 +1,4 @@
-#ifndef GUI_INPUT_HANDLER_HPP
-#define GUI_INPUT_HANDLER_HPP
+#pragma once
 
 #include <optional>
 #include <SFML/Graphics/RenderWindow.hpp>
@@ -24,4 +23,4 @@ private:
 
 } // namespace Gui
 
-#endif // GUI_INPUT_HANDLER_HPP
+

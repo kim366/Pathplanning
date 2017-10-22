@@ -1,5 +1,4 @@
-#ifndef GRID_HPP
-#define GRID_HPP
+#pragma once
 
 #include <Graph.hpp>
 
@@ -20,4 +19,3 @@ public:
 	const unsigned	diagonal_unit;
 };
 
-#endif // GRID_HPP

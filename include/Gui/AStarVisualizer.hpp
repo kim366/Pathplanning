@@ -1,5 +1,4 @@
-#ifndef GUI_A_STAR_VISUALIZER_HPP
-#define GUI_A_STAR_VISUALIZER_HPP
+#pragma once
 
 #include <Gui/Entity.hpp>
 #include <AStarPathplanner.hpp>
@@ -27,4 +26,3 @@ private:
 
 } // namespace Gui
 
-#endif // GUI_A_STAR_VISUALIZER_HPP

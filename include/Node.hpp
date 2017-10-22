@@ -1,5 +1,4 @@
-#ifndef NODE_HPP
-#define NODE_HPP
+#pragma once
 
 #include <unordered_map>
 #include <vector>
@@ -38,4 +37,3 @@ public:
 	}					status;
 };
 
-#endif // NODE_HPP

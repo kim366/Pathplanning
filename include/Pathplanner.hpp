@@ -1,5 +1,4 @@
-#ifndef PATHPLANNER_HPP
-#define PATHPLANNER_HPP
+#pragma once
 
 #include <vector>
 #include <queue>
@@ -43,4 +42,3 @@ public:
 	};
 };
 
-#endif // PATHPLANNER_HPP

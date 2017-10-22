@@ -1,5 +1,4 @@
-#ifndef GUI_RAW_INPUTS_HPP
-#define GUI_RAW_INPUTS_HPP
+#pragma once
 
 #include <array>
 #include <SFML/Window/Keyboard.hpp>
@@ -22,4 +21,4 @@ struct RawInputs
 
 } // namespace Gui
 
-#endif // GUI_RAW_INPUTS_HPP
+

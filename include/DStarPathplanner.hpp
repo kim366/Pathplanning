@@ -1,11 +1,10 @@
-#ifndef D_STAR_PATHPLANNER_HPP
-#define D_STAR_PATHPLANNER_HPP
+#pragma once
 
 class DStarPathplanner
 {
 public:
 	std::pair<std::vector<const Node*>, std::set<const Node*>>
-			operator()(const Node* start_, const Node* goal_) override;
+			operator()(Node* start_, Node* goal_) override;
 
 private:
 	float 	processState();
@@ -14,4 +13,3 @@ private:
 
 #include <DStarPathplanner.inl>
 
-#endif // D_STAR_PATHPLANNER_HPP

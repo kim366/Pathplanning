@@ -1,5 +1,4 @@
-#ifndef GUI_TEST_ENTITY_CPP
-#define GUI_TEST_ENTITY_CPP
+#pragma once
 
 #include <Gui/Entity.hpp>
 #include <SFML/Graphics/CircleShape.hpp>
@@ -22,4 +21,4 @@ private:
 
 } // namespace Gui
 
-#endif // GUI_TEST_ENTITY_CPP
+

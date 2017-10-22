@@ -1,5 +1,4 @@
-#ifndef GUI_ENTITY_MANAGER_HPP
-#define GUI_ENTITY_MANAGER_HPP
+#pragma once
 
 #include <utility>
 #include <vector>
@@ -26,4 +25,4 @@ private:
 
 } // namespace Gui
 
-#endif // GUI_ENTITY_MANAGER_HPP
+

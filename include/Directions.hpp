@@ -1,5 +1,4 @@
-#ifndef DIRECTIONS_HPP
-#define DIRECTIONS_HPP
+#pragma once
 
 #include <array>
 #include <SFML/System/Vector2.hpp>
@@ -24,4 +23,4 @@ const std::array<sf::Vector2i, 8>
 
 } // namespace Directions
 
-#endif // DIRECTIONS_HPP
+

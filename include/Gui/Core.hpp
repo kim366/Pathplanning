@@ -1,5 +1,4 @@
-#ifndef GUI_CORE_HPP
-#define GUI_CORE_HPP
+#pragma once
 
 #include <SFML/Graphics/RenderWindow.hpp>
 #include <Gui/InputHandler.hpp>
@@ -25,4 +24,4 @@ private:
 
 } // namespace Gui
 
-#endif // GUI_CORE_HPP
+

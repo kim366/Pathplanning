@@ -1,5 +1,4 @@
-#ifndef GUI_CONSTS_HPP
-#define GUI_CONSTS_HPP
+#pragma once
 
 #include <SFML/System/String.hpp>
 
@@ -36,4 +35,4 @@ const auto 			edge_width{.901f * node_radius};
 
 } // namespace Gui
 
-#endif // GUI_CONSTS_HPP
+

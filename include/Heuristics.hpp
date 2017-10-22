@@ -1,5 +1,4 @@
-#ifndef HEURISITICS_HPP
-#define HEURISITICS_HPP
+#pragma once
 
 #include <assert.h>
 #include <math.h>
@@ -72,4 +71,3 @@ struct Octile : public Heuristic
 	}
 };
 
-#endif // HEURISITICS_HPP
