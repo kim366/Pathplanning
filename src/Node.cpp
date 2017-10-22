@@ -20,11 +20,10 @@ std::vector<Node*> Node::expand() const
 {
 	std::vector<Node*> expanded_nodes;
 
-	for (auto& connection : _connections)
+	for (auto& [to_node, cost] : _connections)
 	{
-		Node* connected_node{connection.first};
-		if (connected_node != parent)
-			expanded_nodes.push_back(connected_node);
+		if (to_node != parent)
+			expanded_nodes.push_back(to_node);
 	}
 
 	return expanded_nodes;

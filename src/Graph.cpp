@@ -78,8 +78,8 @@ void Graph::draw(sf::RenderTarget& target_, sf::RenderStates states_) const
 
 	for (const auto& node : _nodes)
 	{
-		for (auto& connection : node->_connections)
-			target_.draw(visualize_edge(node, connection.first, {222, 228, 223}));
+		for (auto& [to_node, cost] : node->_connections)
+			target_.draw(visualize_edge(node, to_node, {222, 228, 223}));
 	}
 
 	{

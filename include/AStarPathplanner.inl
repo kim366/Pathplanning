@@ -49,13 +49,13 @@ std::pair<std::vector<const Node*>, std::set<const Node*>>
 
 		for (auto* successor : successors)
 		{
-			auto new_value{evaluate(successor, current)};
-			float combined_value{new_value.first + new_value.second};
+			auto [to_start_value, heuristic_value]{evaluate(successor, current)};
+			float combined_value{to_start_value + heuristic_value};
 			if ((successor->tag == New) != (combined_value < successor->value))
 			{
 				successor->parent = current;
-				successor->to_start_value = new_value.first;
-				successor->heuristic_value = new_value.second;
+				successor->to_start_value = to_start_value;
+				successor->heuristic_value = heuristic_value;
 				successor->value = combined_value;
 				
 				if (successor->tag != Open)
