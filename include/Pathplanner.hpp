@@ -11,7 +11,7 @@
 class Pathplanner
 {
 public:
-	virtual std::pair<std::optional<std::vector<const Node*>>, std::set<const Node*>>
+	virtual std::pair<std::vector<const Node*>, std::set<const Node*>>
 					operator()(const Node* start_, const Node* goal_) = 0;
 	virtual			~Pathplanner() = 0;
 

@@ -65,7 +65,6 @@ SCENARIO("Dijkstra's Algorithm finds the shortest path and expands the correct a
 
 			THEN("It finds the shortest Path")
 			{
-				REQUIRE(result.first);
 				CHECK(result.first == target_path);
 			}
 
@@ -81,7 +80,6 @@ SCENARIO("Dijkstra's Algorithm finds the shortest path and expands the correct a
 
 			THEN("It finds the shortest Path")
 			{
-				REQUIRE(result.first);
 				CHECK(result.first == target_path);
 			}
 
@@ -139,7 +137,7 @@ SCENARIO("Dijkstra's Algorithm finds the shortest path and expands the correct a
 
 			THEN("It terminates unsuccessfully")
 			{
-				REQUIRE(!result.first);
+				REQUIRE(result.first.empty());
 			}
 		}
 
@@ -149,7 +147,7 @@ SCENARIO("Dijkstra's Algorithm finds the shortest path and expands the correct a
 
 			THEN("It terminates unsuccessfully")
 			{
-				REQUIRE(!result.first);
+				REQUIRE(result.first.empty());
 			}
 		}
 	}
