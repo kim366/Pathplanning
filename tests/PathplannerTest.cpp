@@ -9,8 +9,8 @@ enum
 
 SCENARIO("Dijkstra's Algorithm finds the shortest path and expands the correct amount of nodes")
 {
-	GIVEN("A Graph with some Nodes and Edges and Pointers to Start & End Nodes \
-		and Pathplanner Objects and a Target Shortest Path")
+	GIVEN("A Graph with some Nodes and Edges and Pointers to Start & End Nodes"
+		"and Pathplanner Objects and a Target Shortest Path")
 	{
 		// Image & Geogebra File: http://bit.ly/2v6fuJT
 		// Start Node in Green End Node in Red
@@ -90,8 +90,8 @@ SCENARIO("Dijkstra's Algorithm finds the shortest path and expands the correct a
 		}
 	}
 
-	GIVEN("A nonempty Graph with disconnected Nodes \
-		and Pointers to Start & End Nodes and Pathplanner Objects")
+	GIVEN("A nonempty Graph with disconnected Nodes"
+		"and Pointers to Start & End Nodes and Pathplanner Objects")
 	{
 		Graph graph
 		{
