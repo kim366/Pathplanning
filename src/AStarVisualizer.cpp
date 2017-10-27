@@ -13,7 +13,7 @@ AStarVisualizer::AStarVisualizer(Graph& graph_, const Node* start_, const Node* 
 
 void AStarVisualizer::update(float delta_time_, const Inputs& inputs_)
 {
-	if (inputs_.event.released(sf::Keyboard::Space))
+	if (inputs_.event.pressed(sf::Keyboard::Space))
 	{
 		for (auto& examined_node : _examined_nodes)
 			const_cast<Node*>(examined_node)->getVisualization({}).status = NodeComponents::Visualization::Standard;
