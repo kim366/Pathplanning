@@ -1,9 +1,16 @@
+#include <AStarPathplanner.hpp>
 #include <algorithm>
 #include <Graph.hpp>
 
-template<typename H>
+AStarPathplanner::AStarPathplanner(Graph& graph_, std::function<float(const Node*, HeuristicData)> heuristic_)
+	: _graph(graph_)
+	, _heuristic(heuristic_)
+	, _heuristic_data{_graph, _goal}
+{
+}
+
 std::pair<std::vector<const Node*>, std::set<const Node*>>
-	AStarPathplanner<H>::operator()(const Node* start_, const Node* goal_)
+	AStarPathplanner::operator()(const Node* start_, const Node* goal_)
 {
 	_start = start_;
 	_goal = goal_;
@@ -70,10 +77,9 @@ std::pair<std::vector<const Node*>, std::set<const Node*>>
 	return {{}, examined_nodes};  // No connection between Start and End nodes
 }
 
-template<typename H>
-std::pair<float, float> AStarPathplanner<H>::evaluate(const Node* to_evaluate_, const Node* based_on_) const
+std::pair<float, float> AStarPathplanner::evaluate(const Node* to_evaluate_, const Node* based_on_) const
 {
 	float to_start_value{based_on_->to_start_value + cost(to_evaluate_, based_on_)};
-	float heuristic_value{_heuristic(to_evaluate_)};
+	float heuristic_value{_heuristic(to_evaluate_, _heuristic_data)};
 	return {to_start_value, heuristic_value};
 }

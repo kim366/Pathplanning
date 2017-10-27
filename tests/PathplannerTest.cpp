@@ -1,6 +1,6 @@
 #include <catch.hpp>
 #include <Graph.hpp>
-#include <DijkstrasPathplanner.hpp>
+#include <AStarPathplanner.hpp>
 
 enum
 {
@@ -45,8 +45,8 @@ SCENARIO("Dijkstra's Algorithm finds the shortest path and expands the correct a
 		const Node* start{graph.getNode(B)};
 		const Node* goal{graph.getNode(F)};
 
-		DijkstrasPathplanner dijkstra_find_shortest_path{graph};
-		AStarPathplanner<Euclidean> astar_find_shortest_path{graph};
+		AStarPathplanner dijkstra_find_shortest_path{graph, None{}};
+		AStarPathplanner astar_find_shortest_path{graph, Euclidean{}};
 
 		INFO('A' << graph.getNode(A));
 		INFO('B' << graph.getNode(B));
@@ -120,8 +120,8 @@ SCENARIO("Dijkstra's Algorithm finds the shortest path and expands the correct a
 		const Node* start{graph.getNode(B)};
 		const Node* goal{graph.getNode(F)};
 
-		DijkstrasPathplanner dijkstra_find_shortest_path{graph};
-		AStarPathplanner<Euclidean> astar_find_shortest_path{graph};
+		AStarPathplanner dijkstra_find_shortest_path{graph, None{}};
+		AStarPathplanner astar_find_shortest_path{graph, Euclidean{}};
 
 		INFO('A' << graph.getNode(A));
 		INFO('B' << graph.getNode(B));

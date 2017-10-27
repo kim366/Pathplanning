@@ -4,33 +4,29 @@
 #include <math.h>
 #include <Grid.hpp>
 
-class Heuristic
+struct HeuristicData
 {
-public:
-					Heuristic(Graph& graph_, const Node*& goal_) : _goal(goal_), _graph(graph_) {}
-	virtual float 	operator()(const Node* node_) const = 0;
+	const Graph& graph;
+	const Node*& goal;
+};
 
-protected:
-	const Node*& 	_goal;
-	const Graph&	_graph;
+struct Heuristic
+{
+	virtual float 	operator()(const Node* node_, HeuristicData data_) const = 0;
 };
 
 struct Euclidean : public Heuristic
 {
-	using Heuristic::Heuristic;
-
-	float operator()(const Node* node_) const override
+	float operator()(const Node* node_, HeuristicData data_) const override
 	{
-		sf::Vector2f distance{_goal->getPosition() - node_->getPosition()}; 
+		sf::Vector2f distance{data_.goal->getPosition() - node_->getPosition()}; 
 		return std::hypot(distance.x, distance.y);
 	}
 };
 
 struct None : public Heuristic
 {
-	using Heuristic::Heuristic;
-
-	float operator()(const Node* node_) const override
+	float operator()(const Node* node_, HeuristicData data_) const override
 	{
 		return 0.f;
 	}
@@ -38,14 +34,12 @@ struct None : public Heuristic
 
 struct Manhattan : public Heuristic
 {
-	using Heuristic::Heuristic;
-
-	float operator()(const Node* node_) const override
+	float operator()(const Node* node_, HeuristicData data_) const override
 	{
-		auto grid{dynamic_cast<const Grid*>(&_graph)};
+		auto grid{dynamic_cast<const Grid*>(&data_.graph)};
 		assert(grid);
 
-		sf::Vector2f distance{_goal->getPosition() - node_->getPosition()};
+		sf::Vector2f distance{data_.goal->getPosition() - node_->getPosition()};
 
 		distance = {std::abs(distance.x), std::abs(distance.y)};
 
@@ -55,15 +49,13 @@ struct Manhattan : public Heuristic
 
 struct Octile : public Heuristic
 {
-	using Heuristic::Heuristic;
-
-	float operator()(const Node* node_) const override
+	float operator()(const Node* node_, HeuristicData data_) const override
 	{
-		auto grid{dynamic_cast<const Grid*>(&_graph)};
+		auto grid{dynamic_cast<const Grid*>(&data_.graph)};
 		assert(grid);
 		assert(grid->eight_connected);
 
-		sf::Vector2f distance{_goal->getPosition() - node_->getPosition()};
+		sf::Vector2f distance{data_.goal->getPosition() - node_->getPosition()};
 
 		distance = {std::abs(distance.x), std::abs(distance.y)};
 
