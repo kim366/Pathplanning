@@ -11,7 +11,7 @@ public:
 
 private:
 	Graph&	_graph;
-	std::pair<float, float>	evaluate(const Node* to_evaluate_, const Node* based_on_) const override;
+	EvaluationReturnType	evaluate(const Node* to_evaluate_, const Node* based_on_) const override;
 	std::function<float(const Node*, HeuristicData)> 
 							_heuristic;
 	const HeuristicData		_heuristic_data;

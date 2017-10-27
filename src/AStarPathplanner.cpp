@@ -53,13 +53,13 @@ PathplanningReturnType AStarPathplanner::operator()(const Node* start_, const No
 
 		for (auto* successor : successors)
 		{
-			auto [to_start_value, heuristic_value]{evaluate(successor, current)};
-			float combined_value{to_start_value + heuristic_value};
+			auto evaluated{evaluate(successor, current)};
+			float combined_value{evaluated.to_start_value + evaluated.heuristic_value};
 			if ((successor->getPathplanningData().tag == New) != (combined_value < successor->getPathplanningData().value))
 			{
 				successor->getPathplanningData({}).parent = current;
-				successor->getPathplanningData({}).to_start_value = to_start_value;
-				successor->getPathplanningData({}).heuristic_value = heuristic_value;
+				successor->getPathplanningData({}).to_start_value = evaluated.to_start_value;
+				successor->getPathplanningData({}).heuristic_value = evaluated.heuristic_value;
 				successor->getPathplanningData({}).value = combined_value;
 				
 				if (successor->getPathplanningData().tag != Open)
@@ -74,9 +74,10 @@ PathplanningReturnType AStarPathplanner::operator()(const Node* start_, const No
 	return result;  // No connection between Start and End nodes
 }
 
-std::pair<float, float> AStarPathplanner::evaluate(const Node* to_evaluate_, const Node* based_on_) const
+EvaluationReturnType AStarPathplanner::evaluate(const Node* to_evaluate_, const Node* based_on_) const
 {
-	float to_start_value{based_on_->getPathplanningData().to_start_value + cost(to_evaluate_, based_on_)};
-	float heuristic_value{_heuristic(to_evaluate_, _heuristic_data)};
-	return {to_start_value, heuristic_value};
+	EvaluationReturnType result;
+	result.to_start_value = based_on_->getPathplanningData().to_start_value + cost(to_evaluate_, based_on_);
+	result.heuristic_value = _heuristic(to_evaluate_, _heuristic_data);
+	return result;
 }

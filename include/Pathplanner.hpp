@@ -12,6 +12,12 @@ struct PathplanningReturnType
 	std::vector<const Node*>	path;
 	std::set<const Node*> 		examined_nodes;
 };
+
+struct EvaluationReturnType
+{
+	float to_start_value, heuristic_value;
+};
+
 class Pathplanner
 {
 public:
@@ -20,7 +26,7 @@ public:
 	virtual			~Pathplanner() = 0;
 
 protected:
-	virtual std::pair<float, float>
+	virtual EvaluationReturnType
 					evaluate(const Node* to_evaluate_, const Node* based_on_) const = 0;
 	float			cost(const Node* from_, const Node* to_) const;
 
