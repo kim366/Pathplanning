@@ -17,9 +17,9 @@ std::pair<std::vector<const Node*>, std::set<const Node*>>
 
 	for (auto& node : _graph)
 	{
-		node->tag = New;
-		node->parent = nullptr;
-		node->value = 0.f;
+		node->getPathplanningData({}).tag = New;
+		node->getPathplanningData({}).parent = nullptr;
+		node->getPathplanningData({}).value = 0.f;
 	}
  
 	while (!_open.empty())
@@ -33,7 +33,7 @@ std::pair<std::vector<const Node*>, std::set<const Node*>>
 	{
 		Node* current{_open.top()};
 		_open.pop();
-		current->tag = Closed;
+		current->getPathplanningData({}).tag = Closed;
 		examined_nodes.insert(current);
 
 		if (current == goal_)
@@ -44,7 +44,7 @@ std::pair<std::vector<const Node*>, std::set<const Node*>>
 			while (trace)
 			{
 				found_path.push_back(trace);
-				trace = trace->parent;
+				trace = trace->getPathplanningData().parent;
 			}
 
 			std::reverse(begin(found_path), end(found_path));
@@ -58,17 +58,17 @@ std::pair<std::vector<const Node*>, std::set<const Node*>>
 		{
 			auto [to_start_value, heuristic_value]{evaluate(successor, current)};
 			float combined_value{to_start_value + heuristic_value};
-			if ((successor->tag == New) != (combined_value < successor->value))
+			if ((successor->getPathplanningData().tag == New) != (combined_value < successor->getPathplanningData().value))
 			{
-				successor->parent = current;
-				successor->to_start_value = to_start_value;
-				successor->heuristic_value = heuristic_value;
-				successor->value = combined_value;
+				successor->getPathplanningData({}).parent = current;
+				successor->getPathplanningData({}).to_start_value = to_start_value;
+				successor->getPathplanningData({}).heuristic_value = heuristic_value;
+				successor->getPathplanningData({}).value = combined_value;
 				
-				if (successor->tag != Open)
+				if (successor->getPathplanningData().tag != Open)
 				{
 					_open.push(successor);
-					successor->tag = Open;
+					successor->getPathplanningData({}).tag = Open;
 				}
 			}
 		}
@@ -79,7 +79,7 @@ std::pair<std::vector<const Node*>, std::set<const Node*>>
 
 std::pair<float, float> AStarPathplanner::evaluate(const Node* to_evaluate_, const Node* based_on_) const
 {
-	float to_start_value{based_on_->to_start_value + cost(to_evaluate_, based_on_)};
+	float to_start_value{based_on_->getPathplanningData().to_start_value + cost(to_evaluate_, based_on_)};
 	float heuristic_value{_heuristic(to_evaluate_, _heuristic_data)};
 	return {to_start_value, heuristic_value};
 }

@@ -23,9 +23,10 @@ protected:
 	const std::function<bool(Node*, Node*)>
 					_compare{[this] (Node* x_, Node* y_)
 					{
-						if (x_->value == y_->value && x_ == _goal)
+						sf::Vector2f value{x_->getPathplanningData().value, y_->getPathplanningData().value};
+						if (value.x == value.y && x_ == _goal)
 							return false;
-						return x_->value > y_->value;
+						return value.x > value.y;
 					}};
 					
 	std::priority_queue<Node*, std::vector<Node*>, decltype(_compare)>

@@ -1,39 +1,34 @@
 #pragma once
 
-#include <unordered_map>
-#include <vector>
+#include <Key.hpp>
 #include <SFML/System/Vector2.hpp>
+#include <NodeComponents.hpp>
 
-class Pathplanner;
 class Graph;
+class AStarPathplanner;
+
+namespace Gui { class AStarVisualizer; }
 
 class Node
 {
-	friend class Graph;
-
 public:
-						Node(sf::Vector2f position_);
-	
-	const float			getWeight(const Node* to_) const;
-	const auto&			getPosition() const { return _position; }
-	std::vector<Node*>	expand() const;
+											Node(sf::Vector2f position_);
+
+	const NodeComponents::Data& 			getData() const;
+	NodeComponents::Data& 					getData(Key<Graph>);
+
+	const NodeComponents::Visualization&	getVisualization() const;
+	NodeComponents::Visualization&			getVisualization(Key<Gui::AStarVisualizer>);
+
+	const NodeComponents::Pathplanning& 	getPathplanningData() const;
+	NodeComponents::Pathplanning& 			getPathplanningData(Key<AStarPathplanner>);
+
+	const float								getWeight(const Node* to_) const;
+	std::vector<Node*>						expand() const;
 
 private:
-	std::unordered_map<Node*, float>
-						_connections;
-	sf::Vector2f 		_position;
-
-public:
-	int					tag;
-	const Node*			parent{nullptr};
-	float				value{0.f};	
-	float				heuristic_value{0.f};
-	float				to_start_value{0.f};
-	enum Status
-	{
-		Standard,
-		OnPath,
-		Examined
-	}					status;
+	NodeComponents::Data					_data_component;
+	NodeComponents::Visualization			_visualization_component;
+	NodeComponents::Pathplanning			_pathplanning_component;
 };
 

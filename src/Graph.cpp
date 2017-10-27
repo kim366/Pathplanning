@@ -29,17 +29,17 @@ void Graph::disconnect(sf::Vector2u node_indices_)
 
 void Graph::connect(Node* node1_, Node* node2_)
 {
-	sf::Vector2i distance{node1_->getPosition() - node2_->getPosition()};
+	sf::Vector2i distance{node1_->getData().position - node2_->getData().position};
 	auto weight{std::hypot(distance.x, distance.y)};
 
-	node1_->_connections[node2_] = weight;
-	node2_->_connections[node1_] = weight;
+	node1_->getData({}).connections[node2_] = weight;
+	node2_->getData({}).connections[node1_] = weight;
 }
 
 void Graph::disconnect(Node* node1_, Node* node2_)
 {
-	node1_->_connections.erase(node2_);
-	node2_->_connections.erase(node1_);
+	node1_->getData({}).connections.erase(node2_);
+	node2_->getData({}).connections.erase(node1_);
 }
 
 void Graph::createNode(sf::Vector2f position_)
@@ -63,10 +63,10 @@ void Graph::draw(sf::RenderTarget& target_, sf::RenderStates states_) const
 
 	auto visualize_edge{[=] (const auto& node1_, const auto& node2_, sf::Color color_) -> sf::RectangleShape
 	{
-		sf::Vector2f distance{node2_->getPosition() - node1_->getPosition()};
+		sf::Vector2f distance{node2_->getData().position - node1_->getData().position};
 		sf::RectangleShape visualized_edge{{std::hypot(distance.x, distance.y), Gui::cst::Graph::edge_width}};
 		visualized_edge.setOrigin(0, Gui::cst::Graph::edge_width / 2);
-		visualized_edge.setPosition(node1_->getPosition());
+		visualized_edge.setPosition(node1_->getData().position);
 		visualized_edge.setFillColor(color_);
 		visualized_edge.setRotation(std::atan(distance.y / distance.x) * 180u / 3.1415926f);
 
@@ -78,7 +78,7 @@ void Graph::draw(sf::RenderTarget& target_, sf::RenderStates states_) const
 
 	for (const auto& node : _nodes)
 	{
-		for (auto& [to_node, cost] : node->_connections)
+		for (const auto& [to_node, cost] : node->getData().connections)
 			target_.draw(visualize_edge(node, to_node, {222, 228, 223}));
 	}
 
@@ -88,10 +88,10 @@ void Graph::draw(sf::RenderTarget& target_, sf::RenderStates states_) const
 
 		for (const auto& node : _nodes)
 		{
-			if (node->status == Node::OnPath && node->parent)
+			if (node->getVisualization().status == NodeComponents::Visualization::OnPath && node->getPathplanningData().parent)
 			{
-				if (node->_connections.find(const_cast<Node*>(node->parent)) != end(node->_connections))
-					path_edges.push_back(visualize_edge(node, node->parent, {160, 164, 161}));
+				if (node->getData().connections.find(const_cast<Node*>(node->getPathplanningData().parent)) != end(node->getData().connections))
+					path_edges.push_back(visualize_edge(node, node->getPathplanningData().parent, {160, 164, 161}));
 				else
 				{
 					should_draw_path_edges = false;
@@ -110,7 +110,7 @@ void Graph::draw(sf::RenderTarget& target_, sf::RenderStates states_) const
 	{
 		sf::CircleShape visualized_node{Gui::cst::Graph::node_radius};
 		visualized_node.setOrigin(Gui::cst::Graph::node_radius, Gui::cst::Graph::node_radius);
-		visualized_node.setPosition(node->getPosition());
+		visualized_node.setPosition(node->getData().position);
 		
 		if (_selected_node && node.get() == _selected_node)
 		{
@@ -118,9 +118,9 @@ void Graph::draw(sf::RenderTarget& target_, sf::RenderStates states_) const
 			visualized_node.setOutlineColor(sf::Color{186, 182, 96});
 		}
 
-		if (node->status == Node::OnPath)
+		if (node->getVisualization().status == NodeComponents::Visualization::OnPath)
 			visualized_node.setFillColor(sf::Color{39, 96, 122});
-		else if (node->status == Node::Examined)
+		else if (node->getVisualization().status == NodeComponents::Visualization::Examined)
 			visualized_node.setFillColor(sf::Color{91, 201, 249});
 		else
 			visualized_node.setFillColor({173, 72, 87});
@@ -138,7 +138,7 @@ void Graph::update(float delta_time_, const Gui::Inputs& inputs_)
 	{
 		auto found{std::find_if(begin(_nodes), end(_nodes), [=] (auto& node_)
 		{
-			sf::Vector2f distance{static_cast<sf::Vector2f>(inputs_.cursor_position) - node_->getPosition()};
+			sf::Vector2f distance{static_cast<sf::Vector2f>(inputs_.cursor_position) - node_->getData().position};
 			return std::hypot(distance.x, distance.y) <= Gui::cst::Graph::node_radius;
 		})};
 

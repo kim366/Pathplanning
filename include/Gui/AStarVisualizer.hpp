@@ -17,7 +17,7 @@ private:
 
 private:
 	Graph&						_graph;
-	AStarPathplanner			_find_shortest_path{_graph, Octile{}};
+	AStarPathplanner			_find_shortest_path{_graph, Euclidean{}};
 	std::vector<const Node*>	_found_path;
 	std::set<const Node*>		_examined_nodes;
 	const Node*					_start;

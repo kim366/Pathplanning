@@ -19,7 +19,7 @@ struct Euclidean : public Heuristic
 {
 	float operator()(const Node* node_, HeuristicData data_) const override
 	{
-		sf::Vector2f distance{data_.goal->getPosition() - node_->getPosition()}; 
+		sf::Vector2f distance{data_.goal->getData().position - node_->getData().position}; 
 		return std::hypot(distance.x, distance.y);
 	}
 };
@@ -39,7 +39,7 @@ struct Manhattan : public Heuristic
 		auto grid{dynamic_cast<const Grid*>(&data_.graph)};
 		assert(grid);
 
-		sf::Vector2f distance{data_.goal->getPosition() - node_->getPosition()};
+		sf::Vector2f distance{data_.goal->getData().position - node_->getData().position};
 
 		distance = {std::abs(distance.x), std::abs(distance.y)};
 
@@ -55,7 +55,7 @@ struct Octile : public Heuristic
 		assert(grid);
 		assert(grid->eight_connected);
 
-		sf::Vector2f distance{data_.goal->getPosition() - node_->getPosition()};
+		sf::Vector2f distance{data_.goal->getData().position - node_->getData().position};
 
 		distance = {std::abs(distance.x), std::abs(distance.y)};
 
