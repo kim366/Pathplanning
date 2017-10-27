@@ -3,7 +3,7 @@
 #include <Pathplanner.hpp>
 
 Node::Node(sf::Vector2f position_)
-	: _data_component(position_)
+	: _data_component{position_}
 {
 }
 

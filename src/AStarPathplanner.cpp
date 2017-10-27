@@ -3,8 +3,8 @@
 #include <Graph.hpp>
 
 AStarPathplanner::AStarPathplanner(Graph& graph_, std::function<float(const Node*, HeuristicData)> heuristic_)
-	: _graph(graph_)
-	, _heuristic(heuristic_)
+	: _graph{graph_}
+	, _heuristic{heuristic_}
 	, _heuristic_data{_graph, _goal}
 {
 }

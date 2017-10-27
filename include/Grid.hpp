@@ -15,7 +15,7 @@ private:
 
 public:
 	const bool		eight_connected;
-	const unsigned	unit;
-	const unsigned	diagonal_unit;
+	float			unit;
+	float 			diagonal_unit;
 };
 

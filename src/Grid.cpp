@@ -5,11 +5,11 @@
 #include <Gui/Consts.hpp>
 
 Grid::Grid(unsigned size_, bool eight_connected_)
-	: _total_size(Gui::cst::Window::size - 2 * Gui::cst::Graph::node_radius)
-	, _size(size_)
-	, eight_connected(eight_connected_)
-	, unit(_total_size / _size)
-	, diagonal_unit(eight_connected_ ? std::hypot(unit, unit) : 0)
+	: _total_size{Gui::cst::Window::size - 2 * Gui::cst::Graph::node_radius}
+	, _size{size_}
+	, eight_connected{eight_connected_}
+	, unit{_total_size / _size}
+	, diagonal_unit{eight_connected_ ? std::hypot(unit, unit) : 0}
 {
 	_nodes.reserve(std::pow(_size, 2));
 	

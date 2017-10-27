@@ -5,9 +5,9 @@ namespace Gui
 {
 
 AStarVisualizer::AStarVisualizer(Graph& graph_, const Node* start_, const Node* goal_)
-	: _graph(graph_)
-	, _start(start_)
-	, _goal(goal_)
+	: _graph{graph_}
+	, _start{start_}
+	, _goal{goal_}
 {
 }
 
