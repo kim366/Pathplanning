@@ -2,7 +2,5 @@
 
 int main()
 {
-	Gui::Core core;
-	core.loop();
-	return 0;
+	Gui::Core().loop();
 }
