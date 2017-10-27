@@ -61,31 +61,31 @@ SCENARIO("Dijkstra's Algorithm finds the shortest path and expands the correct a
 
 		WHEN("Dijkstra's Algorithm attempts to find the shortest Path")
 		{
-			auto [found_path, examined_nodes]{dijkstra_find_shortest_path(start, goal)};
+			auto result{dijkstra_find_shortest_path(start, goal)};
 
 			THEN("It finds the shortest Path")
 			{
-				CHECK(found_path == target_path);
+				CHECK(result.path == target_path);
 			}
 
 			THEN("It examines the correct Number of Nodes")
 			{
-				CHECK(examined_nodes.size() == 7); // examines all nodes
+				CHECK(result.examined_nodes.size() == 7); // examines all nodes
 			}
 		}
 
 		WHEN("A* attempts to find the shortest Path")
 		{
-			auto [found_path, examined_nodes]{astar_find_shortest_path(start, goal)};
+			auto result{astar_find_shortest_path(start, goal)};
 
 			THEN("It finds the shortest Path")
 			{
-				CHECK(found_path == target_path);
+				CHECK(result.path == target_path);
 			}
 
 			THEN("It examines fewer Nodes than Dijkstra's Pathplanner")
 			{
-				CHECK(examined_nodes.size() < 7); // does not examine all nodes
+				CHECK(result.examined_nodes.size() < 7); // does not examine all nodes
 			}
 		}
 	}
@@ -133,21 +133,21 @@ SCENARIO("Dijkstra's Algorithm finds the shortest path and expands the correct a
 
 		WHEN("Dijkstra's Algorithm attempts to find the shortest Path")
 		{
-			auto [found_path, examined_nodes]{dijkstra_find_shortest_path(start, goal)};
+			auto result{dijkstra_find_shortest_path(start, goal)};
 
 			THEN("It terminates unsuccessfully")
 			{
-				REQUIRE(found_path.empty());
+				REQUIRE(result.path.empty());
 			}
 		}
 
 		WHEN("A* attempts to find the shortest Path")
 		{
-			auto [found_path, examined_nodes]{astar_find_shortest_path(start, goal)};
+			auto result{astar_find_shortest_path(start, goal)};
 
 			THEN("It terminates unsuccessfully")
 			{
-				REQUIRE(found_path.empty());
+				REQUIRE(result.path.empty());
 			}
 		}
 	}

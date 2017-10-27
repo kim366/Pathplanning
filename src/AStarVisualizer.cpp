@@ -15,20 +15,18 @@ void AStarVisualizer::update(float delta_time_, const Inputs& inputs_)
 {
 	if (inputs_.event.pressed(sf::Keyboard::Space))
 	{
-		for (auto& examined_node : _examined_nodes)
+		for (auto& examined_node : _result.examined_nodes)
 			const_cast<Node*>(examined_node)->getVisualization({}).status = NodeComponents::Visualization::Standard;
 
-		for (auto& node_on_path : _found_path)
+		for (auto& node_on_path : _result.path)
 			const_cast<Node*>(node_on_path)->getVisualization({}).status = NodeComponents::Visualization::Standard;
 	
-		auto result = _find_shortest_path(_start, _goal);
-		_found_path = result.first;
-		_examined_nodes = result.second;
+		_result = _find_shortest_path(_start, _goal);
 
-		for (auto& examined_node : _examined_nodes)
+		for (auto& examined_node : _result.examined_nodes)
 			const_cast<Node*>(examined_node)->getVisualization({}).status = NodeComponents::Visualization::Examined;
 
-		for (auto& node_on_path : _found_path)
+		for (auto& node_on_path : _result.path)
 			const_cast<Node*>(node_on_path)->getVisualization({}).status = NodeComponents::Visualization::OnPath;
 	}
 	

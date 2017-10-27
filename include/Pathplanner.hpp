@@ -7,10 +7,15 @@
 #include <optional>
 #include <Node.hpp>
 
+struct PathplanningReturnType
+{
+	std::vector<const Node*>	path;
+	std::set<const Node*> 		examined_nodes;
+};
 class Pathplanner
 {
 public:
-	virtual std::pair<std::vector<const Node*>, std::set<const Node*>>
+	virtual PathplanningReturnType 
 					operator()(const Node* start_, const Node* goal_) = 0;
 	virtual			~Pathplanner() = 0;
 

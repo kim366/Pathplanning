@@ -9,8 +9,7 @@ AStarPathplanner::AStarPathplanner(Graph& graph_, std::function<float(const Node
 {
 }
 
-std::pair<std::vector<const Node*>, std::set<const Node*>>
-	AStarPathplanner::operator()(const Node* start_, const Node* goal_)
+PathplanningReturnType AStarPathplanner::operator()(const Node* start_, const Node* goal_)
 {
 	_start = start_;
 	_goal = goal_;
@@ -25,7 +24,7 @@ std::pair<std::vector<const Node*>, std::set<const Node*>>
 	while (!_open.empty())
 		_open.pop();
 
-	std::set<const Node*> examined_nodes;
+	PathplanningReturnType result;
 
 	_open.push(const_cast<Node*>(start_));
 	
@@ -34,22 +33,20 @@ std::pair<std::vector<const Node*>, std::set<const Node*>>
 		Node* current{_open.top()};
 		_open.pop();
 		current->getPathplanningData({}).tag = Closed;
-		examined_nodes.insert(current);
+		result.examined_nodes.insert(current);
 
 		if (current == goal_)
-		{
-			std::vector<const Node*> found_path;
-			
+		{			
 			const Node* trace{current};
 			while (trace)
 			{
-				found_path.push_back(trace);
+				result.path.push_back(trace);
 				trace = trace->getPathplanningData().parent;
 			}
 
-			std::reverse(begin(found_path), end(found_path));
+			std::reverse(begin(result.path), end(result.path));
 
-			return {{found_path}, examined_nodes};
+			return result;
 		}
 
 		auto successors{current->expand()};
@@ -74,7 +71,7 @@ std::pair<std::vector<const Node*>, std::set<const Node*>>
 		}
 	}
 
-	return {{}, examined_nodes};  // No connection between Start and End nodes
+	return result;  // No connection between Start and End nodes
 }
 
 std::pair<float, float> AStarPathplanner::evaluate(const Node* to_evaluate_, const Node* based_on_) const
