@@ -19,11 +19,11 @@ struct Data
 
 struct Pathplanning
 {
-	int			tag;
-	const Node*	parent{nullptr};
-	float		value{0.f};	
-	float		heuristic_value{0.f};
-	float		to_start_value{0.f};
+	int		tag;
+	Node*	parent{nullptr};
+	float	value{0.f};	
+	float	heuristic_value{0.f};
+	float	to_start_value{0.f};
 };
 
 struct Visualization

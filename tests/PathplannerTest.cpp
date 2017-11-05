@@ -42,8 +42,8 @@ SCENARIO("Dijkstra's Algorithm finds the shortest path and expands the correct a
 			}
 		};
 
-		const Node* start{graph.getNode(B)};
-		const Node* goal{graph.getNode(F)};
+		Node* start{graph.getNode(B)};
+		Node* goal{graph.getNode(F)};
 
 		AStarPathplanner dijkstra_find_shortest_path{graph, None{}};
 		AStarPathplanner astar_find_shortest_path{graph, Euclidean{}};
@@ -56,7 +56,7 @@ SCENARIO("Dijkstra's Algorithm finds the shortest path and expands the correct a
 		INFO('F' << graph.getNode(F));
 		INFO('G' << graph.getNode(G));
 
-		std::vector<const Node*>
+		std::vector<Node*>
 			target_path{graph.getNode(B), graph.getNode(D), graph.getNode(F)};
 
 		WHEN("Dijkstra's Algorithm attempts to find the shortest Path")
@@ -117,8 +117,8 @@ SCENARIO("Dijkstra's Algorithm finds the shortest path and expands the correct a
 			}
 		};
 
-		const Node* start{graph.getNode(B)};
-		const Node* goal{graph.getNode(F)};
+		Node* start{graph.getNode(B)};
+		Node* goal{graph.getNode(F)};
 
 		AStarPathplanner dijkstra_find_shortest_path{graph, None{}};
 		AStarPathplanner astar_find_shortest_path{graph, Euclidean{}};

@@ -9,7 +9,7 @@ AStarPathplanner::AStarPathplanner(Graph& graph_, std::function<float(const Node
 {
 }
 
-PathplanningReturnType AStarPathplanner::operator()(const Node* start_, const Node* goal_)
+PathplanningReturnType AStarPathplanner::operator()(Node* start_, Node* goal_)
 {
 	_start = start_;
 	_goal = goal_;
@@ -26,7 +26,7 @@ PathplanningReturnType AStarPathplanner::operator()(const Node* start_, const No
 
 	PathplanningReturnType result;
 
-	_open.push(const_cast<Node*>(start_));
+	_open.push(start_);
 	
 	while (!_open.empty())
 	{
@@ -37,11 +37,11 @@ PathplanningReturnType AStarPathplanner::operator()(const Node* start_, const No
 
 		if (current == goal_)
 		{			
-			const Node* trace{current};
+			Node* trace{current};
 			while (trace)
 			{
 				result.path.push_back(trace);
-				trace = trace->getPathplanningData().parent;
+				trace = trace->getPathplanningData({}).parent;
 			}
 
 			std::reverse(begin(result.path), end(result.path));

@@ -9,8 +9,8 @@
 
 struct PathplanningReturnType
 {
-	std::vector<const Node*>	path;
-	std::set<const Node*> 		examined_nodes;
+	std::vector<Node*>	path;
+	std::set<Node*> 	examined_nodes;
 };
 
 struct EvaluationReturnType
@@ -24,7 +24,7 @@ public:
 											Pathplanner();
 	virtual									~Pathplanner() = 0;
 
-	virtual PathplanningReturnType 			operator()(const Node* start_, const Node* goal_) = 0;
+	virtual PathplanningReturnType 			operator()(Node* start_, Node* goal_) = 0;
 
 protected:
 	virtual EvaluationReturnType			evaluate(const Node* to_evaluate_, const Node* based_on_) const = 0;

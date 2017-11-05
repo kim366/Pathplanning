@@ -7,7 +7,7 @@ class AStarPathplanner : public Pathplanner
 {
 public:
 							AStarPathplanner(Graph& graph_, std::function<float(const Node*, HeuristicData)> heuristic_);
-	PathplanningReturnType 	operator()(const Node* start_, const Node* goal_) override;
+	PathplanningReturnType 	operator()(Node* start_, Node* goal_) override;
 
 private:
 	Graph&	_graph;
