@@ -49,7 +49,7 @@ PathplanningReturnType AStarPathplanner::operator()(Node* start_, Node* goal_)
 			return result;
 		}
 
-		auto successors{current->expand()};
+		auto successors{current->getSuccessors()};
 
 		for (auto* successor : successors)
 		{

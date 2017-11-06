@@ -15,7 +15,7 @@ const float Node::getWeight(const Node* to_) const
 	return std::numeric_limits<float>::infinity();
 }
 
-std::vector<Node*> Node::expand() const
+std::vector<Node*> Node::getSuccessors() const
 {
 	std::vector<Node*> expanded_nodes;
 

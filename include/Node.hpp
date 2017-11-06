@@ -24,7 +24,7 @@ public:
 	NodeComponents::Pathplanning& 			getPathplanningData(Key<AStarPathplanner>);
 
 	const float								getWeight(const Node* to_) const;
-	std::vector<Node*>						expand() const;
+	std::vector<Node*>						getSuccessors() const;
 
 private:
 	NodeComponents::Data					_data_component;
