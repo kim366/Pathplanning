@@ -13,19 +13,19 @@ TEST_CASE("Four-connected graphs")
 
 	SECTION("The nodes have the correct amount of connections")
 	{
-		CHECK(node_0_0->getSuccessors().size() == 2);
-		CHECK(node_1_2->getSuccessors().size() == 4);
-		CHECK(node_0_2->getSuccessors().size() == 3);
-		CHECK(node_4_4->getSuccessors().size() == 2);
+		CHECK(computeSuccessors(node_0_0).size() == 2);
+		CHECK(computeSuccessors(node_1_2).size() == 4);
+		CHECK(computeSuccessors(node_0_2).size() == 3);
+		CHECK(computeSuccessors(node_4_4).size() == 2);
 	}
 
 	SECTION("The correct nodes are connected")
 	{
-		auto node_0_2_successors{node_0_2->getSuccessors()};
+		auto node_0_2_successors{computeSuccessors(node_0_2)};
 		CHECK(std::find(begin(node_0_2_successors), 
 			end(node_0_2_successors), node_1_2) != end(node_0_2_successors));
 
-		auto node_1_2_successors{node_1_2->getSuccessors()};
+		auto node_1_2_successors{computeSuccessors(node_1_2)};
 		CHECK(std::find(begin(node_1_2_successors),
 			end(node_1_2_successors), node_0_2) != end(node_1_2_successors));
 	}
@@ -42,20 +42,20 @@ SCENARIO("Eight-connected graphs")
 
 	SECTION("The nodes have the correct amount of connections")
 	{
-		CHECK(node_0_0->getSuccessors().size() == 3);
-		CHECK(node_1_2->getSuccessors().size() == 8);
-		CHECK(node_0_2->getSuccessors().size() == 5);
-		CHECK(node_4_4->getSuccessors().size() == 3);
+		CHECK(computeSuccessors(node_0_0).size() == 3);
+		CHECK(computeSuccessors(node_1_2).size() == 8);
+		CHECK(computeSuccessors(node_0_2).size() == 5);
+		CHECK(computeSuccessors(node_4_4).size() == 3);
 
 	}
 
 	SECTION("The correct nodes are connected")
 	{
-		auto node_0_2_successors{node_0_2->getSuccessors()};
+		auto node_0_2_successors{computeSuccessors(node_0_2)};
 		CHECK(std::find(begin(node_0_2_successors), 
 			end(node_0_2_successors), node_1_2) != end(node_0_2_successors));
 
-		auto node_1_2_successors{node_1_2->getSuccessors()};
+		auto node_1_2_successors{computeSuccessors(node_1_2)};
 		CHECK(std::find(begin(node_1_2_successors),
 			end(node_1_2_successors), node_0_2) != end(node_1_2_successors));
 	}

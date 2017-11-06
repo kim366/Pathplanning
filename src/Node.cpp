@@ -7,25 +7,12 @@ Node::Node(sf::Vector2f position_)
 {
 }
 
-const float Node::getWeight(const Node* to_) const
+float Node::getWeight(const Node* to_) const
 {
 	auto found{_data_component.connections.find(const_cast<Node*>(to_))};
 	if (found != end(_data_component.connections))
 		return found->second;
 	return std::numeric_limits<float>::infinity();
-}
-
-std::vector<Node*> Node::getSuccessors() const
-{
-	std::vector<Node*> expanded_nodes;
-
-	for (auto& [to_node, cost] : _data_component.connections)
-	{
-		if (to_node != _pathplanning_component.parent)
-			expanded_nodes.push_back(to_node);
-	}
-
-	return expanded_nodes;
 }
 
 const NodeComponents::Data& Node::getData() const
@@ -56,4 +43,29 @@ const NodeComponents::Pathplanning& Node::getPathplanningData() const
 NodeComponents::Pathplanning& Node::getPathplanningData(Key<AStarPathplanner>)
 {
 	return _pathplanning_component;
+}
+
+
+std::vector<Node*> computeSuccessors(const Node* node_, Key<AStarPathplanner>)
+{
+	std::vector<Node*> successors;
+
+	for (auto& [to_node, cost] : node_->getData().connections) {
+		if (to_node != node_->getPathplanningData().parent)
+			successors.push_back(to_node);
+	}
+
+	return successors;
+}
+
+std::vector<const Node*> computeSuccessors(const Node* node_)
+{
+	std::vector<const Node*> successors;
+
+	for (auto& [to_node, cost] : node_->getData().connections) {
+		if (to_node != node_->getPathplanningData().parent)
+			successors.push_back(to_node);
+	}
+
+	return successors;
 }
