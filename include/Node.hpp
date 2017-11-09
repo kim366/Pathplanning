@@ -14,20 +14,20 @@ class Node
 public:
 											Node(sf::Vector2f position_);
 
-	const NodeComponents::Data&             getData() const;
-	NodeComponents::Data&                   getData(Key<Graph>);
+	const NodeComponents::Data&				getData() const;
+	NodeComponents::Data&					getData(Key<Graph>);
 
-	const NodeComponents::Visualization&    getVisualization() const;
-	NodeComponents::Visualization&          getVisualization(Key<Gui::AStarVisualizer>);
+	const NodeComponents::Visualization&	getVisualization() const;
+	NodeComponents::Visualization&			getVisualization(Key<Gui::AStarVisualizer>);
 
-	const NodeComponents::Pathplanning&     getPathplanningData() const;
-	NodeComponents::Pathplanning&           getPathplanningData(Key<AStarPathplanner>);
+	const NodeComponents::PathplanningData&	getPathplanningData() const;
+	NodeComponents::PathplanningData&		getPathplanningData(Key<AStarPathplanner>);
 
 
 private:
-	NodeComponents::Data                    _data_component;
-	NodeComponents::Visualization           _visualization_component;
-	NodeComponents::Pathplanning            _pathplanning_component;
+	NodeComponents::Data					_data_component;
+	NodeComponents::Visualization 			_visualization_component;
+	NodeComponents::PathplanningData 		_pathplanning_data_component;
 };
 
 float getWeight(const Node* from_, const Node* to_);

@@ -17,7 +17,7 @@ struct Data
 	std::unordered_map<Node*, float>	connections;
 };
 
-struct Pathplanning
+struct PathplanningData
 {
 	int		tag;
 	Node*	parent{nullptr};

@@ -27,14 +27,14 @@ NodeComponents::Visualization& Node::getVisualization(Key<Gui::AStarVisualizer>)
 	return _visualization_component;
 }
 
-const NodeComponents::Pathplanning& Node::getPathplanningData() const
+const NodeComponents::PathplanningData& Node::getPathplanningData() const
 {
-	return _pathplanning_component;
+	return _pathplanning_data_component;
 }
 
-NodeComponents::Pathplanning& Node::getPathplanningData(Key<AStarPathplanner>)
+NodeComponents::PathplanningData& Node::getPathplanningData(Key<AStarPathplanner>)
 {
-	return _pathplanning_component;
+	return _pathplanning_data_component;
 }
 
 float getWeight(const Node* from_, const Node* to_)
