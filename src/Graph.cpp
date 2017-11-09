@@ -148,7 +148,7 @@ void Graph::update(float delta_time_, const Gui::Inputs& inputs_)
 				_selected_node = found->get();
 			else
 			{
-				if (!std::isinf((*found)->getWeight(*_selected_node)))
+				if (!std::isinf(getWeight(*_selected_node, found->get())))
 					disconnect(found->get(), *_selected_node);
 				else if (_selected_node != found->get())
 					connect(found->get(), *_selected_node);

@@ -77,7 +77,7 @@ PathplanningReturnType AStarPathplanner::operator()(Node* start_, Node* goal_)
 EvaluationReturnType AStarPathplanner::evaluate(const Node* to_evaluate_, const Node* based_on_) const
 {
 	EvaluationReturnType result;
-	result.to_start_value = based_on_->getPathplanningData().to_start_value + cost(to_evaluate_, based_on_);
+	result.to_start_value = based_on_->getPathplanningData().to_start_value + getWeight(to_evaluate_, based_on_);
 	result.heuristic_value = _heuristic(to_evaluate_, _heuristic_data);
 	return result;
 }

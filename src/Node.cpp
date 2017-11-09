@@ -7,14 +7,6 @@ Node::Node(sf::Vector2f position_)
 {
 }
 
-float Node::getWeight(const Node* to_) const
-{
-	auto found{_data_component.connections.find(const_cast<Node*>(to_))};
-	if (found != end(_data_component.connections))
-		return found->second;
-	return std::numeric_limits<float>::infinity();
-}
-
 const NodeComponents::Data& Node::getData() const
 {
 	return _data_component; 
@@ -45,6 +37,13 @@ NodeComponents::Pathplanning& Node::getPathplanningData(Key<AStarPathplanner>)
 	return _pathplanning_component;
 }
 
+float getWeight(const Node* from_, const Node* to_)
+{
+	const auto found{from_->getData().connections.find(const_cast<Node*>(to_))};
+	if (found != end(from_->getData().connections))
+		return found->second;
+	return std::numeric_limits<float>::infinity();
+}
 
 std::vector<Node*> computeSuccessors(const Node* node_, Key<AStarPathplanner>)
 {

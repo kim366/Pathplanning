@@ -28,7 +28,6 @@ public:
 
 protected:
 	virtual EvaluationReturnType			evaluate(const Node* to_evaluate_, const Node* based_on_) const = 0;
-	float									cost(const Node* from_, const Node* to_) const;
 
 protected:
 	const std::function<bool(Node*, Node*)>	_compare;
