@@ -15,11 +15,7 @@ PathplanningReturnType AStarPathplanner::operator()(Node* start_, Node* goal_)
 	_goal = goal_;
 
 	for (auto& node : _graph)
-	{
-		node->getPathplanningData({}).tag = New;
-		node->getPathplanningData({}).parent = nullptr;
-		node->getPathplanningData({}).value = 0.f;
-	}
+		node->getPathplanningData({}) = {};
  
 	while (!_open.empty())
 		_open.pop();
