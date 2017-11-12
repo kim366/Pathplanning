@@ -46,7 +46,7 @@ PathplanningReturnType AStarPathplanner::operator()(Node* start_, Node* goal_)
 
 		auto successors{computeSuccessors(current, {})};
 
-		for (auto* successor : successors)
+		for (auto successor : successors)
 		{
 			auto evaluated{evaluate(successor, current)};
 			float combined_value{evaluated.to_start_value + evaluated.heuristic_value};
