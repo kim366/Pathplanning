@@ -32,17 +32,9 @@ protected:
 protected:
 	const std::function<bool(Node*, Node*)>	_compare;
 					
-	std::priority_queue<Node*, std::vector<Node*>, decltype(_compare)>
+	std::priority_queue<Node*, std::vector<Node*>, std::function<bool(Node*, Node*)>>
 											_open{_compare};
 	const Node*								_start;
 	const Node*								_goal;
-
-public:
-	enum Tag
-	{
-		New,
-		Open,
-		Closed
-	};
 };
 

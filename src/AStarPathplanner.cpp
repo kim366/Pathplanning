@@ -17,8 +17,7 @@ PathplanningReturnType AStarPathplanner::operator()(Node* start_, Node* goal_)
 	for (auto& node : _graph)
 		node->getPathplanningData({}) = {};
  
-	while (!_open.empty())
-		_open.pop();
+	_open = decltype(_open){_compare};
 
 	PathplanningReturnType result;
 

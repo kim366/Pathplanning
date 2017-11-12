@@ -10,7 +10,7 @@ public:
 	PathplanningReturnType 	operator()(Node* start_, Node* goal_) override;
 
 private:
-	Graph&	_graph;
+	Graph&					_graph;
 	EvaluationReturnType	evaluate(const Node* to_evaluate_, const Node* based_on_) const override;
 	std::function<float(const Node*, HeuristicData)> 
 							_heuristic;

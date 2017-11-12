@@ -3,6 +3,7 @@
 #include <unordered_map>
 #include <vector>
 #include <SFML/System/Vector2.hpp>
+#include <PathplanningTag.hpp>
 
 class Node;
 
@@ -19,7 +20,7 @@ struct Data
 
 struct PathplanningData
 {
-	int		tag;
+	int		tag{New};
 	Node*	parent{nullptr};
 	float	value{0.f};	
 	float	heuristic_value{0.f};
