@@ -31,13 +31,9 @@ PathplanningReturnType AStarPathplanner::operator()(Node* start_, Node* goal_)
 		result.examined_nodes.insert(current);
 
 		if (current == goal_)
-		{			
-			Node* trace{current};
-			while (trace)
-			{
+		{
+			for (Node* trace{current}; trace != nullptr; trace = trace->getPathplanningData({}).parent)
 				result.path.push_back(trace);
-				trace = trace->getPathplanningData({}).parent;
-			}
 
 			std::reverse(begin(result.path), end(result.path));
 
