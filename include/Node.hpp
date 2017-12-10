@@ -6,6 +6,7 @@
 
 class Graph;
 class AStarPathplanner;
+class DStarPathplanner;
 
 namespace Gui { class AStarVisualizer; }
 
@@ -22,12 +23,16 @@ public:
 
 	const NodeComponents::PathplanningData&	getPathplanningData() const;
 	NodeComponents::PathplanningData&		getPathplanningData(Key<AStarPathplanner>);
+	NodeComponents::PathplanningData&		getPathplanningDataDStar(Key<DStarPathplanner>);
 
+	const NodeComponents::DStarData&		getDStarData() const;
+	NodeComponents::DStarData&				getDStarData(Key<DStarPathplanner>);
 
 private:
 	NodeComponents::Data					_data_component;
 	NodeComponents::Visualization 			_visualization_component;
 	NodeComponents::PathplanningData 		_pathplanning_data_component;
+	NodeComponents::DStarData				_dstar_data_component;
 };
 
 float getWeight(const Node* from_, const Node* to_);

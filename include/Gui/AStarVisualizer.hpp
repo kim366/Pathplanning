@@ -17,7 +17,7 @@ private:
 
 private:
 	Graph&					_graph;
-	AStarPathplanner		_find_shortest_path{_graph, Euclidean{}};
+	AStarPathplanner		_find_shortest_path{_graph, Manhattan{}};
 	PathplanningReturnType	_result;
 	Node*					_start;
 	Node*					_goal;

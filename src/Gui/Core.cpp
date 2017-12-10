@@ -8,8 +8,8 @@ namespace Gui
 
 Core::Core()
 {
-	auto grid{std::make_unique<Grid>(5, true)};
-	auto astar_visualizer{std::make_unique<AStarVisualizer>(*grid, grid->getNode(grid->toIndex({0, 4})), grid->getNode(grid->toIndex({4, 0})))};
+	auto grid{std::make_unique<Grid>(30, true)};
+	auto astar_visualizer{std::make_unique<AStarVisualizer>(*grid, grid->getNode(grid->toIndex({14, 15})), grid->getNode(grid->toIndex({28, 1})))};
 	_entity_manager->addEntity(std::move(grid));
 	_entity_manager->addEntity(std::move(astar_visualizer));
 	_window->setFramerateLimit(10);

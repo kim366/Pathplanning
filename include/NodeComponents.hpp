@@ -20,11 +20,17 @@ struct Data
 
 struct PathplanningData
 {
-	int		tag{New};
-	Node*	parent{nullptr};
-	float	value{0.f};	
-	float	heuristic_value{0.f};
-	float	to_start_value{0.f};
+	PathplanningTag	tag{New};
+	Node*			parent{nullptr};
+	float			value{0.f};	
+	float			heuristic_value{0.f};
+	float			to_start_value{0.f};
+};
+
+struct DStarData
+{
+	float previous_heuristic_value{0.f};
+	float key_value{0.f};
 };
 
 struct Visualization

@@ -37,6 +37,21 @@ NodeComponents::PathplanningData& Node::getPathplanningData(Key<AStarPathplanner
 	return _pathplanning_data_component;
 }
 
+NodeComponents::PathplanningData& Node::getPathplanningDataDStar(Key<DStarPathplanner>)
+{
+	return _pathplanning_data_component;
+}
+
+const NodeComponents::DStarData& Node::getDStarData() const
+{
+	return _dstar_data_component;
+}
+
+NodeComponents::DStarData& Node::getDStarData(Key<DStarPathplanner>)
+{
+	return _dstar_data_component;
+}
+
 float getWeight(const Node* from_, const Node* to_)
 {
 	const auto found{from_->getData().connections.find(const_cast<Node*>(to_))};
