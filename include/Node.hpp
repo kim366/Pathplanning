@@ -22,8 +22,7 @@ public:
 	NodeComponents::Visualization&			getVisualization(Key<Gui::AStarVisualizer>);
 
 	const NodeComponents::PathplanningData&	getPathplanningData() const;
-	NodeComponents::PathplanningData&		getPathplanningData(Key<AStarPathplanner>);
-	NodeComponents::PathplanningData&		getPathplanningDataDStar(Key<DStarPathplanner>);
+	NodeComponents::PathplanningData&		getPathplanningData(PathplannerKey);
 
 	const NodeComponents::DStarData&		getDStarData() const;
 	NodeComponents::DStarData&				getDStarData(Key<DStarPathplanner>);

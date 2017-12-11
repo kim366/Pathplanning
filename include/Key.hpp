@@ -7,3 +7,12 @@ class Key
 	Key() {}; // must not be `= default`
 	Key(Key const&) {};
 };
+
+class PathplannerKey
+{
+	friend class AStarPathplanner;
+	friend class DStarPathplanner;
+	
+	PathplannerKey() {}; // must not be `= default`
+	PathplannerKey(PathplannerKey const&) {};	
+};

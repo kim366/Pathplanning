@@ -32,15 +32,11 @@ const NodeComponents::PathplanningData& Node::getPathplanningData() const
 	return _pathplanning_data_component;
 }
 
-NodeComponents::PathplanningData& Node::getPathplanningData(Key<AStarPathplanner>)
+NodeComponents::PathplanningData& Node::getPathplanningData(PathplannerKey)
 {
 	return _pathplanning_data_component;
 }
 
-NodeComponents::PathplanningData& Node::getPathplanningDataDStar(Key<DStarPathplanner>)
-{
-	return _pathplanning_data_component;
-}
 
 const NodeComponents::DStarData& Node::getDStarData() const
 {
