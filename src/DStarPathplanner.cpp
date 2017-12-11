@@ -78,6 +78,16 @@ float DStarPathplanner::processState()
 	return getMinimumKey();
 }
 
+float modifyCost(Node* node1_, Node* node2_, float new_cost)
+{
+	 = new_cost;
+
+	if (node1_->getPathplanningData().tag == Closed)
+		insert(node1_, node1_->getPathplanningData().heuristic_value);
+
+	return getMinimumKey();
+}
+
 float DStarPathplanner::getMinimumKey() const
 {
 	return _open.empty() ? -1 : _open.top()->getDStarData().key_value;
