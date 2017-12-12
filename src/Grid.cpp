@@ -95,12 +95,12 @@ Grid::Grid(unsigned size_, bool eight_connected_)
 	}
 }
 
-unsigned Grid::toIndex(sf::Vector2u coordinate_)
+int Grid::toIndex(sf::Vector2i coordinate_)
 {
 	return _size * coordinate_.y + coordinate_.x;
 }
 
-sf::Vector2u Grid::toCoordinate(int index_)
+sf::Vector2i Grid::toCoordinate(int index_)
 {
 	unsigned x{0}, y{0};
 	while (index_ >= static_cast<int>(_size))

@@ -7,7 +7,7 @@
 struct HeuristicData
 {
 	const Graph& graph;
-	const Node*& goal;
+	Node*&		 goal;
 };
 
 struct Heuristic

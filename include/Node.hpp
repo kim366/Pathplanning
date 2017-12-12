@@ -34,6 +34,6 @@ private:
 	NodeComponents::DStarData				_dstar_data_component;
 };
 
-float getWeight(const Node* from_, const Node* to_);
-std::vector<Node*> computeSuccessors(const Node* node_, Key<AStarPathplanner>);
-std::vector<const Node*> computeSuccessors(const Node* node_);
+float getWeight(Graph& graph_, const Node& from_, const Node& to_);
+std::vector<Node*> computeSuccessors(const Graph& graph_, const Node* node_, Key<AStarPathplanner>);
+std::vector<const Node*> computeSuccessors(const Graph& graph_, const Node* node_);

@@ -5,7 +5,7 @@
 namespace Gui
 {
 
-AStarVisualizer::AStarVisualizer(Graph& graph_, Node* start_, Node* goal_)
+AStarVisualizer::AStarVisualizer(Graph& graph_, int start_, int goal_)
 	: _graph{graph_}
 	, _start{start_}
 	, _goal{goal_}
@@ -29,11 +29,13 @@ void AStarVisualizer::update(float delta_time_, const Inputs& inputs_)
 
 		for (auto& node_on_path : _result.path)
 			node_on_path->getVisualization({}).status = NodeComponents::Visualization::OnPath;
-		float sum1 = _result.path.back()->getPathplanningData().value, sum2 = 0;
-		for (int i{0}; i < _result.path.size() - 1; ++i)
-			sum2 += getWeight(_result.path[i], _result.path[i + 1]);
 
-		std::cout << sum1 << ", " << sum2 << ", " << dynamic_cast<Grid&>(_graph).diagonal_unit << ", " << getWeight(_result.path[0], _result.path[1]) << "Not Equal!!!!"/*<< ", " << _result.path.size()*/;
+		// float sum1 = _result.path.back()->getPathplanningData().value, sum2 = 0;
+		
+		// for (int i{0}; i < _result.path.size() - 1; ++i)
+		// 	sum2 += getWeight(_result.path[i], _result.path[i + 1]);
+
+		// std::cout << sum1 << ", " << sum2 << ", " << dynamic_cast<Grid&>(_graph).diagonal_unit << ", " << getWeight(_result.path[0], _result.path[1]) << "Not Equal!!!!"/*<< ", " << _result.path.size()*/;
 	}
 	
 }

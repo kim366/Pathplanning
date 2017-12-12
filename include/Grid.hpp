@@ -6,8 +6,8 @@ class Grid : public Graph
 {
 public:
 					Grid(unsigned size_, bool eight_connected_ = false);
-	unsigned		toIndex(sf::Vector2u coordinate_);
-	sf::Vector2u	toCoordinate(int index_);
+	int				toIndex(sf::Vector2i coordinate_);
+	sf::Vector2i	toCoordinate(int index_);
 
 private:
 	float 			_total_size;

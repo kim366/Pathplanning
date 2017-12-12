@@ -6,38 +6,38 @@
 #include <optional>
 #include <Node.hpp>
 #include <Gui/Entity.hpp>
+#include <utility>
 
 class Graph : public Gui::Entity
 {
 public:
-				Graph() {}
-				Graph(std::initializer_list<sf::Vector2i> node_positions_,
-					std::initializer_list<sf::Vector2i> node_indices_);
+						Graph() = default;
+						Graph(std::initializer_list<sf::Vector2i> node_positions_,
+							std::initializer_list<std::pair<int, int>> node_indices_);
 
-	void		createNode(sf::Vector2f position_);
-	void		deleteNode(unsigned node_index_);
+	void				createNode(sf::Vector2f position_);
+	void				deleteNode(int node_index_);
 
-	void 		connect(sf::Vector2u node_indices_);
-	void 		disconnect(sf::Vector2u node_indices_);
+	void 				connect(std::pair<int, int> node_indices_);
+	void 				disconnect(std::pair<int, int> node_indices_);
+	void				modifyWeight(std::pair<int, int> node_indices_, float new_weight_);
 
-	void 		connect(Node* node1_, Node* node2_);
-	void 		disconnect(Node* node1_, Node* node2_);
+	Node& 				getNode(int node_index_) { return _nodes[node_index_]; }
+	const Node&			getNode(int node_index_) const { return _nodes[node_index_]; }
 
-	auto* 		getNode(unsigned node_index_) { return _nodes[node_index_].get(); }
+	int					getIndex(const Node& node_) const;
 
-	auto 		begin() { return _nodes.begin(); }
-	auto		end() { return _nodes.end(); }
-
-protected:
-	void 		draw(sf::RenderTarget& target_, sf::RenderStates states_) const override;
-	void		update(float delta_time_, const Gui::Inputs& inputs_) override;
+	auto 				begin() { return _nodes.begin(); }
+	auto				end() { return _nodes.end(); }
 
 protected:
-	std::vector<std::unique_ptr<Node>>
-				_nodes;
+	void 				draw(sf::RenderTarget& target_, sf::RenderStates states_) const override;
+	void				update(float delta_time_, const Gui::Inputs& inputs_) override;
+
+protected:
+	std::vector<Node>	_nodes;
 
 private:
-	std::optional<Node*>
-				_selected_node;
+	int	_selected_node_index;
 };
 

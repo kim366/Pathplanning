@@ -12,10 +12,10 @@ namespace NodeComponents
 
 struct Data
 {
-										Data(sf::Vector2f position_) : position{position_} {}
+									Data(sf::Vector2f position_) : position{position_} {}
 
-	const sf::Vector2f					position;
-	std::unordered_map<Node*, float>	connections;
+	sf::Vector2f					position;
+	std::unordered_map<int, float>	connections;
 };
 
 struct PathplanningData

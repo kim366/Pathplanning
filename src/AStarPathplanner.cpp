@@ -9,19 +9,19 @@ AStarPathplanner::AStarPathplanner(Graph& graph_, std::function<float(const Node
 {
 }
 
-PathplanningReturnType AStarPathplanner::operator()(Node* start_, Node* goal_)
+PathplanningReturnType AStarPathplanner::operator()(int start_index_, int goal_index_)
 {
-	_start = start_;
-	_goal = goal_;
+	_start = &_graph.getNode(start_index_);
+	_goal = &_graph.getNode(goal_index_);
 
 	for (auto& node : _graph)
-		node->getPathplanningData({}) = {};
+		node.getPathplanningData({}) = {};
  
 	_open = decltype(_open){_compare};
 
 	PathplanningReturnType result;
 
-	_open.push(start_);
+	_open.push(_start);
 	
 	while (!_open.empty())
 	{
@@ -30,7 +30,7 @@ PathplanningReturnType AStarPathplanner::operator()(Node* start_, Node* goal_)
 		current->getPathplanningData({}).tag = Closed;
 		result.examined_nodes.insert(current);
 
-		if (current == goal_)
+		if (current == _goal)
 		{
 			for (Node* trace{current}; trace != nullptr; trace = trace->getPathplanningData({}).parent)
 				result.path.push_back(trace);
@@ -40,7 +40,7 @@ PathplanningReturnType AStarPathplanner::operator()(Node* start_, Node* goal_)
 			return result;
 		}
 
-		auto successors{computeSuccessors(current, {})};
+		auto successors{computeSuccessors(_graph, current, {})};
 
 		for (auto successor : successors)
 		{
@@ -68,7 +68,7 @@ PathplanningReturnType AStarPathplanner::operator()(Node* start_, Node* goal_)
 EvaluationReturnType AStarPathplanner::evaluate(const Node* to_evaluate_, const Node* based_on_) const
 {
 	EvaluationReturnType result;
-	result.to_start_value = based_on_->getPathplanningData().to_start_value + getWeight(to_evaluate_, based_on_);
+	result.to_start_value = based_on_->getPathplanningData().to_start_value + getWeight(_graph, *to_evaluate_, *based_on_);
 	result.heuristic_value = _heuristic(to_evaluate_, _heuristic_data);
 	return result;
 }
