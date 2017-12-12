@@ -19,7 +19,7 @@ public:
 	NodeComponents::Data&					getData(Key<Graph>);
 
 	const NodeComponents::Visualization&	getVisualization() const;
-	NodeComponents::Visualization&			getVisualization(Key<Gui::AStarVisualizer>);
+	NodeComponents::Visualization&			getVisualization(VisualizationKey);
 
 	const NodeComponents::PathplanningData&	getPathplanningData() const;
 	NodeComponents::PathplanningData&		getPathplanningData(PathplannerKey);

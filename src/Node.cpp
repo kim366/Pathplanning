@@ -23,7 +23,7 @@ const NodeComponents::Visualization& Node::getVisualization() const
 	return _visualization_component;
 }
 
-NodeComponents::Visualization& Node::getVisualization(Key<Gui::AStarVisualizer>)
+NodeComponents::Visualization& Node::getVisualization(VisualizationKey)
 {
 	return _visualization_component;
 }

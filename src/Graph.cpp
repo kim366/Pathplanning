@@ -19,7 +19,7 @@ Graph::Graph(std::initializer_list<sf::Vector2i> node_positions_,
 int Graph::getIndex(const Node& node_) const
 {
 	for (int node_index{0}; node_index < _nodes.size(); ++node_index)
-		if (node_.getPathplanningData().parent->getData().position == _nodes[node_index].getData().position)
+		if (node_.getData().position == _nodes[node_index].getData().position)
 			return node_index;
 
 	return -1;
@@ -88,7 +88,7 @@ void Graph::draw(sf::RenderTarget& target_, sf::RenderStates states_) const
 	for (const auto& node : _nodes)
 	{
 		for (const auto& [to_node_index, cost] : node.getData().connections)
-			target_.draw(visualize_edge(node, _nodes[to_node_index], {222, 228, 223}));
+			target_.draw(visualize_edge(node, _nodes[to_node_index], {98, 100, 98}));
 	}
 
 	{
@@ -102,14 +102,13 @@ void Graph::draw(sf::RenderTarget& target_, sf::RenderStates states_) const
 				const int parent_index{getIndex(*node.getPathplanningData().parent)};
 
 				if (node.getData().connections.find(parent_index) != node.getData().connections.end())
-					path_edges.push_back(visualize_edge(node, _nodes[parent_index], {160, 164, 161}));
+					path_edges.push_back(visualize_edge(node, _nodes[parent_index], {47, 48, 47}));
 				else
 				{
 					should_draw_path_edges = false;
 					break;
 				}
 			}
-
 		}
 
 		if (should_draw_path_edges)

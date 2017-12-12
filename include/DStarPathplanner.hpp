@@ -11,6 +11,8 @@ public:
 	PathplanningReturnType 	
 			operator()(int start_index_, int goal_index_) override;
 
+	EvaluationReturnType			evaluate(const Node* to_evaluate_, const Node* based_on_) const override {}
+
 private:
 	float 	processState();
 	float 	modifyCost(Node* node1_, Node* node2_, float new_cost_);

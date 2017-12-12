@@ -2,6 +2,7 @@
 #include <Graph.hpp>
 #include <Grid.hpp>
 #include <Gui/AStarVisualizer.hpp>
+#include <Gui/DStarVisualizer.hpp>
 
 namespace Gui
 {
@@ -9,9 +10,11 @@ namespace Gui
 Core::Core()
 {
 	auto grid{std::make_unique<Grid>(30, true)};
-	auto astar_visualizer{std::make_unique<AStarVisualizer>(*grid, grid->toIndex({14, 15}), grid->toIndex({28, 1}))};
+	std::unique_ptr<DStarVisualizer> visualizer{new DStarVisualizer{*grid, grid->toIndex({14, 15}), grid->toIndex({28, 1})}};
+	// std::unique_ptr<AStarVisualizer> visualizer{new AStarVisualizer{*grid, grid->toIndex({14, 15}), grid->toIndex({28, 1})}};
+	// std::unique_ptr<AStarVisualizer> visualizer{new AStarVisualizer{*grid, grid->toIndex({10, 14}), grid->toIndex({20, 14})}};
 	_entity_manager->addEntity(std::move(grid));
-	_entity_manager->addEntity(std::move(astar_visualizer));
+	_entity_manager->addEntity(std::move(visualizer));
 	_window->setFramerateLimit(10);
 }
 
