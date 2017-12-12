@@ -38,6 +38,6 @@ protected:
 	std::vector<Node>	_nodes;
 
 private:
-	int	_selected_node_index;
+	int	_selected_node_index{-1};
 };
 
