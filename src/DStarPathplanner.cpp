@@ -15,7 +15,7 @@ PathplanningReturnType DStarPathplanner::operator()(int start_index_, int goal_i
 	_open.push(_goal);
 	_goal->getPathplanningData({}).heuristic_value = 0;
 
-	while (!(processState() == -1 || _goal->getPathplanningData().tag == Closed));
+	while (!(processState() == -1 || _start->getPathplanningData().tag == Closed));
 
 	PathplanningReturnType result;
 	for (Node* trace{_start}; trace != nullptr; trace = trace->getPathplanningData({}).parent)
@@ -29,12 +29,15 @@ float DStarPathplanner::processState()
 	if (_open.empty())
 		return -1;
 
-	std::cout << _open.size() << '\n'; // Debug
+	// std::cout << _open.size() << '\n'; // Debug
+	std::cout << _start->getPathplanningData().tag << '\n'; // Debug
 
 	Node* current{_open.top()};
 
 	float old_key_value{getMinimumKey()};
+
 	_open.pop();
+	current->getPathplanningData({}).tag = Closed;
 
 	const float current_heuristic_value{current->getPathplanningData({}).heuristic_value};
 
