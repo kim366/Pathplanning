@@ -1,11 +1,12 @@
 #pragma once
 
-#include <AStarPathplanner.hpp>
+#include <Pathplanner.hpp>
+#include <Graph.hpp>
 
-class DStarPathplanner : public AStarPathplanner
+class DStarPathplanner : public Pathplanner
 {
 public:
-			DStarPathplanner(Graph& graph_, std::function<float(const Node*, HeuristicData)> heuristic_);
+			DStarPathplanner(Graph& graph_);
 
 	PathplanningReturnType 	
 			operator()(int start_index_, int goal_index_) override;
@@ -16,5 +17,6 @@ private:
 	float	getMinimumKey() const;
 	void	insert(Node* node_, float new_heuristic_);
 
+	Graph&	_graph;
 	Graph	_map;
 };

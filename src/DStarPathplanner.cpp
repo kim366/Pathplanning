@@ -1,7 +1,7 @@
 #include <DStarPathplanner.hpp>
 
-DStarPathplanner::DStarPathplanner(Graph& graph_, std::function<float(const Node*, HeuristicData)> heuristic_)
-	: AStarPathplanner{graph_, heuristic_}
+DStarPathplanner::DStarPathplanner(Graph& graph_)
+	: _graph{graph_}
 	, _map{graph_}
 {
 }
