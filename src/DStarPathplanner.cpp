@@ -1,4 +1,5 @@
 #include <DStarPathplanner.hpp>
+#include <iostream>
 
 DStarPathplanner::DStarPathplanner(Graph& graph_)
 	: _graph{graph_}
@@ -28,6 +29,8 @@ float DStarPathplanner::processState()
 	if (_open.empty())
 		return -1;
 
+	std::cout << _open.size() << '\n'; // Debug
+
 	Node* current{_open.top()};
 
 	float old_key_value{getMinimumKey()};
@@ -42,10 +45,10 @@ float DStarPathplanner::processState()
 		{
 			auto& neighbor{_graph.getNode(neighbor_index)};
 
-			if (neighbor.getPathplanningData().heuristic_value <= old_key_value && current_heuristic_value > current->getPathplanningData().heuristic_value + cost) 
+			if (neighbor.getPathplanningData().heuristic_value <= old_key_value && current_heuristic_value > neighbor.getPathplanningData().heuristic_value + cost) 
 			{
 				current->getPathplanningData({}).parent = &neighbor;
-				current->getPathplanningData({}).heuristic_value = current->getPathplanningData().heuristic_value + cost;
+				current->getPathplanningData({}).heuristic_value = neighbor.getPathplanningData().heuristic_value + cost;
 			}
 		}
 	}
@@ -55,14 +58,14 @@ float DStarPathplanner::processState()
 		{
 			auto& neighbor{_graph.getNode(neighbor_index)};
 
-			const float new_heuristic_value{current->getPathplanningData({}).heuristic_value + getWeight(_graph, neighbor, *current)};
+			const float new_heuristic_value{current_heuristic_value + getWeight(_graph, neighbor, *current)};
 
 			if (neighbor.getPathplanningData().tag == New
-				|| (neighbor.getPathplanningData().parent == current && neighbor.getPathplanningData().heuristic_value != current->getPathplanningData().heuristic_value + cost)
-				|| (neighbor.getPathplanningData().parent != current && neighbor.getPathplanningData().heuristic_value > current->getPathplanningData().heuristic_value + cost))
+				|| (neighbor.getPathplanningData().parent == current && neighbor.getPathplanningData().heuristic_value != current_heuristic_value + cost)
+				|| (neighbor.getPathplanningData().parent != current && neighbor.getPathplanningData().heuristic_value > current_heuristic_value + cost))
 			{
 				neighbor.getPathplanningData({}).parent = current;
-				insert(&neighbor, current->getPathplanningData().heuristic_value + cost);
+				insert(&neighbor, current_heuristic_value + cost);
 			}
 		}
 	}
@@ -73,20 +76,20 @@ float DStarPathplanner::processState()
 			auto& neighbor{_graph.getNode(neighbor_index)};
 
 			if (neighbor.getPathplanningData().tag == New
-				|| (neighbor.getPathplanningData().parent == current && neighbor.getPathplanningData().heuristic_value > current->getPathplanningData().heuristic_value + cost))
+				|| (neighbor.getPathplanningData().parent == current && neighbor.getPathplanningData().heuristic_value > current_heuristic_value + cost))
 			{
 				neighbor.getPathplanningData({}).parent = current;
-				insert(&neighbor, current->getPathplanningData().heuristic_value + cost);
+				insert(&neighbor, current_heuristic_value + cost);
 			}
 			else
 			{
-				if (neighbor.getPathplanningData().parent && neighbor.getPathplanningData().heuristic_value > current->getPathplanningData().heuristic_value + cost)
+				if (neighbor.getPathplanningData().parent && neighbor.getPathplanningData().heuristic_value > current_heuristic_value + cost)
 				{
-					insert(current, current->getPathplanningData().heuristic_value);
+					insert(current, current_heuristic_value);
 				}
-				else if (neighbor.getPathplanningData().parent != current && current->getPathplanningData().heuristic_value > current->getPathplanningData().heuristic_value + cost
+				else if (neighbor.getPathplanningData().parent != current && current_heuristic_value > neighbor.getPathplanningData().heuristic_value + cost
 					&& neighbor.getPathplanningData().tag == Closed
-					&& current->getPathplanningData().heuristic_value)
+					&& neighbor.getPathplanningData().heuristic_value > old_key_value)
 				{
 					insert(&neighbor, neighbor.getPathplanningData().heuristic_value);
 				}
