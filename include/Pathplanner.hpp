@@ -13,11 +13,6 @@ struct PathplanningReturnType
 	std::set<Node*>	 	examined_nodes;
 };
 
-struct EvaluationReturnType
-{
-	float to_start_value, heuristic_value;
-};
-
 class Pathplanner
 {
 public:
@@ -25,9 +20,6 @@ public:
 	virtual									~Pathplanner() = 0;
 
 	virtual PathplanningReturnType 			operator()(int start_index_, int goal_index_) = 0;
-
-protected:
-	virtual EvaluationReturnType			evaluate(const Node* to_evaluate_, const Node* based_on_) const = 0;
 
 protected:
 	const std::function<bool(Node*, Node*)>	_compare;

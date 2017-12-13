@@ -13,7 +13,3 @@ Pathplanner::Pathplanner()
 Pathplanner::~Pathplanner()
 {
 }
-
-EvaluationReturnType Pathplanner::evaluate(const Node* to_evaluate_, const Node* based_on_) const
-{
-}
