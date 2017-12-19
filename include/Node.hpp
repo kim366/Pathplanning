@@ -2,38 +2,42 @@
 
 #include <Key.hpp>
 #include <SFML/System/Vector2.hpp>
-#include <NodeComponents.hpp>
+#include <unordered_map>
+#include <vector>
+#include <PathplanningTag.hpp> 
+#include <NodeHandle.hpp>
 
-class Graph;
-class AStarPathplanner;
-class DStarPathplanner;
-
-namespace Gui { class AStarVisualizer; }
-
-class Node
+struct Node
 {
-public:
-											Node(sf::Vector2f position_);
+					Node(sf::Vector2f position_);
 
-	const NodeComponents::Data&				getData() const;
-	NodeComponents::Data&					getData(Key<Graph>);
+	// Common Data
+	sf::Vector2f	position;
+	std::unordered_map<NodeHandle, float>
+					neighbors;
 
-	const NodeComponents::Visualization&	getVisualization() const;
-	NodeComponents::Visualization&			getVisualization(VisualizationKey);
+	// Used by Dijkstra's Algorithm, A* and D*
+	PathplanningTag	tag;
+	NodeHandle		parent;
+	float			value;	
 
-	const NodeComponents::PathplanningData&	getPathplanningData() const;
-	NodeComponents::PathplanningData&		getPathplanningData(PathplannerKey);
+	// Used by A*
+	float			to_start_value;
 
-	const NodeComponents::DStarData&		getDStarData() const;
-	NodeComponents::DStarData&				getDStarData(Key<DStarPathplanner>);
+	// Used by A* and D*
+	float			heuristic_value;
 
-private:
-	NodeComponents::Data					_data_component;
-	NodeComponents::Visualization 			_visualization_component;
-	NodeComponents::PathplanningData 		_pathplanning_data_component;
-	NodeComponents::DStarData				_dstar_data_component;
+	// Used by D*
+	float 			previous_heuristic_value;
+	float 			key_value;
+
+	enum VisualizationStatus
+	{
+		Standard,
+		OnPath,
+		Examined
+	} visualization_status;
 };
 
-float getWeight(Graph& graph_, const Node& from_, const Node& to_);
-std::vector<Node*> computeSuccessors(const Graph& graph_, const Node* node_, Key<AStarPathplanner>);
-std::vector<const Node*> computeSuccessors(const Graph& graph_, const Node* node_);
+float 					getWeight(NodeHandle from_, NodeHandle to_);
+std::vector<NodeHandle> computeSuccessors(NodeHandle node_);

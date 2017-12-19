@@ -2,23 +2,22 @@
 #include <iostream>
 
 DStarPathplanner::DStarPathplanner(Graph& graph_)
-	: _graph{graph_}
-	, _map{graph_}
+	: _map{graph_}
 {
 }
 
-PathplanningReturnType DStarPathplanner::operator()(int start_index_, int goal_index_)
+PathplanningReturnType DStarPathplanner::operator()(NodeHandle start_, NodeHandle goal_)
 {
-	_start = &_graph.getNode(start_index_);
-	_goal = &_graph.getNode(goal_index_);
+	_start = start_;
+	_goal = goal_;
 
 	_open.push(_goal);
-	_goal->getPathplanningData({}).heuristic_value = 0;
+	_goal->heuristic_value = 0;
 
-	while (!(processState() == -1 || _start->getPathplanningData().tag == Closed));
+	while (!(processState() == -1 || _start->tag == Closed));
 
 	PathplanningReturnType result;
-	for (Node* trace{_start}; trace != nullptr; trace = trace->getPathplanningData({}).parent)
+	for (NodeHandle trace{_start}; trace; trace = trace->parent)
 		result.path.push_back(trace);
 
 	return result;
@@ -29,72 +28,64 @@ float DStarPathplanner::processState()
 	if (_open.empty())
 		return -1;
 
-	// std::cout << _open.size() << '\n'; // Debug
-	std::cout << _start->getPathplanningData().tag << '\n'; // Debug
+	std::cout << _open.size() << '\n'; // Debug
+	// std::cout << _start->getPathplanningData().tag << '\n'; // Debug
 
-	Node* current{_open.top()};
+	NodeHandle current{_open.top()};
 
 	float old_key_value{getMinimumKey()};
 
 	_open.pop();
-	current->getPathplanningData({}).tag = Closed;
+	current->tag = Closed;
 
-	const float current_heuristic_value{current->getPathplanningData({}).heuristic_value};
-
-	if (old_key_value < current_heuristic_value)
+	if (old_key_value < current->heuristic_value)
 	{
 			
-		for (auto& [neighbor_index, cost] : current->getData().connections)
+		for (auto& [neighbor, cost] : current->neighbors)
 		{
-			auto& neighbor{_graph.getNode(neighbor_index)};
-
-			if (neighbor.getPathplanningData().heuristic_value <= old_key_value && current_heuristic_value > neighbor.getPathplanningData().heuristic_value + cost) 
+			if (neighbor->heuristic_value <= old_key_value && current->heuristic_value > neighbor->heuristic_value + cost) 
 			{
-				current->getPathplanningData({}).parent = &neighbor;
-				current->getPathplanningData({}).heuristic_value = neighbor.getPathplanningData().heuristic_value + cost;
+				current->parent = neighbor;
+				current->heuristic_value = neighbor->heuristic_value + cost;
 			}
 		}
 	}
-	else if (old_key_value == current_heuristic_value)
+	else if (old_key_value == current->heuristic_value)
 	{
-		for (auto& [neighbor_index, cost] : current->getData().connections)
+		for (auto& [neighbor_ref, cost] : current->neighbors)
 		{
-			auto& neighbor{_graph.getNode(neighbor_index)};
-
-			const float new_heuristic_value{current_heuristic_value + getWeight(_graph, neighbor, *current)};
-
-			if (neighbor.getPathplanningData().tag == New
-				|| (neighbor.getPathplanningData().parent == current && neighbor.getPathplanningData().heuristic_value != current_heuristic_value + cost)
-				|| (neighbor.getPathplanningData().parent != current && neighbor.getPathplanningData().heuristic_value > current_heuristic_value + cost))
+			auto neighbor{neighbor_ref};
+			if (neighbor->tag == New
+				|| (neighbor->parent == current && neighbor->heuristic_value != current->heuristic_value + cost)
+				|| (neighbor->parent != current && neighbor->heuristic_value > current->heuristic_value + cost))
 			{
-				neighbor.getPathplanningData({}).parent = current;
-				insert(&neighbor, current_heuristic_value + cost);
+				neighbor->parent = current;
+				insert(neighbor, current->heuristic_value + cost);
 			}
 		}
 	}
 	else
 	{
-		for (auto& [neighbor_index, cost] : current->getData().connections)
+		for (auto [neighbor, cost] : current->neighbors)
 		{
-			auto& neighbor{_graph.getNode(neighbor_index)};
-
-			if (neighbor.getPathplanningData().tag == New
-				|| (neighbor.getPathplanningData().parent == current && neighbor.getPathplanningData().heuristic_value > current_heuristic_value + cost))
+			auto copy{neighbor};
+			if (neighbor->tag == New
+				|| (neighbor->parent == current && neighbor->heuristic_value > current->heuristic_value + cost))
 			{
-				neighbor.getPathplanningData({}).parent = current;
-				insert(&neighbor, current_heuristic_value + cost);
+				copy->parent = current;
+				insert(neighbor, current->heuristic_value + cost);
 			}
 			else
 			{
-				if (neighbor.getPathplanningData().parent && neighbor.getPathplanningData().heuristic_value > current_heuristic_value + cost)
+				if (neighbor->parent && neighbor->heuristic_value > current->heuristic_value + cost)
 				{
-					insert(current, current_heuristic_value);
+					insert(current, current->heuristic_value);
 				}
-				else if (neighbor.getPathplanningData().parent != current && current_heuristic_value > neighbor.getPathplanningData().heuristic_value + cost
-					&& neighbor.getPathplanningData().tag == Closed
-					&& neighbor.getPathplanningData().heuristic_value > old_key_value)
+				else if (neighbor->parent != current && current->heuristic_value > neighbor->heuristic_value + cost
+					&& neighbor->tag == Closed
+					&& neighbor->heuristic_value > old_key_value)
 				{
-					insert(&neighbor, neighbor.getPathplanningData().heuristic_value);
+					insert(neighbor, neighbor->heuristic_value);
 				}
 			}
 		}
@@ -108,40 +99,40 @@ void handleCostDiscrepancy()
 	
 };
 
-float DStarPathplanner::modifyCost(Node* node1_, Node* node2_, float new_cost_)
+float DStarPathplanner::modifyCost(NodeHandle first_, NodeHandle second_, float new_cost_)
 {
-	_map.modifyWeight({_graph.getIndex(*node1_), _graph.getIndex(*node2_)}, new_cost_);
+	_map.modifyWeight(first_, second_, new_cost_);
 
-	if (node1_->getPathplanningData().tag == Closed)
-		insert(node1_, node1_->getPathplanningData().heuristic_value);
+	if (first_->tag == Closed)
+		insert(first_, first_->heuristic_value);
 
 	return getMinimumKey();
 }
 
 float DStarPathplanner::getMinimumKey() const
 {
-	return _open.empty() ? -1 : _open.top()->getDStarData().key_value;
+	return _open.empty() ? -1 : _open.top()->key_value;
 }
 
-void DStarPathplanner::insert(Node* node_, float new_heuristic_)
+void DStarPathplanner::insert(NodeHandle node_, float new_heuristic_)
 {
-	auto& key_value{node_->getDStarData({}).key_value};
+	auto& key_value{node_->key_value};
 
-	switch (node_->getPathplanningData().tag)
+	switch (node_->tag)
 	{	
 		case New:
 		key_value = new_heuristic_;
 		break;
 
 		case Open:
-		key_value = std::min(node_->getDStarData().key_value, new_heuristic_);
+		key_value = std::min(node_->key_value, new_heuristic_);
 		break;
 
 		case Closed:
-		key_value = std::min(node_->getPathplanningData({}).heuristic_value, new_heuristic_);
+		key_value = std::min(node_->heuristic_value, new_heuristic_);
 		break;
 	}
 
-	node_->getPathplanningData({}).heuristic_value = new_heuristic_;
+	node_->heuristic_value = new_heuristic_;
 	_open.push(node_);
 }

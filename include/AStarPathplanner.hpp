@@ -11,13 +11,11 @@ struct EvaluationReturnType
 class AStarPathplanner : public Pathplanner
 {
 public:
-							AStarPathplanner(Graph& graph_, std::function<float(const Node*, HeuristicData)> heuristic_);
-	PathplanningReturnType 	operator()(int start_index_, int goal_index_) override;
+							AStarPathplanner(std::function<float(NodeHandle, NodeHandle)> heuristic_);
+	PathplanningReturnType 	operator()(NodeHandle start_, NodeHandle goal_) override;
 
 private:
-	Graph&					_graph;
-	EvaluationReturnType	evaluate(const Node* to_evaluate_, const Node* based_on_) const;
-	std::function<float(const Node*, HeuristicData)> 
+	EvaluationReturnType	evaluate(NodeHandle to_evaluate_, NodeHandle based_on_) const;
+	std::function<float(NodeHandle, NodeHandle)> 
 							_heuristic;
-	const HeuristicData		_heuristic_data;
 };

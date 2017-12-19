@@ -10,25 +10,27 @@
 
 class Graph : public Gui::Entity
 {
+friend class NodeHandle;
+
 public:
 						Graph() = default;
 						Graph(std::initializer_list<sf::Vector2i> node_positions_,
 							std::initializer_list<std::pair<int, int>> node_indices_);
-
+						Graph(const Graph& other_);
+						
 	void				createNode(sf::Vector2f position_);
 	void				deleteNode(int node_index_);
 
 	void 				connect(std::pair<int, int> node_indices_);
 	void 				disconnect(std::pair<int, int> node_indices_);
-	void				modifyWeight(std::pair<int, int> node_indices_, float new_weight_);
+	void 				connect(NodeHandle first_, NodeHandle second_);
+	void 				disconnect(NodeHandle first_, NodeHandle second_);
 
-	Node& 				getNode(int node_index_) { return _nodes[node_index_]; }
-	const Node&			getNode(int node_index_) const { return _nodes[node_index_]; }
+	void				modifyWeight(NodeHandle first_, NodeHandle second_, float new_weight_);
 
-	int					getIndex(const Node& node_) const;
+	NodeHandle 			operator[](int index_);
 
-	auto 				begin() { return _nodes.begin(); }
-	auto				end() { return _nodes.end(); }
+	void				resetNodes();
 
 protected:
 	void 				draw(sf::RenderTarget& target_, sf::RenderStates states_) const override;
@@ -38,6 +40,6 @@ protected:
 	std::vector<Node>	_nodes;
 
 private:
-	int	_selected_node_index{-1};
+	int					_selected_node_index;
 };
 

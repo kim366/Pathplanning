@@ -2,31 +2,30 @@
 
 #include <vector>
 #include <queue>
-#include <set>
 #include <functional>
 #include <optional>
 #include <Node.hpp>
+#include <NodeHandle.hpp>
 
 struct PathplanningReturnType
 {
-	std::vector<Node*>	path;
-	std::set<Node*>	 	examined_nodes;
+	std::vector<NodeHandle>	path, examined_nodes;
 };
 
 class Pathplanner
 {
 public:
-											Pathplanner();
-	virtual									~Pathplanner() = 0;
+									Pathplanner();
+	virtual							~Pathplanner() = 0;
 
-	virtual PathplanningReturnType 			operator()(int start_index_, int goal_index_) = 0;
+	virtual PathplanningReturnType 	operator()(NodeHandle start_, NodeHandle goal_) = 0;
 
 protected:
-	const std::function<bool(Node*, Node*)>	_compare;
+	const std::function<bool(NodeHandle, NodeHandle)>
+									_compare;
 					
-	std::priority_queue<Node*, std::vector<Node*>, std::function<bool(Node*, Node*)>>
-											_open{_compare};
-	Node*									_start;
-	Node*									_goal;
+	std::priority_queue<NodeHandle, std::vector<NodeHandle>, std::function<bool(NodeHandle, NodeHandle)>>
+									_open{_compare};
+	NodeHandle						_start;
+	NodeHandle						_goal;
 };
-

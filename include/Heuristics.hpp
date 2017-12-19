@@ -4,56 +4,45 @@
 #include <math.h>
 #include <Grid.hpp>
 
-struct HeuristicData
-{
-	const Graph& graph;
-	Node*&		 goal;
-};
-
 struct Heuristic
 {
-	virtual float 	operator()(const Node* node_, HeuristicData data_) const = 0;
+	virtual float operator()(NodeHandle node_, NodeHandle goal_) const = 0;
 };
 
-struct Euclidean : public Heuristic
+struct Euclidean : Heuristic
 {
-	float operator()(const Node* node_, HeuristicData data_) const override
+	float operator()(NodeHandle node_, NodeHandle goal_) const override
 	{
-		sf::Vector2f distance{data_.goal->getData().position - node_->getData().position}; 
+		sf::Vector2f distance{goal_->position - node_-> position}; 
 		return std::hypot(distance.x, distance.y);
 	}
 };
 
-struct None : public Heuristic
+struct None : Heuristic
 {
-	float operator()(const Node* node_, HeuristicData data_) const override
+	float operator()(NodeHandle node_, NodeHandle goal_) const override
 	{
-		return 0.f;
+		return 0;
 	}
 };
 
-struct Manhattan : public Heuristic
+struct Manhattan : Heuristic
 {
-	float operator()(const Node* node_, HeuristicData data_) const override
+	float operator()(NodeHandle node_, NodeHandle goal_) const override
 	{
-		sf::Vector2f distance{data_.goal->getData().position - node_->getData().position};
+		sf::Vector2f distance{goal_->position - node_->position};
 		return std::abs(distance.x) + std::abs(distance.y);
 	}
 };
 
-struct Octile : public Heuristic
-{
-	float operator()(const Node* node_, HeuristicData data_) const override
-	{
-		auto grid{dynamic_cast<const Grid*>(&data_.graph)};
-		assert(grid);
-		assert(grid->eight_connected);
+// struct Octile : Heuristic
+// {
+// 	float operator()(NodeHandle node_, NodeHandle goal_) const override
+// 	{
+// 		sf::Vector2f distance{data_.goal->getData().position - node_->getData().position};
 
-		sf::Vector2f distance{data_.goal->getData().position - node_->getData().position};
+// 		distance = {std::abs(distance.x), std::abs(distance.y)};
 
-		distance = {std::abs(distance.x), std::abs(distance.y)};
-
-		return grid->unit * std::max(distance.x, distance.y) + (grid->diagonal_unit - 1) * std::min(distance.x, distance.y);
-	}
-};
-
+// 		return grid->unit * std::max(distance.x, distance.y) + (grid->diagonal_unit - 1) * std::min(distance.x, distance.y);
+// 	}
+// };

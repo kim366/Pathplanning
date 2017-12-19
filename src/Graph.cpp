@@ -16,43 +16,49 @@ Graph::Graph(std::initializer_list<sf::Vector2i> node_positions_,
 		connect(node_indices);
 }
 
-int Graph::getIndex(const Node& node_) const
+Graph::Graph(const Graph& other_)
+	: _nodes{other_._nodes}
+	, _selected_node_index{other_._selected_node_index}
 {
-	for (int node_index{0}; node_index < _nodes.size(); ++node_index)
-		if (node_.getData().position == _nodes[node_index].getData().position)
-			return node_index;
-
-	return -1;
+	for (auto& node : _nodes)
+		for (auto& [neighbor, cost] : node.neighbors)
+			const_cast<NodeHandle&>(neighbor)._graph = this;
 }
 
 void Graph::connect(std::pair<int, int> node_indices_)
 {
-	Node& node1{_nodes[node_indices_.first]};
-	Node& node2{_nodes[node_indices_.second]};
-
-	sf::Vector2i distance{node1.getData().position - node2.getData().position};
-	auto weight{std::hypot(distance.x, distance.y)};
-
-	node1.getData({}).connections[node_indices_.second] = weight;
-	node2.getData({}).connections[node_indices_.first] = weight;
+	connect(operator[](node_indices_.first), operator[](node_indices_.second));
 }
 
 void Graph::disconnect(std::pair<int, int> node_indices_)
 {
-	Node& node1{_nodes[node_indices_.first]};
-	Node& node2{_nodes[node_indices_.second]};
-
-	node1.getData({}).connections.erase(node_indices_.second);
-	node2.getData({}).connections.erase(node_indices_.first);
+	disconnect(operator[](node_indices_.first), operator[](node_indices_.second));
 }
 
-void Graph::modifyWeight(std::pair<int, int> node_indices_, float new_weight_)
+void Graph::connect(NodeHandle first_, NodeHandle second_)
 {
-	Node& node1{_nodes[node_indices_.first]};
-	Node& node2{_nodes[node_indices_.second]};
+	sf::Vector2i delta{first_->position - second_->position};
+	auto weight{std::hypot(delta.x, delta.y)};
 
-	node1.getData({}).connections[node_indices_.second] = new_weight_;
-	node2.getData({}).connections[node_indices_.first] = new_weight_;
+	first_->neighbors[second_] = weight;
+	second_->neighbors[first_] = weight;
+}
+
+void Graph::disconnect(NodeHandle first_, NodeHandle second_)
+{
+	first_->neighbors.erase(second_);
+	second_->neighbors.erase(first_);
+}
+
+void Graph::modifyWeight(NodeHandle first_, NodeHandle second_, float new_weight_)
+{
+	first_->neighbors[second_] = new_weight_;
+	second_->neighbors[first_] = new_weight_;
+}
+
+NodeHandle Graph::operator[](int index_)
+{
+	return {index_, *this}; 
 }
 
 void Graph::createNode(sf::Vector2f position_)
@@ -65,17 +71,28 @@ void Graph::deleteNode(int node_index_)
 	_nodes.erase(_nodes.begin() + node_index_);
 }
 
+void Graph::resetNodes()
+{
+	for (auto& node : _nodes)
+	{
+		auto neighbors{std::move(node.neighbors)};
+		auto position{node.position};
+		node = {position};
+		node.neighbors = neighbors;
+	}
+}
+
 void Graph::draw(sf::RenderTarget& target_, sf::RenderStates states_) const
 {
 	using std::begin;
 	using std::end;
 
-	auto visualize_edge{[=] (const auto& node1_, const auto& node2_, sf::Color color_) -> sf::RectangleShape
+	auto visualize_edge{[=] (const Node& first_, const Node& second_, sf::Color color_) -> sf::RectangleShape
 	{
-		sf::Vector2f distance{node2_.getData().position - node1_.getData().position};
+		sf::Vector2f distance{second_.position - first_.position};
 		sf::RectangleShape visualized_edge{{std::hypot(distance.x, distance.y), Gui::cst::Graph::edge_width}};
 		visualized_edge.setOrigin(0, Gui::cst::Graph::edge_width / 2);
-		visualized_edge.setPosition(node1_.getData().position);
+		visualized_edge.setPosition(first_.position);
 		visualized_edge.setFillColor(color_);
 		visualized_edge.setRotation(std::atan(distance.y / distance.x) * 180u / 3.1415926f);
 
@@ -87,8 +104,8 @@ void Graph::draw(sf::RenderTarget& target_, sf::RenderStates states_) const
 
 	for (const auto& node : _nodes)
 	{
-		for (const auto& [to_node_index, cost] : node.getData().connections)
-			target_.draw(visualize_edge(node, _nodes[to_node_index], {98, 100, 98}));
+		for (const auto& [neighbor, cost] : node.neighbors)
+			target_.draw(visualize_edge(node, *neighbor, {98, 100, 98}));
 	}
 
 	{
@@ -97,12 +114,10 @@ void Graph::draw(sf::RenderTarget& target_, sf::RenderStates states_) const
 
 		for (const auto& node : _nodes)
 		{
-			if (node.getVisualization().status == NodeComponents::Visualization::OnPath && node.getPathplanningData().parent != nullptr)
+			if (node.visualization_status == Node::OnPath && node.parent)
 			{
-				const int parent_index{getIndex(*node.getPathplanningData().parent)};
-
-				if (node.getData().connections.find(parent_index) != node.getData().connections.end())
-					path_edges.push_back(visualize_edge(node, _nodes[parent_index], {47, 48, 47}));
+				if (node.neighbors.find(node.parent) != node.neighbors.end())
+					path_edges.push_back(visualize_edge(node, *node.parent, {47, 48, 47}));
 				else
 				{
 					should_draw_path_edges = false;
@@ -120,7 +135,7 @@ void Graph::draw(sf::RenderTarget& target_, sf::RenderStates states_) const
 	{
 		sf::CircleShape visualized_node{Gui::cst::Graph::node_radius};
 		visualized_node.setOrigin(Gui::cst::Graph::node_radius, Gui::cst::Graph::node_radius);
-		visualized_node.setPosition(_nodes[node_index].getData().position);
+		visualized_node.setPosition(_nodes[node_index].position);
 		
 		if (node_index == _selected_node_index)
 		{
@@ -128,9 +143,9 @@ void Graph::draw(sf::RenderTarget& target_, sf::RenderStates states_) const
 			visualized_node.setOutlineColor(sf::Color{186, 182, 96});
 		}
 
-		if (_nodes[node_index].getVisualization().status == NodeComponents::Visualization::OnPath)
+		if (_nodes[node_index].visualization_status == Node::OnPath)
 			visualized_node.setFillColor(sf::Color{39, 96, 122});
-		else if (_nodes[node_index].getVisualization().status == NodeComponents::Visualization::Examined)
+		else if (_nodes[node_index].visualization_status == Node::Examined)
 			visualized_node.setFillColor(sf::Color{91, 201, 249});
 		else
 			visualized_node.setFillColor({173, 72, 87});
@@ -148,7 +163,7 @@ void Graph::update(float delta_time_, const Gui::Inputs& inputs_)
 	{
 		auto found{std::find_if(begin(_nodes), end(_nodes), [=] (auto& node_)
 		{
-			sf::Vector2f distance{static_cast<sf::Vector2f>(inputs_.cursor_position) - node_.getData().position};
+			sf::Vector2f distance{static_cast<sf::Vector2f>(inputs_.cursor_position) - node_.position};
 			return std::hypot(distance.x, distance.y) <= Gui::cst::Graph::node_radius;
 		})};
 
@@ -160,7 +175,7 @@ void Graph::update(float delta_time_, const Gui::Inputs& inputs_)
 				_selected_node_index = found_node_index;
 			else
 			{
-				if (!std::isinf(getWeight(*this, _nodes[_selected_node_index], *found)))
+				if (!std::isinf(getWeight(operator[](_selected_node_index), operator[](found_node_index))))
 					disconnect({found_node_index, _selected_node_index});
 				else if (_selected_node_index != found_node_index)
 					connect({found_node_index, _selected_node_index});

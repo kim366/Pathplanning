@@ -1,82 +1,32 @@
 #include <Node.hpp>
-#include <algorithm>
-#include <Pathplanner.hpp>
-#include <Graph.hpp>
 
 Node::Node(sf::Vector2f position_)
-	: _data_component{position_}
+	: position{position_}
+	, tag{New}
+	, parent{}
+	, value{0}
+	, heuristic_value{0}
+	, to_start_value{0}
+	, previous_heuristic_value{0}
+	, key_value{0}
 {
 }
 
-const NodeComponents::Data& Node::getData() const
+float getWeight(NodeHandle from_, NodeHandle to_)
 {
-	return _data_component; 
-}
-
-NodeComponents::Data& Node::getData(Key<Graph>)
-{
-	return _data_component;
-}
-
-const NodeComponents::Visualization& Node::getVisualization() const
-{
-	return _visualization_component;
-}
-
-NodeComponents::Visualization& Node::getVisualization(VisualizationKey)
-{
-	return _visualization_component;
-}
-
-const NodeComponents::PathplanningData& Node::getPathplanningData() const
-{
-	return _pathplanning_data_component;
-}
-
-NodeComponents::PathplanningData& Node::getPathplanningData(PathplannerKey)
-{
-	return _pathplanning_data_component;
-}
-
-
-const NodeComponents::DStarData& Node::getDStarData() const
-{
-	return _dstar_data_component;
-}
-
-NodeComponents::DStarData& Node::getDStarData(Key<DStarPathplanner>)
-{
-	return _dstar_data_component;
-}
-
-float getWeight(Graph& graph_, const Node& from_, const Node& to_)
-{
-	const auto found{from_.getData().connections.find(graph_.getIndex(to_))};
-	if (found != end(from_.getData().connections))
+	const auto found{from_->neighbors.find(to_)};
+	if (found != from_->neighbors.end())
 		return found->second;
 	return std::numeric_limits<float>::infinity();
 }
 
-std::vector<Node*> computeSuccessors(const Graph& graph_, const Node* node_, Key<AStarPathplanner>)
+std::vector<NodeHandle> computeSuccessors(NodeHandle node_)
 {
-	std::vector<Node*> successors;
+	std::vector<NodeHandle> successors;
 
-	for (auto& [to_node_index, cost] : node_->getData().connections) {
-		if (&graph_.getNode(to_node_index) != node_->getPathplanningData().parent)
-			successors.push_back(const_cast<Node*>(&graph_.getNode(to_node_index)));
-	}
-
-	return successors;
-}
-
-std::vector<const Node*> computeSuccessors(const Graph& graph_, const Node* node_)
-{
-	std::vector<const Node*> successors;
-
-	for (auto& [to_node_index, cost] : node_->getData().connections) {
-		if (&graph_.getNode(to_node_index) != node_->getPathplanningData().parent)
-			successors.push_back(&graph_.getNode(to_node_index));
-	}
-
+	for (auto [neighbor, cost] : node_->neighbors)
+		if (neighbor != node_)
+			successors.push_back(neighbor);
+	
 	return successors;
 }
