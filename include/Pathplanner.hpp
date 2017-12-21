@@ -26,6 +26,5 @@ protected:
 					
 	std::priority_queue<NodeHandle, std::vector<NodeHandle>, std::function<bool(NodeHandle, NodeHandle)>>
 									_open{_compare};
-	NodeHandle						_start;
 	NodeHandle						_goal;
 };

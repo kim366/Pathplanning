@@ -13,6 +13,7 @@ friend class std::hash<NodeHandle>;
 
 public:
 				NodeHandle();
+				NodeHandle(std::nullptr_t);
 				NodeHandle(int index_, Graph& graph_);
 				
 	Node* 		operator->();
@@ -22,10 +23,9 @@ public:
 
 	bool 		operator==(NodeHandle other_) const;
 	bool		operator!=(NodeHandle other_) const;
-	// bool 		operator==(Node* other_) const;
-	// bool		operator!=(Node* other_) const;
 
-				operator bool() const;
+	bool		operator==(std::nullptr_t) const;
+	bool 		operator!=(std::nullptr_t) const;
 	NodeHandle& operator=(NodeHandle other_);
 
 private:

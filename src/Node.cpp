@@ -3,7 +3,7 @@
 Node::Node(sf::Vector2f position_)
 	: position{position_}
 	, tag{New}
-	, parent{}
+	, parent{nullptr}
 	, value{0}
 	, heuristic_value{0}
 	, to_start_value{0}

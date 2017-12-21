@@ -8,16 +8,16 @@ DStarPathplanner::DStarPathplanner(Graph& graph_)
 
 PathplanningReturnType DStarPathplanner::operator()(NodeHandle start_, NodeHandle goal_)
 {
-	_start = start_;
+	_open = decltype(_open){_compare};
 	_goal = goal_;
 
-	_open.push(_goal);
-	_goal->heuristic_value = 0;
+	_open.push(goal_);
+	goal_->heuristic_value = 0;
 
-	while (!(processState() == -1 || _start->tag == Closed));
+	while (!(processState() == -1 || start_->tag == Closed));
 
 	PathplanningReturnType result;
-	for (NodeHandle trace{_start}; trace; trace = trace->parent)
+	for (NodeHandle trace{start_}; trace != nullptr; trace = trace->parent)
 		result.path.push_back(trace);
 
 	return result;
@@ -28,20 +28,18 @@ float DStarPathplanner::processState()
 	if (_open.empty())
 		return -1;
 
-	std::cout << _open.size() << '\n'; // Debug
-	// std::cout << _start->getPathplanningData().tag << '\n'; // Debug
+	std::cout << _open.size() << ';'; // Debug
 
 	NodeHandle current{_open.top()};
 
-	float old_key_value{getMinimumKey()};
+	const float old_key_value{getMinimumKey()};
 
 	_open.pop();
 	current->tag = Closed;
 
 	if (old_key_value < current->heuristic_value)
-	{
-			
-		for (auto& [neighbor, cost] : current->neighbors)
+	{	
+		for (auto [neighbor, cost] : current->neighbors)
 		{
 			if (neighbor->heuristic_value <= old_key_value && current->heuristic_value > neighbor->heuristic_value + cost) 
 			{
@@ -52,12 +50,12 @@ float DStarPathplanner::processState()
 	}
 	else if (old_key_value == current->heuristic_value)
 	{
-		for (auto& [neighbor_ref, cost] : current->neighbors)
+		for (auto [neighbor_ref, cost] : current->neighbors)
 		{
 			auto neighbor{neighbor_ref};
-			if (neighbor->tag == New
-				|| (neighbor->parent == current && neighbor->heuristic_value != current->heuristic_value + cost)
-				|| (neighbor->parent != current && neighbor->heuristic_value > current->heuristic_value + cost))
+			if (neighbor->tag == New ||
+				(neighbor->parent == current && neighbor->heuristic_value != current->heuristic_value + cost) ||
+				(neighbor->parent != current && neighbor->heuristic_value > current->heuristic_value + cost))
 			{
 				neighbor->parent = current;
 				insert(neighbor, current->heuristic_value + cost);
@@ -66,30 +64,29 @@ float DStarPathplanner::processState()
 	}
 	else
 	{
-		for (auto [neighbor, cost] : current->neighbors)
+		for (auto [neighbor_ref, cost] : current->neighbors)
 		{
-			auto copy{neighbor};
-			if (neighbor->tag == New
-				|| (neighbor->parent == current && neighbor->heuristic_value > current->heuristic_value + cost))
+			auto neighbor{neighbor_ref};
+			if (neighbor->tag == New ||
+				 (neighbor->parent == current && neighbor->heuristic_value > current->heuristic_value + cost))
 			{
-				copy->parent = current;
+				neighbor->parent = current;
 				insert(neighbor, current->heuristic_value + cost);
 			}
 			else
 			{
-				if (neighbor->parent && neighbor->heuristic_value > current->heuristic_value + cost)
-				{
+				if (neighbor->parent != current && neighbor->heuristic_value > current->heuristic_value + cost)
 					insert(current, current->heuristic_value);
-				}
-				else if (neighbor->parent != current && current->heuristic_value > neighbor->heuristic_value + cost
-					&& neighbor->tag == Closed
-					&& neighbor->heuristic_value > old_key_value)
+				else if (neighbor->parent != current && current->heuristic_value > neighbor->heuristic_value + cost &&
+					neighbor->tag == Closed && neighbor->heuristic_value > old_key_value)
 				{
 					insert(neighbor, neighbor->heuristic_value);
 				}
 			}
 		}
 	}
+
+	std::cout << _open.size() << '\n'; // Debug
 
 	return getMinimumKey();
 }

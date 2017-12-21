@@ -8,15 +8,14 @@ AStarPathplanner::AStarPathplanner(std::function<float(NodeHandle, NodeHandle)> 
 }
 
 PathplanningReturnType AStarPathplanner::operator()(NodeHandle start_, NodeHandle goal_)
-{
-	_start = start_;
-	_goal = goal_;	
- 
+{ 
+	_goal = goal_;
+
 	_open = decltype(_open){_compare};
 
 	PathplanningReturnType result;
 
-	_open.push(_start);
+	_open.push(start_);
 	
 	while (!_open.empty())
 	{
@@ -25,9 +24,9 @@ PathplanningReturnType AStarPathplanner::operator()(NodeHandle start_, NodeHandl
 		current->tag = Closed;
 		result.examined_nodes.push_back(current);
 
-		if (current == _goal)
+		if (current == goal_)
 		{
-			for (NodeHandle trace{current}; trace; trace = trace->parent)
+			for (NodeHandle trace{current}; trace != nullptr; trace = trace->parent)
 				result.path.push_back(trace);
 
 			std::reverse(result.path.begin(), result.path.end());

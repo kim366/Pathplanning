@@ -2,6 +2,11 @@
 #include <Graph.hpp>
 
 NodeHandle::NodeHandle()
+	: NodeHandle{nullptr}
+{
+}
+
+NodeHandle::NodeHandle(std::nullptr_t)
 	: _index{-1}
 	, _graph{nullptr}
 {
@@ -53,7 +58,12 @@ bool NodeHandle::operator!=(NodeHandle other_) const
 // 	return !(*this == other_);
 // }
 
-NodeHandle::operator bool() const
+bool NodeHandle::operator==(std::nullptr_t) const
+{
+	return _index == -1;
+}
+
+bool NodeHandle::operator!=(std::nullptr_t) const
 {
 	return _index != -1;
 }

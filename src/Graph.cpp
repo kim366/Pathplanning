@@ -114,7 +114,7 @@ void Graph::draw(sf::RenderTarget& target_, sf::RenderStates states_) const
 
 		for (const auto& node : _nodes)
 		{
-			if (node.visualization_status == Node::OnPath && node.parent)
+			if (node.visualization_status == Node::OnPath && node.parent != nullptr)
 			{
 				if (node.neighbors.find(node.parent) != node.neighbors.end())
 					path_edges.push_back(visualize_edge(node, *node.parent, {47, 48, 47}));
