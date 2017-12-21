@@ -7,6 +7,7 @@ Pathplanner::Pathplanner()
 			return newly_added_ == _goal;
 		return newly_added_->value < topmost_->value;
 	}}
+	, _goal{nullptr}
 {
 }
 

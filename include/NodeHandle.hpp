@@ -12,7 +12,6 @@ friend Graph;
 friend class std::hash<NodeHandle>;
 
 public:
-				NodeHandle();
 				NodeHandle(std::nullptr_t);
 				NodeHandle(int index_, Graph& graph_);
 				

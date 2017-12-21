@@ -1,11 +1,6 @@
 #include <NodeHandle.hpp>
 #include <Graph.hpp>
 
-NodeHandle::NodeHandle()
-	: NodeHandle{nullptr}
-{
-}
-
 NodeHandle::NodeHandle(std::nullptr_t)
 	: _index{-1}
 	, _graph{nullptr}
