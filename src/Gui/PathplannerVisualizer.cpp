@@ -29,22 +29,17 @@ void PathplannerVisualizer::update(float delta_time_, const Inputs& inputs_)
 			node_on_path->visualization_status = Node::OnPath;
 	}
 
-	if (inputs_.event.pressed(sf::Keyboard::S))
-	{
-		auto astar_pathplanner{dynamic_cast<AStarPathplanner&>(*_pathplanner)};
-		if (astar_pathplanner.getHeuristic().target<Manhattan>())
-		{
-			_pathplanner = std::make_unique<AStarPathplanner>(Euclidean{});
-			std::cout << "Euclidean\n";
-		}
-		else
-		{
-			_pathplanner = std::make_unique<AStarPathplanner>(Manhattan{});
-			std::cout << "Manhattan\n";
-		}
-		// _pathplanner = std::make_unique<DStarPathplanner>(_graph);
-	}
-	
+	if (inputs_.event.pressed(sf::Keyboard::D))
+		_pathplanner = std::make_unique<DStarPathplanner>(_graph);
+
+	if (inputs_.event.pressed(sf::Keyboard::N))
+		_pathplanner = std::make_unique<AStarPathplanner>(None{});
+
+	if (inputs_.event.pressed(sf::Keyboard::M))
+		_pathplanner = std::make_unique<AStarPathplanner>(Manhattan{});
+
+	if (inputs_.event.pressed(sf::Keyboard::E))
+		_pathplanner = std::make_unique<AStarPathplanner>(Euclidean{});
 }
 
 } // namespace Gui

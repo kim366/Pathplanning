@@ -43,16 +43,6 @@ bool NodeHandle::operator!=(NodeHandle other_) const
 	return !(*this == other_);
 }
 
-// bool NodeHandle::operator==(Node* other_) const
-// {
-// 	return &**this == other_;
-// }
-
-// bool NodeHandle::operator!=(Node* other_) const
-// {
-// 	return !(*this == other_);
-// }
-
 bool NodeHandle::operator==(std::nullptr_t) const
 {
 	return _index == -1;
