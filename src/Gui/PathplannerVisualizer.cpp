@@ -1,33 +1,31 @@
-#include <Gui/DStarVisualizer.hpp>
+#include <Gui/PathplannerVisualizer.hpp>
 #include <Graph.hpp>
 #include <iostream>
 
 namespace Gui
 {
 
-DStarVisualizer::DStarVisualizer(Graph& graph_, NodeHandle start_, NodeHandle goal_)
-	: _find_shortest_path{graph_}
+PathplannerVisualizer::PathplannerVisualizer(std::unique_ptr<Pathplanner>&& pathplanner_, Graph& graph_, NodeHandle start_, NodeHandle goal_)
+	: _pathplanner{std::move(pathplanner_)}
+	, _graph{graph_}
 	, _start{start_}
 	, _goal{goal_}
 {
 }
 
-void DStarVisualizer::update(float delta_time_, const Inputs& inputs_)
+void PathplannerVisualizer::update(float delta_time_, const Inputs& inputs_)
 {
 	if (inputs_.event.pressed(sf::Keyboard::Space))
 	{
-		for (auto& examined_node : _result.examined_nodes)
-			examined_node->visualization_status = Node::Standard;
+		_graph.resetNodes();
 
-		for (auto& node_on_path : _result.path)
-			node_on_path->visualization_status = Node::Standard;
-	
-		_result = _find_shortest_path(_start, _goal);
+		auto& find_shortest_path{*_pathplanner};
+		auto result{find_shortest_path(_start, _goal)};
 
-		for (auto& examined_node : _result.examined_nodes)
+		for (auto& examined_node : result.examined_nodes)
 			examined_node->visualization_status = Node::Examined;
 
-		for (auto& node_on_path : _result.path)
+		for (auto& node_on_path : result.path)
 			node_on_path->visualization_status = Node::OnPath;
 
 		// float sum1 = _result.path.back()->getPathplanningData().value, sum2 = 0;
