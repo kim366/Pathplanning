@@ -27,13 +27,22 @@ void PathplannerVisualizer::update(float delta_time_, const Inputs& inputs_)
 
 		for (auto& node_on_path : result.path)
 			node_on_path->visualization_status = Node::OnPath;
+	}
 
-		// float sum1 = _result.path.back()->getPathplanningData().value, sum2 = 0;
-		
-		// for (int i{0}; i < _result.path.size() - 1; ++i)
-		// 	sum2 += getWeight(_result.path[i], _result.path[i + 1]);
-
-		// std::cout << sum1 << ", " << sum2 << ", " << dynamic_cast<Grid&>(_graph).diagonal_unit << ", " << getWeight(_result.path[0], _result.path[1]) << "Not Equal!!!!"/*<< ", " << _result.path.size()*/;
+	if (inputs_.event.pressed(sf::Keyboard::S))
+	{
+		auto astar_pathplanner{dynamic_cast<AStarPathplanner&>(*_pathplanner)};
+		if (astar_pathplanner.getHeuristic().target<Manhattan>())
+		{
+			_pathplanner = std::make_unique<AStarPathplanner>(Euclidean{});
+			std::cout << "Euclidean\n";
+		}
+		else
+		{
+			_pathplanner = std::make_unique<AStarPathplanner>(Manhattan{});
+			std::cout << "Manhattan\n";
+		}
+		// _pathplanner = std::make_unique<DStarPathplanner>(_graph);
 	}
 	
 }

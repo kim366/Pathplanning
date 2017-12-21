@@ -21,6 +21,7 @@ private:
 	Graph&							_graph;
 	NodeHandle						_start;
 	NodeHandle						_goal;
+	
 };
 
 } // namespace Gui
