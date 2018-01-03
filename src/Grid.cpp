@@ -8,14 +8,14 @@ Grid::Grid(unsigned size_, bool eight_connected_)
 	: _total_size{Gui::cst::Window::size - 2 * Gui::cst::Graph::node_radius}
 	, _size{size_}
 	, eight_connected{eight_connected_}
-	, unit{_total_size / _size}
+	, unit{_total_size / (_size - 1)}
 	, diagonal_unit{eight_connected_ ? std::hypot(unit, unit) : 0}
 {
 	_nodes.reserve(std::pow(_size, 2));
 	
-	for (auto y_coordinate{0u}; y_coordinate < _size; ++y_coordinate)
+	for (int y_coordinate{0}; y_coordinate < _size; ++y_coordinate)
 	{
-		for (auto x_coordinate{0u}; x_coordinate < _size; ++x_coordinate)
+		for (int x_coordinate{0}; x_coordinate < _size; ++x_coordinate)
 		{
 			float x_window_coordinate{(static_cast<float>(x_coordinate) / (_size - 1)) * _total_size + Gui::cst::Graph::node_radius};
 			float y_window_coordinate{(static_cast<float>(y_coordinate) / (_size - 1)) * _total_size + Gui::cst::Graph::node_radius};
@@ -23,15 +23,15 @@ Grid::Grid(unsigned size_, bool eight_connected_)
 		}
 	}
 
-	for (auto y_coordinate{0u}; y_coordinate < _size; ++y_coordinate)
+	for (int y_coordinate{0}; y_coordinate < _size; ++y_coordinate)
 	{
-		for (auto x_coordinate{0u}; x_coordinate < _size; ++x_coordinate)
+		for (int x_coordinate{0}; x_coordinate < _size; ++x_coordinate)
 		{	
-			unsigned current_node_index{toIndex({x_coordinate, y_coordinate})};
+			int current_node_index{toIndex({x_coordinate, y_coordinate})};
 
-			for (auto direction{0u}; direction < (eight_connected_ ? 8 : 4); ++direction)
+			for (int direction{0}; direction < (eight_connected_ ? 8 : 4); ++direction)
 			{
-				unsigned neighbor_node_index{current_node_index};
+				int neighbor_node_index{current_node_index};
 
 				if (direction == 0)
 				{
@@ -102,7 +102,7 @@ int Grid::toIndex(sf::Vector2i coordinate_)
 
 sf::Vector2i Grid::toCoordinate(int index_)
 {
-	unsigned x{0}, y{0};
+	int x{0}, y{0};
 	while (index_ >= static_cast<int>(_size))
 	{
 		index_ -= _size;

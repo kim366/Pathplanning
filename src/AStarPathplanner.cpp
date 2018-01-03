@@ -2,8 +2,9 @@
 #include <algorithm>
 #include <Graph.hpp>
 
-AStarPathplanner::AStarPathplanner(std::function<float(NodeHandle, NodeHandle)> heuristic_)
+AStarPathplanner::AStarPathplanner(std::function<float(NodeHandle, NodeHandle, const Graph&)> heuristic_, const Graph& graph_)
 	: _heuristic{heuristic_}
+	, _graph{graph_}
 {
 }
 
@@ -61,6 +62,6 @@ EvaluationReturnType AStarPathplanner::evaluate(NodeHandle to_evaluate_, NodeHan
 {
 	EvaluationReturnType result;
 	result.to_start_value = based_on_->to_start_value + getWeight(to_evaluate_, based_on_);
-	result.heuristic_value = _heuristic(to_evaluate_, _goal);
+	result.heuristic_value = _heuristic(to_evaluate_, _goal, _graph);
 	return result;
 }
