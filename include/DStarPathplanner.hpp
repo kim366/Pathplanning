@@ -10,12 +10,14 @@ public:
 
 	PathplanningReturnType 	
 			operator()(NodePtr start_, NodePtr goal_) override;
+	void	advance(int index_);
 
 private:
 	float 	processState();
 	float 	modifyCost(NodePtr first_, NodePtr second_, float new_cost_);
 	float	getMinimumKey() const;
-	void	insert(NodePtr node_, float new_value_);
+	void	insert(NodePtr node_, float new_heuristic_);
+	
 
 	PathplanningReturnType
 			_result;

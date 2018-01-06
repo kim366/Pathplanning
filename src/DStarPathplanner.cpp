@@ -3,7 +3,13 @@
 #include <Grid.hpp>
 
 DStarPathplanner::DStarPathplanner(Graph& graph_)
-	: _map{graph_}
+	: Pathplanner{[this] (NodePtr topmost_, NodePtr newly_added_) -> bool
+	{
+		if (topmost_->key_value == newly_added_->key_value)
+			return newly_added_ == _goal;
+		return newly_added_->key_value < topmost_->key_value;
+	}}
+	, _map{graph_}
 {
 }
 
@@ -35,28 +41,28 @@ float DStarPathplanner::processState()
 	current->tag = Closed;
 	_result.examined_nodes.push_back(current);
 
-	if (old_key_value == current->value)
+	if (old_key_value == current->heuristic_value)
 	{
 		for (auto [neighbor_ref, cost] : current->neighbors)
 		{
 			auto neighbor{neighbor_ref};
 			if (neighbor->tag == New ||
-				(neighbor->parent == current && neighbor->value != current->value + cost) ||
-				(neighbor->parent != current && neighbor->value > current->value + cost))
+				(neighbor->parent == current && neighbor->heuristic_value != current->heuristic_value + cost) ||
+				(neighbor->parent != current && neighbor->heuristic_value > current->heuristic_value + cost))
 			{
 				neighbor->parent = current;
-				insert(neighbor, current->value + cost);
+				insert(neighbor, current->heuristic_value + cost);
 			}
 		}
 	}
-	else if (old_key_value < current->value)
+	else if (old_key_value < current->heuristic_value)
 	{
 		for (auto [neighbor, cost] : current->neighbors)
 		{
-			if (neighbor->value <= old_key_value && current->value > neighbor->value + cost) 
+			if (neighbor->heuristic_value <= old_key_value && current->heuristic_value > neighbor->heuristic_value + cost) 
 			{
 				current->parent = neighbor;
-				current->value = neighbor->value + cost;
+				current->heuristic_value = neighbor->heuristic_value + cost;
 			}
 		}
 	}
@@ -66,19 +72,19 @@ float DStarPathplanner::processState()
 		{
 			auto neighbor{neighbor_ref};
 			if (neighbor->tag == New ||
-				 (neighbor->parent == current && neighbor->value > current->value + cost))
+				 (neighbor->parent == current && neighbor->heuristic_value > current->heuristic_value + cost))
 			{
 				neighbor->parent = current;
-				insert(neighbor, current->value + cost);
+				insert(neighbor, current->heuristic_value + cost);
 			}
 			else
 			{
-				if (neighbor->parent != current && neighbor->value > current->value + cost)
-					insert(current, current->value);
-				else if (neighbor->parent != current && current->value > neighbor->value + cost &&
-					neighbor->tag == Closed && neighbor->value > old_key_value)
+				if (neighbor->parent != current && neighbor->heuristic_value > current->heuristic_value + cost)
+					insert(current, current->heuristic_value);
+				else if (neighbor->parent != current && current->heuristic_value > neighbor->heuristic_value + cost &&
+					neighbor->tag == Closed && neighbor->heuristic_value > old_key_value)
 				{
-					insert(neighbor, neighbor->value);
+					insert(neighbor, neighbor->heuristic_value);
 				}
 			}
 		}
@@ -87,9 +93,12 @@ float DStarPathplanner::processState()
 	return getMinimumKey();
 }
 
-void handleCostDiscrepancy()
+void DStarPathplanner::advance(int index_)
 {
-	
+	if (index_ < _result.path.size() - 1)
+	{
+
+	}
 };
 
 float DStarPathplanner::modifyCost(NodePtr first_, NodePtr second_, float new_cost_)
@@ -97,7 +106,7 @@ float DStarPathplanner::modifyCost(NodePtr first_, NodePtr second_, float new_co
 	_map.modifyWeight(first_, second_, new_cost_);
 
 	if (first_->tag == Closed)
-		insert(first_, first_->value);
+		insert(first_, first_->heuristic_value);
 
 	return getMinimumKey();
 }
@@ -107,25 +116,25 @@ float DStarPathplanner::getMinimumKey() const
 	return _open.empty() ? -1 : _open.top()->key_value;
 }
 
-void DStarPathplanner::insert(NodePtr node_, float new_value_)
+void DStarPathplanner::insert(NodePtr node_, float new_heuristic_)
 {
 
 	switch (node_->tag)
 	{	
 		case New:
-		node_->key_value = new_value_;
+		node_->key_value = new_heuristic_;
 		break;
 
 		case Open:
-		node_->key_value = std::min(node_->key_value, new_value_);
+		node_->key_value = std::min(node_->key_value, new_heuristic_);
 		break;
 
 		case Closed:
-		node_->key_value = std::min(node_->value, new_value_);
+		node_->key_value = std::min(node_->heuristic_value, new_heuristic_);
 		break;
 	}
 
-	node_->value = new_value_;
+	node_->heuristic_value = new_heuristic_;
 
 	if (node_->tag != Open)
 	{
