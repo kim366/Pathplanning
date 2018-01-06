@@ -60,3 +60,8 @@ NodePtr& NodePtr::operator=(NodePtr other_)
 
 	return *this;
 }
+
+int NodePtr::getIndex() const
+{
+	return _index;
+}
