@@ -6,26 +6,26 @@
 class Graph;
 class Node;
 
-class NodeHandle
+class NodePtr
 {
 friend Graph; 
-friend class std::hash<NodeHandle>;
+friend class std::hash<NodePtr>;
 
 public:
-				NodeHandle(std::nullptr_t);
-				NodeHandle(int index_, Graph& graph_);
+				NodePtr(std::nullptr_t);
+				NodePtr(int index_, Graph& graph_);
 				
 	Node* 		operator->();
 	const Node* operator->() const;
 	Node& 		operator*();
 	const Node& operator*() const;
 
-	bool 		operator==(NodeHandle other_) const;
-	bool		operator!=(NodeHandle other_) const;
+	bool 		operator==(NodePtr other_) const;
+	bool		operator!=(NodePtr other_) const;
 
 	bool		operator==(std::nullptr_t) const;
 	bool 		operator!=(std::nullptr_t) const;
-	NodeHandle& operator=(NodeHandle other_);
+	NodePtr& 	operator=(NodePtr other_);
 
 private:
 	int 		_index;
@@ -35,9 +35,9 @@ private:
 namespace std
 {
 	template<>
-	struct hash<NodeHandle>
+	struct hash<NodePtr>
 	{
-		size_t operator()(NodeHandle node_) const
+		size_t operator()(NodePtr node_) const
 		{
 			return hash<int>()(node_._index);
 		}

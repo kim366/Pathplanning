@@ -10,7 +10,7 @@
 
 class Graph : public Gui::Entity
 {
-friend class NodeHandle;
+friend class NodePtr;
 
 public:
 						Graph() = default;
@@ -23,12 +23,12 @@ public:
 
 	void 				connect(std::pair<int, int> node_indices_);
 	void 				disconnect(std::pair<int, int> node_indices_);
-	void 				connect(NodeHandle first_, NodeHandle second_);
-	void 				disconnect(NodeHandle first_, NodeHandle second_);
+	void 				connect(NodePtr first_, NodePtr second_);
+	void 				disconnect(NodePtr first_, NodePtr second_);
 
-	void				modifyWeight(NodeHandle first_, NodeHandle second_, float new_weight_);
+	void				modifyWeight(NodePtr first_, NodePtr second_, float new_weight_);
 
-	NodeHandle 			operator[](int index_);
+	NodePtr 			operator[](int index_);
 
 	void				resetNodes();
 

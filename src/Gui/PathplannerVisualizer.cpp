@@ -5,7 +5,7 @@
 namespace Gui
 {
 
-PathplannerVisualizer::PathplannerVisualizer(std::unique_ptr<Pathplanner>&& pathplanner_, Graph& graph_, NodeHandle start_, NodeHandle goal_)
+PathplannerVisualizer::PathplannerVisualizer(std::unique_ptr<Pathplanner>&& pathplanner_, Graph& graph_, NodePtr start_, NodePtr goal_)
 	: _pathplanner{std::move(pathplanner_)}
 	, _graph{graph_}
 	, _start{start_}

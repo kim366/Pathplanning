@@ -22,7 +22,7 @@ Graph::Graph(const Graph& other_)
 {
 	for (auto& node : _nodes)
 		for (auto& [neighbor, cost] : node.neighbors)
-			const_cast<NodeHandle&>(neighbor)._graph = this;
+			const_cast<NodePtr&>(neighbor)._graph = this;
 }
 
 void Graph::connect(std::pair<int, int> node_indices_)
@@ -35,7 +35,7 @@ void Graph::disconnect(std::pair<int, int> node_indices_)
 	disconnect(operator[](node_indices_.first), operator[](node_indices_.second));
 }
 
-void Graph::connect(NodeHandle first_, NodeHandle second_)
+void Graph::connect(NodePtr first_, NodePtr second_)
 {
 	sf::Vector2i delta{first_->position - second_->position};
 	auto weight{std::hypot(delta.x, delta.y)};
@@ -44,19 +44,19 @@ void Graph::connect(NodeHandle first_, NodeHandle second_)
 	second_->neighbors[first_] = weight;
 }
 
-void Graph::disconnect(NodeHandle first_, NodeHandle second_)
+void Graph::disconnect(NodePtr first_, NodePtr second_)
 {
 	first_->neighbors.erase(second_);
 	second_->neighbors.erase(first_);
 }
 
-void Graph::modifyWeight(NodeHandle first_, NodeHandle second_, float new_weight_)
+void Graph::modifyWeight(NodePtr first_, NodePtr second_, float new_weight_)
 {
 	first_->neighbors[second_] = new_weight_;
 	second_->neighbors[first_] = new_weight_;
 }
 
-NodeHandle Graph::operator[](int index_)
+NodePtr Graph::operator[](int index_)
 {
 	return {index_, *this}; 
 }

@@ -5,11 +5,11 @@
 #include <functional>
 #include <optional>
 #include <Node.hpp>
-#include <NodeHandle.hpp>
+#include <NodePtr.hpp>
 
 struct PathplanningReturnType
 {
-	std::vector<NodeHandle>	path, examined_nodes;
+	std::vector<NodePtr> path, examined_nodes;
 };
 
 class Pathplanner
@@ -18,13 +18,13 @@ public:
 									Pathplanner();
 	virtual							~Pathplanner() = 0;
 
-	virtual PathplanningReturnType 	operator()(NodeHandle start_, NodeHandle goal_) = 0;
+	virtual PathplanningReturnType 	operator()(NodePtr start_, NodePtr goal_) = 0;
 
 protected:
-	const std::function<bool(NodeHandle, NodeHandle)>
+	const std::function<bool(NodePtr, NodePtr)>
 									_compare;
 					
-	std::priority_queue<NodeHandle, std::vector<NodeHandle>, std::function<bool(NodeHandle, NodeHandle)>>
+	std::priority_queue<NodePtr, std::vector<NodePtr>, std::function<bool(NodePtr, NodePtr)>>
 									_open{_compare};
-	NodeHandle						_goal;
+	NodePtr							_goal;
 };
