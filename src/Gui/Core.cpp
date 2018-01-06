@@ -21,6 +21,7 @@ Core::Core()
 	grid->disconnect({grid->toIndex({6, 3}), grid->toIndex({7, 2})});
 	grid->disconnect({grid->toIndex({6, 4}), grid->toIndex({7, 3})});
 	grid->disconnect({grid->toIndex({6, 5}), grid->toIndex({7, 4})});
+
 	std::unique_ptr<PathplannerVisualizer> visualizer{new PathplannerVisualizer{std::make_unique<DStarPathplanner>(/*[] (...) { return 0; }, */*grid), *grid, (*grid)[grid->toIndex({4, 5})], (*grid)[grid->toIndex({8, 1})]}};
 	_entity_manager->addEntity(std::move(grid));
 	_entity_manager->addEntity(std::move(visualizer));

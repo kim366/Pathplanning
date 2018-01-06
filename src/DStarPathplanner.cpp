@@ -15,6 +15,7 @@ DStarPathplanner::DStarPathplanner(Graph& graph_)
 
 PathplanningReturnType DStarPathplanner::operator()(NodePtr start_, NodePtr goal_)
 {
+	auto& updated_graph{start_.getGraph()};
 	_map.resetNodes();
 	NodePtr start{_map[start_.getIndex()]};
 	_goal = _map[goal_.getIndex()];
@@ -27,22 +28,17 @@ PathplanningReturnType DStarPathplanner::operator()(NodePtr start_, NodePtr goal
 
 	for (NodePtr trace{start}; trace != nullptr; trace = trace->parent)
 	{
-		// std::cout << "Tracing\n";
-		// float new_weight{getWeight(trace, trace->parent)};
-		// if (new_weight != getWeight(start_.getGraph()[trace.getIndex()], start_.getGraph()[trace->parent.getIndex()]))
-		// {
-		// 	std::cout << "Discrepancy Detected!\n";
-		// 	modifyCost(trace, trace->parent, new_weight);
-		// 	while (!(processState() >= trace->heuristic_value));
+		float new_weight{getWeight(updated_graph[trace.getIndex()], updated_graph[trace->parent.getIndex()])};
+		if (getWeight(trace, trace->parent) != new_weight)
+		{
+			modifyCost(trace, trace->parent, new_weight);
+			trace->heuristic_value = std::numeric_limits<float>::infinity();
+			while (!(processState() >= trace->heuristic_value));
 
-		// 	_result.path.clear();
-		// 	for (NodePtr new_trace{trace}; new_trace != nullptr; new_trace = new_trace->parent)
-		// 	{
-		// 		std::cout << "Tracing again\n";
-		// 		_result.path.push_back(new_trace);
-		// 	}
-		// 	break;
-		// }
+			for (NodePtr new_trace{trace}; new_trace != nullptr; new_trace = new_trace->parent)
+				_result.path.push_back(new_trace);
+			break;
+		}
 
 		_result.path.push_back(trace);
 	}
