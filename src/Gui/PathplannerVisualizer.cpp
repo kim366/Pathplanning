@@ -11,6 +11,8 @@ PathplannerVisualizer::PathplannerVisualizer(std::unique_ptr<Pathplanner>&& path
 	, _start{start_}
 	, _goal{goal_}
 {
+	auto& grid{dynamic_cast<Grid&>(_graph)};
+	grid.disconnect({grid.toIndex({8, 2}), grid.toIndex({8, 3})});
 }
 
 void PathplannerVisualizer::update(float delta_time_, const Inputs& inputs_)
@@ -23,12 +25,12 @@ void PathplannerVisualizer::update(float delta_time_, const Inputs& inputs_)
 		auto result{find_shortest_path(_start, _goal)};
 
 		for (auto& examined_node : result.examined_nodes)
-			examined_node->visualization_status = Node::Examined;
+			_graph[examined_node.getIndex()]->visualization_status = Node::Examined;
 
 		for (auto& node_on_path : result.path)
-			node_on_path->visualization_status = Node::OnPath;
+			_graph[node_on_path.getIndex()]->visualization_status = Node::OnPath;
 
-		std::cout << result.path.back()->value << '\n';
+		// std::cout << result.path.back()->value << '\n';
 	}
 
 	if (inputs_.event.pressed(sf::Keyboard::D))

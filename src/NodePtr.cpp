@@ -65,3 +65,8 @@ int NodePtr::getIndex() const
 {
 	return _index;
 }
+
+Graph& NodePtr::getGraph()
+{
+	return *_graph;
+}

@@ -5,6 +5,7 @@
 #include <SFML/Graphics/CircleShape.hpp>
 #include <SFML/Graphics/RectangleShape.hpp>
 #include <Gui/Consts.hpp>
+#include <iostream>
 
 Graph::Graph(std::initializer_list<sf::Vector2i> node_positions_,
 	std::initializer_list<std::pair<int, int>> node_indices_)

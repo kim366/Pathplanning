@@ -19,8 +19,8 @@ private:
 private:
 	std::unique_ptr<Pathplanner>	_pathplanner;
 	Graph&							_graph;
-	NodePtr						_start;
-	NodePtr						_goal;
+	NodePtr							_start;
+	NodePtr							_goal;
 	
 };
 

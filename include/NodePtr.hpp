@@ -28,6 +28,7 @@ public:
 	NodePtr& 	operator=(NodePtr other_);
 
 	int			getIndex() const;
+	Graph&		getGraph();
 
 private:
 	int 		_index;

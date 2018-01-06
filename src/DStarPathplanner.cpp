@@ -15,24 +15,51 @@ DStarPathplanner::DStarPathplanner(Graph& graph_)
 
 PathplanningReturnType DStarPathplanner::operator()(NodePtr start_, NodePtr goal_)
 {
-	_goal = goal_;
-	// _open = decltype(_open){_compare};
-
+	_map.resetNodes();
+	NodePtr start{_map[start_.getIndex()]};
+	_goal = _map[goal_.getIndex()];
+	_open = decltype(_open){_compare};
 	_result = {};
 
-	_open.push(goal_);
+	_open.push(_goal);
 
-	while (!(_open.empty() || start_->tag == Closed))
-		processState();
+	while (!(processState() == -1 || start->tag == Closed));
 
-	for (NodePtr trace{start_}; trace != nullptr; trace = trace->parent)
-		_result.path.push_back(trace);	
+	for (NodePtr trace{start}; trace != nullptr; trace = trace->parent)
+	{
+		// std::cout << "Tracing\n";
+		// float new_weight{getWeight(trace, trace->parent)};
+		// if (new_weight != getWeight(start_.getGraph()[trace.getIndex()], start_.getGraph()[trace->parent.getIndex()]))
+		// {
+		// 	std::cout << "Discrepancy Detected!\n";
+		// 	modifyCost(trace, trace->parent, new_weight);
+		// 	while (!(processState() >= trace->heuristic_value));
+
+		// 	_result.path.clear();
+		// 	for (NodePtr new_trace{trace}; new_trace != nullptr; new_trace = new_trace->parent)
+		// 	{
+		// 		std::cout << "Tracing again\n";
+		// 		_result.path.push_back(new_trace);
+		// 	}
+		// 	break;
+		// }
+
+		_result.path.push_back(trace);
+	}
+
+	// Copy from map to graph
+
+	// for (NodePtr node_on_path : _result.path)
+		// node_on_path = {node_on_path.getIndex(), start_.getGraph()};
 
 	return _result;
 }
 
 float DStarPathplanner::processState()
 {
+	if (_open.empty())
+		return -1;
+
 	NodePtr current{_open.top()};
 
 	const float old_key_value{getMinimumKey()};
