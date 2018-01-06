@@ -16,7 +16,7 @@ DStarPathplanner::DStarPathplanner(Graph& graph_)
 PathplanningReturnType DStarPathplanner::operator()(NodePtr start_, NodePtr goal_)
 {
 	_goal = goal_;
-	_open = decltype(_open){_compare};
+	// _open = decltype(_open){_compare};
 
 	_result = {};
 
@@ -93,12 +93,22 @@ float DStarPathplanner::processState()
 	return getMinimumKey();
 }
 
-void DStarPathplanner::advance(int index_)
+bool DStarPathplanner::advance(int index_)
 {
-	if (index_ < _result.path.size() - 1)
-	{
+	NodePtr current{_result.path[index_]};
+	NodePtr next{_result.path[index_ + 1]};
 
+	float new_weight{getWeight(current, next)};
+	float old_weight{getWeight(_map[current.getIndex()], _map[next.getIndex()])};
+
+	// Goal not reached
+	if (index_ < _result.path.size() - 1 && new_weight != old_weight)
+	{
+		modifyCost(current, next, new_weight);
+		return true;
 	}
+
+	return false;
 };
 
 float DStarPathplanner::modifyCost(NodePtr first_, NodePtr second_, float new_cost_)
@@ -118,7 +128,6 @@ float DStarPathplanner::getMinimumKey() const
 
 void DStarPathplanner::insert(NodePtr node_, float new_heuristic_)
 {
-
 	switch (node_->tag)
 	{	
 		case New:

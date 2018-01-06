@@ -10,7 +10,7 @@ public:
 
 	PathplanningReturnType 	
 			operator()(NodePtr start_, NodePtr goal_) override;
-	void	advance(int index_);
+	bool	advance(int index_);
 
 private:
 	float 	processState();
