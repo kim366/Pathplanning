@@ -27,7 +27,7 @@ public:
 	bool 		operator!=(std::nullptr_t) const;
 	NodePtr& 	operator=(NodePtr other_);
 
-private:
+// private:
 	int 		_index;
 	Graph* 		_graph;
 };

@@ -18,11 +18,11 @@ struct Node
 
 	// Used by Dijkstra's Algorithm, A* and D*
 	PathplanningTag	tag;
-	NodePtr		parent;
+	NodePtr			parent;
 	float			value;	
-	float			to_start_value;
 
-	// Used by A* and D*
+	// Used by A*
+	float			to_start_value;
 	float			heuristic_value;
 
 	// Used by D*

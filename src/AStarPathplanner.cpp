@@ -27,7 +27,7 @@ PathplanningReturnType AStarPathplanner::operator()(NodePtr start_, NodePtr goal
 
 		if (current == goal_)
 		{
-			for (NodePtr trace{current}; trace != nullptr; trace = trace->parent)
+			for (NodePtr trace{goal_}; trace != nullptr; trace = trace->parent)
 				result.path.push_back(trace);
 
 			std::reverse(result.path.begin(), result.path.end());
