@@ -35,18 +35,7 @@ float DStarPathplanner::processState()
 	current->tag = Closed;
 	_result.examined_nodes.push_back(current);
 
-	if (old_key_value < current->value)
-	{
-		for (auto [neighbor, cost] : current->neighbors)
-		{
-			if (neighbor->value <= old_key_value && current->value > neighbor->value + cost) 
-			{
-				current->parent = neighbor;
-				current->value = neighbor->value + cost;
-			}
-		}
-	}
-	else if (old_key_value == current->value)
+	if (old_key_value == current->value)
 	{
 		for (auto [neighbor_ref, cost] : current->neighbors)
 		{
@@ -57,6 +46,17 @@ float DStarPathplanner::processState()
 			{
 				neighbor->parent = current;
 				insert(neighbor, current->value + cost);
+			}
+		}
+	}
+	else if (old_key_value < current->value)
+	{
+		for (auto [neighbor, cost] : current->neighbors)
+		{
+			if (neighbor->value <= old_key_value && current->value > neighbor->value + cost) 
+			{
+				current->parent = neighbor;
+				current->value = neighbor->value + cost;
 			}
 		}
 	}
