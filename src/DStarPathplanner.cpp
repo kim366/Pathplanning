@@ -6,7 +6,7 @@ DStarPathplanner::DStarPathplanner(Graph& graph_)
 {
 }
 
-PathplanningReturnType DStarPathplanner::operator()(NodeHandle start_, NodeHandle goal_)
+PathplanningReturnType DStarPathplanner::operator()(NodePtr start_, NodePtr goal_)
 {
 	_open = decltype(_open){_compare};
 	_goal = goal_;
@@ -17,7 +17,7 @@ PathplanningReturnType DStarPathplanner::operator()(NodeHandle start_, NodeHandl
 	while (!(processState() == -1 || start_->tag == Closed));
 
 	PathplanningReturnType result;
-	for (NodeHandle trace{start_}; trace != nullptr; trace = trace->parent)
+	for (NodePtr trace{start_}; trace != nullptr; trace = trace->parent)
 		result.path.push_back(trace);
 
 	return result;
@@ -30,7 +30,7 @@ float DStarPathplanner::processState()
 
 	std::cout << _open.size() << ';'; // Debug
 
-	NodeHandle current{_open.top()};
+	NodePtr current{_open.top()};
 
 	const float old_key_value{getMinimumKey()};
 
@@ -96,7 +96,7 @@ void handleCostDiscrepancy()
 	
 };
 
-float DStarPathplanner::modifyCost(NodeHandle first_, NodeHandle second_, float new_cost_)
+float DStarPathplanner::modifyCost(NodePtr first_, NodePtr second_, float new_cost_)
 {
 	_map.modifyWeight(first_, second_, new_cost_);
 
@@ -111,7 +111,7 @@ float DStarPathplanner::getMinimumKey() const
 	return _open.empty() ? -1 : _open.top()->key_value;
 }
 
-void DStarPathplanner::insert(NodeHandle node_, float new_heuristic_)
+void DStarPathplanner::insert(NodePtr node_, float new_heuristic_)
 {
 	auto& key_value{node_->key_value};
 

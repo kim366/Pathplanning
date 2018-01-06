@@ -2,13 +2,13 @@
 #include <algorithm>
 #include <Graph.hpp>
 
-AStarPathplanner::AStarPathplanner(std::function<float(NodeHandle, NodeHandle, const Graph&)> heuristic_, const Graph& graph_)
+AStarPathplanner::AStarPathplanner(std::function<float(NodePtr, NodePtr, const Graph&)> heuristic_, const Graph& graph_)
 	: _heuristic{heuristic_}
 	, _graph{graph_}
 {
 }
 
-PathplanningReturnType AStarPathplanner::operator()(NodeHandle start_, NodeHandle goal_)
+PathplanningReturnType AStarPathplanner::operator()(NodePtr start_, NodePtr goal_)
 { 
 	_goal = goal_;
 
@@ -20,14 +20,14 @@ PathplanningReturnType AStarPathplanner::operator()(NodeHandle start_, NodeHandl
 	
 	while (!_open.empty())
 	{
-		NodeHandle current{_open.top()};
+		NodePtr current{_open.top()};
 		_open.pop();
 		current->tag = Closed;
 		result.examined_nodes.push_back(current);
 
 		if (current == goal_)
 		{
-			for (NodeHandle trace{current}; trace != nullptr; trace = trace->parent)
+			for (NodePtr trace{current}; trace != nullptr; trace = trace->parent)
 				result.path.push_back(trace);
 
 			std::reverse(result.path.begin(), result.path.end());
@@ -58,7 +58,7 @@ PathplanningReturnType AStarPathplanner::operator()(NodeHandle start_, NodeHandl
 	return result;  // No connection between Start and End nodes
 }
 
-EvaluationReturnType AStarPathplanner::evaluate(NodeHandle to_evaluate_, NodeHandle based_on_) const
+EvaluationReturnType AStarPathplanner::evaluate(NodePtr to_evaluate_, NodePtr based_on_) const
 {
 	EvaluationReturnType result;
 	result.to_start_value = based_on_->to_start_value + getWeight(to_evaluate_, based_on_);

@@ -5,7 +5,7 @@
 #include <unordered_map>
 #include <vector>
 #include <PathplanningTag.hpp> 
-#include <NodeHandle.hpp>
+#include <NodePtr.hpp>
 
 struct Node
 {
@@ -13,12 +13,12 @@ struct Node
 
 	// Common Data
 	sf::Vector2f	position;
-	std::unordered_map<NodeHandle, float>
+	std::unordered_map<NodePtr, float>
 					neighbors;
 
 	// Used by Dijkstra's Algorithm, A* and D*
 	PathplanningTag	tag;
-	NodeHandle		parent;
+	NodePtr		parent;
 	float			value;	
 
 	// Used by A*
@@ -39,5 +39,5 @@ struct Node
 	} visualization_status;
 };
 
-float 					getWeight(NodeHandle from_, NodeHandle to_);
-std::vector<NodeHandle> computeSuccessors(NodeHandle node_);
+float 					getWeight(NodePtr from_, NodePtr to_);
+std::vector<NodePtr> computeSuccessors(NodePtr node_);

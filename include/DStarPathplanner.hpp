@@ -9,13 +9,13 @@ public:
 			DStarPathplanner(Graph& graph_);
 
 	PathplanningReturnType 	
-			operator()(NodeHandle start_, NodeHandle goal_) override;
+			operator()(NodePtr start_, NodePtr goal_) override;
 
 private:
 	float 	processState();
-	float 	modifyCost(NodeHandle first_, NodeHandle second_, float new_cost_);
+	float 	modifyCost(NodePtr first_, NodePtr second_, float new_cost_);
 	float	getMinimumKey() const;
-	void	insert(NodeHandle node_, float new_heuristic_);
+	void	insert(NodePtr node_, float new_heuristic_);
 
 	Graph	_map;
 };
