@@ -48,10 +48,12 @@ struct Octile : Heuristic
 		assert(grid != nullptr);
 		assert(grid->eight_connected);
 
-		sf::Vector2f distance{goal_->position - node_->position};
-		distance = {std::abs(distance.x), std::abs(distance.y)};
-		distance /= grid->unit;
+		sf::Vector2f grid_distance{goal_->position - node_->position};
+		grid_distance = {std::abs(grid_distance.x), std::abs(grid_distance.y)};
+		grid_distance /= grid->unit;
 
-		return grid->unit * (distance.x + distance.y) + (grid->diagonal_unit - 2 * grid->unit) * std::min(distance.x, distance.y);
+		// std::cout << grid->unit * (grid_distance.x + grid_distance.y) + (grid->diagonal_unit - 2 * grid->unit) * std::min(grid_distance.x, grid_distance.y) << " - " << grid->toCoordinate(node_._index).x << ", " << grid->toCoordinate(node_._index).y << '\n';
+
+		return grid->unit * (grid_distance.x + grid_distance.y) + (grid->diagonal_unit - 2 * grid->unit) * std::min(grid_distance.x, grid_distance.y);
 	}
 };

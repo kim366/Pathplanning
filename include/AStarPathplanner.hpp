@@ -17,6 +17,7 @@ public:
 							getHeuristic() { return _heuristic; }
 
 private:
+	void					insert(NodeHandle node_);
 	EvaluationReturnType	evaluate(NodeHandle to_evaluate_, NodeHandle based_on_) const;
 	std::function<float(NodeHandle, NodeHandle, const Graph&)> 
 							_heuristic;

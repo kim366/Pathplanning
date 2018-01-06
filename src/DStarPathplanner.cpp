@@ -8,10 +8,11 @@ DStarPathplanner::DStarPathplanner(Graph& graph_)
 
 PathplanningReturnType DStarPathplanner::operator()(NodeHandle start_, NodeHandle goal_)
 {
-	_open = decltype(_open){_compare};
 	_goal = goal_;
+	_open = decltype(_open){_compare};
 
 	_open.push(goal_);
+	goal_->tag = Open;
 	goal_->heuristic_value = 0;
 
 	while (!(processState() == -1 || start_->tag == Closed));

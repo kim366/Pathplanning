@@ -20,8 +20,6 @@ struct Node
 	PathplanningTag	tag;
 	NodeHandle		parent;
 	float			value;	
-
-	// Used by A*
 	float			to_start_value;
 
 	// Used by A* and D*
@@ -39,5 +37,5 @@ struct Node
 	} visualization_status;
 };
 
-float 					getWeight(NodeHandle from_, NodeHandle to_);
-std::vector<NodeHandle> computeSuccessors(NodeHandle node_);
+float 					getWeight(const NodeHandle from_, const NodeHandle to_);
+std::vector<NodeHandle> computeSuccessors(const NodeHandle node_);

@@ -16,7 +16,7 @@ PathplanningReturnType AStarPathplanner::operator()(NodeHandle start_, NodeHandl
 
 	PathplanningReturnType result;
 
-	_open.push(start_);
+	insert(start_);
 	
 	while (!_open.empty())
 	{
@@ -47,15 +47,18 @@ PathplanningReturnType AStarPathplanner::operator()(NodeHandle start_, NodeHandl
 				successor->value = combined_value;
 				
 				if (successor->tag != Open)
-				{
-					_open.push(successor);
-					successor->tag = Open;
-				}
+					insert(successor);
 			}
 		}
 	}
 
 	return result;  // No connection between Start and End nodes
+}
+
+void AStarPathplanner::insert(NodeHandle node_)
+{
+	node_->tag = Open;
+	_open.push(node_);
 }
 
 EvaluationReturnType AStarPathplanner::evaluate(NodeHandle to_evaluate_, NodeHandle based_on_) const

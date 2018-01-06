@@ -11,6 +11,7 @@ PathplannerVisualizer::PathplannerVisualizer(std::unique_ptr<Pathplanner>&& path
 	, _start{start_}
 	, _goal{goal_}
 {
+	std::cout << dynamic_cast<Grid&>(_graph).unit << " =?= " << _graph[1]->position.x - _graph[0]->position.x;
 }
 
 void PathplannerVisualizer::update(float delta_time_, const Inputs& inputs_)
@@ -28,7 +29,7 @@ void PathplannerVisualizer::update(float delta_time_, const Inputs& inputs_)
 		for (auto& node_on_path : result.path)
 			node_on_path->visualization_status = Node::OnPath;
 
-		// std::cout << result.path.back()->value << '\n';
+		std::cout << result.path.back()->value << '\n';
 	}
 
 	if (inputs_.event.pressed(sf::Keyboard::D))

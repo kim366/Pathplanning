@@ -12,7 +12,7 @@ Node::Node(sf::Vector2f position_)
 {
 }
 
-float getWeight(NodeHandle from_, NodeHandle to_)
+float getWeight(const NodeHandle from_, const NodeHandle to_)
 {
 	const auto found{from_->neighbors.find(to_)};
 	if (found != from_->neighbors.end())
@@ -20,7 +20,7 @@ float getWeight(NodeHandle from_, NodeHandle to_)
 	return std::numeric_limits<float>::infinity();
 }
 
-std::vector<NodeHandle> computeSuccessors(NodeHandle node_)
+std::vector<NodeHandle> computeSuccessors(const NodeHandle node_)
 {
 	std::vector<NodeHandle> successors;
 
