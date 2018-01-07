@@ -20,6 +20,7 @@ PathplanningReturnType DStarPathplanner::operator()(NodePtr start_, NodePtr goal
 	NodePtr start{_map[start_.getIndex()]};
 	_goal = _map[goal_.getIndex()];
 	_open = decltype(_open){_compare};
+
 	_result = {};
 
 	_open.push(_goal);
