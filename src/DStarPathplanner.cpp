@@ -34,19 +34,10 @@ PathplanningReturnType DStarPathplanner::operator()(NodePtr start_, NodePtr goal
 			modifyCost(trace, trace->parent, new_weight);
 			trace->heuristic_value = std::numeric_limits<float>::infinity();
 			while (!(processState() >= trace->heuristic_value));
-
-			for (NodePtr new_trace{trace}; new_trace != nullptr; new_trace = new_trace->parent)
-				_result.path.push_back(new_trace);
-			break;
 		}
 
 		_result.path.push_back(trace);
 	}
-
-	// Copy from map to graph
-
-	// for (NodePtr node_on_path : _result.path)
-		// node_on_path = {node_on_path.getIndex(), start_.getGraph()};
 
 	return _result;
 }
