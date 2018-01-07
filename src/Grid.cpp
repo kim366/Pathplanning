@@ -1,7 +1,6 @@
 #include <Grid.hpp>
 #include <math.h>
 #include <SFML/System/Vector2.hpp>
-#include <Consts.hpp>
 #include <Gui/Consts.hpp>
 
 Grid::Grid(unsigned size_, bool eight_connected_)
