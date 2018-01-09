@@ -31,7 +31,8 @@ void PathplannerVisualizer::update(float delta_time_, const Inputs& inputs_)
 		for (auto& node_on_path : result.path)
 			_graph[node_on_path.getIndex()]->visualization_status = Node::OnPath;
 
-		// std::cout << result.path.back()->value << '\n';
+		std::cout << result.path.back()->value << '\n';
+		
 	}
 
 	if (inputs_.event.pressed(sf::Keyboard::D))

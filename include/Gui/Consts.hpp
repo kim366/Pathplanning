@@ -26,7 +26,7 @@ const auto			threshold_drag{10u}; // in px; hypot threshold until a held button 
 namespace Graph
 {
 
-const auto 			node_radius{10.f};
+const auto 			node_radius{3.f};
 const auto 			edge_width{.901f * node_radius};
 
 } // namespace Graph

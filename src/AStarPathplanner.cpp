@@ -6,7 +6,7 @@ AStarPathplanner::AStarPathplanner(std::function<float(NodePtr, NodePtr, const G
 	: Pathplanner{[this] (NodePtr topmost_, NodePtr newly_added_) -> bool
 	{
 		if (topmost_->value == newly_added_->value)
-			return newly_added_ == _goal;
+			return topmost_ != _goal;
 		return newly_added_->value < topmost_->value;
 	}}
 	, _heuristic{heuristic_}

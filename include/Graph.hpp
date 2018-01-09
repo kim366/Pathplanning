@@ -28,11 +28,9 @@ public:
 
 	void				modifyWeight(NodePtr first_, NodePtr second_, float new_weight_);
 
-	// TODO: Remove
 	NodePtr 			operator[](int index_);
 
 	void				resetNodes();
-
 protected:
 	void 				draw(sf::RenderTarget& target_, sf::RenderStates states_) const override;
 	void				update(float delta_time_, const Gui::Inputs& inputs_) override;
