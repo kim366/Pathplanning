@@ -32,7 +32,12 @@ PathplanningReturnType DStarPathplanner::operator()(NodePtr start_, NodePtr goal
 		float new_weight{getWeight(updated_graph[trace.getIndex()], updated_graph[trace->parent.getIndex()])};
 		if (getWeight(trace, trace->parent) != new_weight)
 		{
-			modifyCost(trace, trace->parent, new_weight);
+			for (const auto [neighbor, cost] : trace->neighbors)
+			{
+				const auto updated_neighbor{updated_graph[neighbor.getIndex()]};
+
+				modifyCost(trace, neighbor, getWeight(updated_graph[trace.getIndex()], updated_neighbor));
+			}
 			trace->heuristic_value = std::numeric_limits<float>::infinity();
 			while (!(processState() >= trace->heuristic_value));
 		}
@@ -74,7 +79,7 @@ float DStarPathplanner::processState()
 	{
 		for (auto [neighbor, cost] : current->neighbors)
 		{
-			if (neighbor->heuristic_value <= old_key_value && current->heuristic_value > neighbor->heuristic_value + cost) 
+			if (/*neighbor->heuristic_value <= old_key_value &&*/ current->heuristic_value > neighbor->heuristic_value + cost) 
 			{
 				current->parent = neighbor;
 				current->heuristic_value = neighbor->heuristic_value + cost;
