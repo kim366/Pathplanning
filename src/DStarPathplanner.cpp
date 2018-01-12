@@ -1,4 +1,5 @@
 #include <DStarPathplanner.hpp>
+#include <cmath>
 #include <iostream>
 #include <Grid.hpp>
 
@@ -38,6 +39,18 @@ PathplanningReturnType DStarPathplanner::operator()(NodePtr start_, NodePtr goal
 
 				modifyCost(trace, neighbor, getWeight(updated_graph[trace.getIndex()], updated_neighbor));
 			}
+
+			for(auto iter{trace->neighbors.begin()}; iter != trace->neighbors.end();)
+			{
+				if (std::isinf(iter->second))
+				{
+					const_cast<std::unordered_map<NodePtr, float>&>(iter->first->neighbors).erase(trace);
+					iter = trace->neighbors.erase(iter);
+				}
+				else
+					++iter;
+			}
+
 			trace->heuristic_value = std::numeric_limits<float>::infinity();
 			while (!(processState() >= trace->heuristic_value));
 		}
@@ -77,12 +90,22 @@ float DStarPathplanner::processState()
 	}
 	else if (old_key_value < current->heuristic_value)
 	{
-		for (auto [neighbor, cost] : current->neighbors)
+		for (auto [neighbor_ref, cost] : current->neighbors)
 		{
+			auto neighbor{neighbor_ref};
 			if (/*neighbor->heuristic_value <= old_key_value &&*/ current->heuristic_value > neighbor->heuristic_value + cost) 
 			{
 				current->parent = neighbor;
 				current->heuristic_value = neighbor->heuristic_value + cost;
+
+				auto neighbor_size{current->neighbors.size()};
+
+			}
+			
+			if (current->neighbors.size() == 1)
+			{
+				modifyCost(neighbor, current, neighbor->heuristic_value);
+				neighbor->heuristic_value = std::numeric_limits<float>::infinity();
 			}
 		}
 	}

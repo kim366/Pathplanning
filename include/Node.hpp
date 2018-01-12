@@ -37,5 +37,5 @@ struct Node
 	} visualization_status;
 };
 
-float 					getWeight(const NodePtr from_, const NodePtr to_);
-std::vector<NodePtr> 	computeSuccessors(const NodePtr node_);
+float 					getWeight(NodePtr from_, NodePtr to_);
+std::vector<NodePtr> 	computeSuccessors(NodePtr node_);

@@ -12,10 +12,6 @@ PathplannerVisualizer::PathplannerVisualizer(std::unique_ptr<Pathplanner>&& path
 	, _goal{goal_}
 	, _map{graph_}
 {
-	auto& grid{dynamic_cast<Grid&>(_graph)};
-	grid.disconnect({grid.toIndex({8, 3}), grid.toIndex({8, 4})});
-	grid.disconnect({grid.toIndex({8, 1}), grid.toIndex({8, 2})});
-	grid.disconnect({grid.toIndex({7, 3}), grid.toIndex({8, 4})});
 }
 
 void PathplannerVisualizer::update(float delta_time_, const Inputs& inputs_)

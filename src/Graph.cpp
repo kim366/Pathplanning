@@ -47,12 +47,21 @@ void Graph::connect(NodePtr first_, NodePtr second_)
 
 void Graph::disconnect(NodePtr first_, NodePtr second_)
 {
-	first_->neighbors.erase(second_);
 	second_->neighbors.erase(first_);
+	first_->neighbors.erase(second_);
 }
 
 void Graph::modifyWeight(NodePtr first_, NodePtr second_, float new_weight_)
 {
+	// if (isinf(new_weight_))
+	// {
+	// 	disconnect(first_, second_);
+	// 	return;
+	// }
+
+	if (first_->neighbors.find(second_) == first_->neighbors.end())
+		connect(first_, second_);
+
 	first_->neighbors[second_] = new_weight_;
 	second_->neighbors[first_] = new_weight_;
 }
