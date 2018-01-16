@@ -23,11 +23,14 @@ void PathplannerVisualizer::update(float delta_time_, const Inputs& inputs_)
 		auto& find_shortest_path{*_pathplanner};
 		auto result{find_shortest_path(_start, _goal)};
 
-		for (auto& examined_node : result.examined_nodes)
+		for (auto examined_node : result.examined_nodes)
 			_graph[examined_node.getIndex()]->visualization_status = Node::Examined;
 
-		for (auto& node_on_path : result.path)
+		for (auto node_on_path : result.path)
+		{
 			_graph[node_on_path.getIndex()]->visualization_status = Node::OnPath;
+			_graph[node_on_path.getIndex()]->parent = node_on_path->parent;
+		}
 
 		std::cout << result.path.back()->value << '\n';
 		

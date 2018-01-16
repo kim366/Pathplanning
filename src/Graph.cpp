@@ -113,21 +113,18 @@ void Graph::draw(sf::RenderTarget& target_, sf::RenderStates states_) const
 	}};
 
 	for (const auto& node : _nodes)
-	{
 		for (const auto& [neighbor, cost] : node.neighbors)
 			target_.draw(visualize_edge(node, *neighbor, {98, 100, 98}));
-	}
 
 	{
 		bool should_draw_path_edges{true};
 		std::vector<sf::RectangleShape> path_edges;
 
 		for (Node node : _nodes)
-			if (node.visualization_status == Node::OnPath)
-				for (const auto [neighbor, cost] : node.neighbors)
-					if (neighbor->visualization_status == Node::OnPath)
-						path_edges.push_back(visualize_edge(node, *neighbor, {47, 48, 47}));
-				
+			if (int parent_index{node.parent.getIndex()}; parent_index > -1 && node.visualization_status == Node::OnPath)
+					path_edges.push_back(visualize_edge(node, _nodes[parent_index], {47, 48, 47}));
+				// for (const auto [neighbor, cost] : node.neighbors)
+				// 	if (neighbor->visualization_status == Node::OnPath)
 
 		if (should_draw_path_edges)
 			for (auto& path_edge : path_edges)
