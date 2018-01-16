@@ -123,8 +123,6 @@ void Graph::draw(sf::RenderTarget& target_, sf::RenderStates states_) const
 		for (Node node : _nodes)
 			if (int parent_index{node.parent.getIndex()}; parent_index > -1 && node.visualization_status == Node::OnPath)
 					path_edges.push_back(visualize_edge(node, _nodes[parent_index], {0, 0, 0}));
-				// for (const auto [neighbor, cost] : node.neighbors)
-				// 	if (neighbor->visualization_status == Node::OnPath)
 
 		if (should_draw_path_edges)
 			for (auto& path_edge : path_edges)
