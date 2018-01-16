@@ -152,7 +152,7 @@ bool DStarPathplanner::advance(int index_)
 	}
 
 	return false;
-};
+}
 
 float DStarPathplanner::modifyCost(NodePtr first_, NodePtr second_, float new_cost_)
 {

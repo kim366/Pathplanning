@@ -22,5 +22,5 @@ target_link_libraries(gui ${SFML_LIBRARIES})
 # 	target_link_libraries(tests ${SFML_LIBRARIES})
 # endif()
 
-add_compile_options(-Wall -Wextra -Wshadow -Werror -Wconversion -Wno-sign-conversion)
+add_compile_options(-Wall -Wextra -Wshadow -Werror -Wconversion -Wpedantic -Wno-sign-conversion)
 string(APPEND CMAKE_CXX_FLAGS_DEBUG " -O0")
