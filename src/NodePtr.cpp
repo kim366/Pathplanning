@@ -15,12 +15,12 @@ NodePtr::NodePtr(int index_, Graph& graph_)
 
 Node* NodePtr::operator->()
 {
-	return &_graph->_nodes[_index];
+	return &**this;
 }
 
 const Node* NodePtr::operator->() const
 {
-	return &_graph->_nodes[_index];
+	return &**this;
 }
 
 Node& NodePtr::operator*()
