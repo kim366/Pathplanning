@@ -33,17 +33,17 @@ const Node& NodePtr::operator*() const
 	return _graph->_nodes[_index];
 }
 
-bool NodePtr::operator<(const NodePtr other_) const
+bool NodePtr::operator<(NodePtr other_) const
 {
 	return _index < other_._index;
 }
 
-bool NodePtr::operator==(const NodePtr other_) const
+bool NodePtr::operator==(NodePtr other_) const
 {
 	return _index == other_._index && _graph == other_._graph;
 }
 
-bool NodePtr::operator!=(const NodePtr other_) const
+bool NodePtr::operator!=(NodePtr other_) const
 {
 	return !(*this == other_);
 }
@@ -56,14 +56,6 @@ bool NodePtr::operator==(std::nullptr_t) const
 bool NodePtr::operator!=(std::nullptr_t) const
 {
 	return _index != -1;
-}
-
-NodePtr& NodePtr::operator=(NodePtr other_)
-{
-	_index = other_._index;
-	_graph = other_._graph;
-
-	return *this;
 }
 
 int NodePtr::getIndex() const

@@ -20,13 +20,11 @@ public:
 	Node& 		operator*();
 	const Node& operator*() const;
 
-	bool 		operator<(const NodePtr other_) const;
-	bool 		operator==(const NodePtr other_) const;
-	bool		operator!=(const NodePtr other_) const;
+	bool 		operator<(NodePtr other_) const;
+	bool 		operator==(NodePtr other_) const;
+	bool		operator!=(NodePtr other_) const;
 	bool		operator==(std::nullptr_t) const;
 	bool 		operator!=(std::nullptr_t) const;
-
-	NodePtr& 	operator=(NodePtr other_);
 
 	int			getIndex() const;
 	Graph&		getGraph();
