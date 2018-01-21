@@ -77,7 +77,7 @@ float DStarPathplanner::processState()
 
 	current->tag = Closed;
 
-	if (old_key_value == current->heuristic_value)
+	if (current->heuristic_value == old_key_value)
 	{
 		for (auto [neighbor_ref, cost] : current->neighbors)
 		{
@@ -91,18 +91,15 @@ float DStarPathplanner::processState()
 			}
 		}
 	}
-	else if (old_key_value < current->heuristic_value)
+	else if (current->heuristic_value > old_key_value)
 	{
 		for (auto [neighbor_ref, cost] : current->neighbors)
 		{
 			auto neighbor{neighbor_ref};
-			if (/*neighbor->heuristic_value <= old_key_value &&*/ current->heuristic_value > neighbor->heuristic_value + cost) 
+			if (current->heuristic_value > neighbor->heuristic_value + cost) 
 			{
 				current->parent = neighbor;
 				current->heuristic_value = neighbor->heuristic_value + cost;
-
-				auto neighbor_size{current->neighbors.size()};
-
 			}
 			
 			if (current->neighbors.size() == 1)
@@ -137,24 +134,6 @@ float DStarPathplanner::processState()
 	}
 
 	return getMinimumKey();
-}
-
-bool DStarPathplanner::advance(int index_)
-{
-	NodePtr current{_result.path[index_]};
-	NodePtr next{_result.path[index_ + 1]};
-
-	float new_weight{getWeight(current, next)};
-	float old_weight{getWeight(_map[current.getIndex()], _map[next.getIndex()])};
-
-	// Goal not reached
-	if (index_ < _result.path.size() - 1 && new_weight != old_weight)
-	{
-		modifyCost(current, next, new_weight);
-		return true;
-	}
-
-	return false;
 }
 
 float DStarPathplanner::modifyCost(NodePtr first_, NodePtr second_, float new_cost_)

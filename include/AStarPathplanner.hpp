@@ -17,6 +17,6 @@ public:
 private:
 	void					insert(NodePtr node_);
 	EvaluationReturnType	evaluate(NodePtr to_evaluate_, NodePtr based_on_) const;
-	std::function<float(NodePtr, NodePtr)> 
+	const std::function<float(NodePtr, NodePtr)> 
 							_heuristic;
 };
