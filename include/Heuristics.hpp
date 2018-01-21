@@ -7,12 +7,12 @@
 
 struct Heuristic
 {
-	virtual float operator()(NodePtr node_, NodePtr goal_, const Graph& graph_) const = 0;
+	virtual float operator()(NodePtr node_, NodePtr goal_) const = 0;
 };
 
 struct Euclidean : Heuristic
 {
-	float operator()(NodePtr node_, NodePtr goal_, const Graph&) const override
+	float operator()(NodePtr node_, NodePtr goal_) const override
 	{
 		sf::Vector2f distance{goal_->position - node_-> position}; 
 		return std::hypot(distance.x, distance.y);
@@ -21,7 +21,7 @@ struct Euclidean : Heuristic
 
 struct None : Heuristic
 {
-	float operator()(NodePtr, NodePtr, const Graph&) const override
+	float operator()(NodePtr, NodePtr) const override
 	{
 		return 0;
 	}
@@ -29,9 +29,9 @@ struct None : Heuristic
 
 struct Manhattan : Heuristic
 {
-	float operator()(NodePtr node_, NodePtr goal_, const Graph& graph_) const override
+	float operator()(NodePtr node_, NodePtr goal_) const override
 	{
-		auto grid{dynamic_cast<const Grid*>(&graph_)};
+		auto grid{dynamic_cast<const Grid*>(&node_.getGraph())};
 		assert(grid != nullptr);
 		assert(!grid->eight_connected);
 
@@ -42,9 +42,9 @@ struct Manhattan : Heuristic
 
 struct Octile : Heuristic
 {
-	float operator()(NodePtr node_, NodePtr goal_, const Graph& graph_) const override
+	float operator()(NodePtr node_, NodePtr goal_) const override
 	{
-		auto grid{dynamic_cast<const Grid*>(&graph_)};
+		auto grid{dynamic_cast<const Grid*>(&node_.getGraph())};
 		assert(grid != nullptr);
 		assert(grid->eight_connected);
 

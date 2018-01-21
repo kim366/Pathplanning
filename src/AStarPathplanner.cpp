@@ -2,7 +2,7 @@
 #include <algorithm>
 #include <Graph.hpp>
 
-AStarPathplanner::AStarPathplanner(std::function<float(NodePtr, NodePtr, const Graph&)> heuristic_, const Graph& graph_)
+AStarPathplanner::AStarPathplanner(std::function<float(NodePtr, NodePtr)> heuristic_)
 	: Pathplanner{[this] (NodePtr topmost_, NodePtr newly_added_) -> bool
 	{
 		if (topmost_->value == newly_added_->value)
@@ -10,7 +10,6 @@ AStarPathplanner::AStarPathplanner(std::function<float(NodePtr, NodePtr, const G
 		return newly_added_->value < topmost_->value;
 	}}
 	, _heuristic{heuristic_}
-	, _graph{graph_}
 {
 }
 
@@ -28,8 +27,12 @@ PathplanningReturnType AStarPathplanner::operator()(NodePtr start_, NodePtr goal
 	{
 		NodePtr current{_open.top()};
 		_open.pop();
+
+		if (current->tag == New)
+			result.examined_nodes.push_back(current);
+		
 		current->tag = Closed;
-		result.examined_nodes.push_back(current);
+
 
 		if (current == goal_)
 		{
@@ -71,6 +74,6 @@ EvaluationReturnType AStarPathplanner::evaluate(NodePtr to_evaluate_, NodePtr ba
 {
 	EvaluationReturnType result;
 	result.to_start_value = based_on_->to_start_value + getWeight(to_evaluate_, based_on_);
-	result.heuristic_value = _heuristic(to_evaluate_, _goal, _graph);
+	result.heuristic_value = _heuristic(to_evaluate_, _goal);
 	return result;
 }

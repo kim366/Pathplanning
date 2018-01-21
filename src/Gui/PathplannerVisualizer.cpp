@@ -43,16 +43,16 @@ void PathplannerVisualizer::update(float delta_time_, const Inputs& inputs_)
 		_pathplanner = std::make_unique<DStarPathplanner>(_map);
 
 	if (inputs_.event.pressed(sf::Keyboard::N))
-		_pathplanner = std::make_unique<AStarPathplanner>(None{}, _graph);
+		_pathplanner = std::make_unique<AStarPathplanner>([] (...) { return 0; });
 
 	if (inputs_.event.pressed(sf::Keyboard::M))
-		_pathplanner = std::make_unique<AStarPathplanner>(Manhattan{}, _graph);
+		_pathplanner = std::make_unique<AStarPathplanner>(Manhattan{});
 
 	if (inputs_.event.pressed(sf::Keyboard::O))
-		_pathplanner = std::make_unique<AStarPathplanner>(Octile{}, _graph);
+		_pathplanner = std::make_unique<AStarPathplanner>(Octile{});
 
 	if (inputs_.event.pressed(sf::Keyboard::E))
-		_pathplanner = std::make_unique<AStarPathplanner>(Euclidean{}, _graph);
+		_pathplanner = std::make_unique<AStarPathplanner>(Euclidean{});
 
 }
 
