@@ -30,33 +30,39 @@ PathplanningReturnType DStarPathplanner::operator()(NodePtr start_, NodePtr goal
 
 	for (NodePtr trace{start}; trace != nullptr; trace = trace->parent)
 	{
-		float new_weight{getWeight(updated_graph[trace.getIndex()], updated_graph[trace->parent.getIndex()])};
-		if (getWeight(trace, trace->parent) != new_weight)
+		if (trace->parent != nullptr)
 		{
-			for (const auto [neighbor, cost] : trace->neighbors)
+			float new_weight{getWeight(updated_graph[trace.getIndex()], updated_graph[trace->parent.getIndex()])};
+			
+			if (getWeight(trace, trace->parent) != new_weight)
 			{
-				const auto updated_neighbor{updated_graph[neighbor.getIndex()]};
 
-				modifyCost(trace, neighbor, getWeight(updated_graph[trace.getIndex()], updated_neighbor));
-			}
-
-			for(auto iter{trace->neighbors.begin()}; iter != trace->neighbors.end();)
-			{
-				if (std::isinf(iter->second))
+				for (const auto [neighbor, cost] : trace->neighbors)
 				{
-					const_cast<std::unordered_map<NodePtr, float>&>(iter->first->neighbors).erase(trace);
-					iter = trace->neighbors.erase(iter);
-				}
-				else
-					++iter;
-			}
+					const auto updated_neighbor{updated_graph[neighbor.getIndex()]};
 
-			trace->heuristic_value = std::numeric_limits<float>::infinity();
-			while (!(processState() >= trace->heuristic_value));
+					modifyCost(trace, neighbor, getWeight(updated_graph[trace.getIndex()], updated_neighbor));
+				}
+
+				for(auto iter{trace->neighbors.begin()}; iter != trace->neighbors.end();)
+				{
+					if (std::isinf(iter->second))
+					{
+						const_cast<std::unordered_map<NodePtr, float>&>(iter->first->neighbors).erase(trace);
+						iter = trace->neighbors.erase(iter);
+					}
+					else
+						++iter;
+				}
+
+				trace->heuristic_value = std::numeric_limits<float>::infinity();
+				while (!(processState() >= trace->heuristic_value));
+			}
 		}
 
 		_result.path.push_back(trace);
 	}
+
 
 	return _result;
 }

@@ -1,5 +1,6 @@
 #include <NodePtr.hpp>
 #include <Graph.hpp>
+#include <cassert>
 
 NodePtr::NodePtr(std::nullptr_t)
 	: _index{-1}
@@ -25,18 +26,20 @@ const Node* NodePtr::operator->() const
 
 Node& NodePtr::operator*()
 {
+	assert(_index > -1);
 	return _graph->_nodes[_index];
 }
 
 const Node& NodePtr::operator*() const
 {
+	assert(_index > -1);
 	return _graph->_nodes[_index];
 }
 
-bool NodePtr::operator<(NodePtr other_) const
-{
-	return _index < other_._index;
-}
+// bool NodePtr::operator<(NodePtr other_) const
+// {
+// 	return _index < other_._index;
+// }
 
 bool NodePtr::operator==(NodePtr other_) const
 {
@@ -60,6 +63,7 @@ bool NodePtr::operator!=(std::nullptr_t) const
 
 int NodePtr::getIndex() const
 {
+	assert(_index > -1);
 	return _index;
 }
 
