@@ -77,7 +77,7 @@ float DStarPathplanner::processState()
 
 	_open.pop();
 
-	if (current->tag == New)
+	if (std::find(_result.examined_nodes.begin(), _result.examined_nodes.end(), current) == _result.examined_nodes.end())
 		_result.examined_nodes.push_back(current);
 
 	current->tag = Closed;
