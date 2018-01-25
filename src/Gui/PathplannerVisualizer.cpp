@@ -31,8 +31,6 @@ void PathplannerVisualizer::update(float delta_time_, const Inputs& inputs_)
 		else
 			result = find_shortest_path(_start, _goal);
 
-		// std::cout << result.path.back()->value << '\n';
-
 		if (uninformed)
 		{
 			for (int node_index{0}; node_index < result.path.size(); ++node_index)
@@ -76,7 +74,9 @@ void PathplannerVisualizer::update(float delta_time_, const Inputs& inputs_)
 						}
 
 						_map.resetNodes();
-						dynamic_path = find_shortest_path(node, _map[_goal.getIndex()]).path;
+						auto dynamic_result{find_shortest_path(node, _map[_goal.getIndex()])};
+						dynamic_path = std::move(dynamic_result.path);
+						result.examined_nodes.insert(result.examined_nodes.end(), dynamic_result.examined_nodes.begin(), dynamic_result.examined_nodes.end());
 
 						for (int node_index{0}; node_index < result.path.size(); ++node_index)
 						{

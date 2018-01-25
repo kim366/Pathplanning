@@ -28,7 +28,9 @@ PathplanningReturnType AStarPathplanner::operator()(NodePtr start_, NodePtr goal
 		NodePtr current{_open.top()};
 		_open.pop();
 
-		if (current->tag == New)
+		auto current_tag{current->tag};
+
+		if (std::find(result.examined_nodes.begin(), result.examined_nodes.end(), current) == result.examined_nodes.end())
 			result.examined_nodes.push_back(current);
 		
 		current->tag = Closed;
