@@ -36,7 +36,6 @@ PathplanningReturnType DStarPathplanner::operator()(NodePtr start_, NodePtr goal
 			
 			if (getWeight(trace, trace->parent) != new_weight)
 			{
-
 				for (const auto [neighbor, cost] : trace->neighbors)
 				{
 					const auto updated_neighbor{updated_graph[neighbor.getIndex()]};

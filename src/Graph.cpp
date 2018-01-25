@@ -87,8 +87,10 @@ void Graph::resetNodes()
 	{
 		auto neighbors{std::move(node.neighbors)};
 		auto position{node.position};
+		auto visualization_parent{node.visualization_parent};
 		node = {position};
 		node.neighbors = neighbors;
+		node.visualization_parent = visualization_parent;
 	}
 }
 
@@ -121,11 +123,8 @@ void Graph::draw(sf::RenderTarget& target_, sf::RenderStates states_) const
 		std::vector<sf::RectangleShape> path_edges;
 
 		for (Node node : _nodes)
-			if (node.parent != nullptr && node.visualization_status == Node::OnPath)
-			{	
-				int parent_index{node.parent.getIndex()};
-				path_edges.push_back(visualize_edge(node, _nodes[parent_index], {0, 0, 0}));
-			}
+			if (node.visualization_parent != nullptr && node.visualization_status == Node::OnPath)
+				path_edges.push_back(visualize_edge(node, _nodes[node.visualization_parent.getIndex()], {0, 0, 0}));
 
 		if (should_draw_path_edges)
 			for (auto& path_edge : path_edges)

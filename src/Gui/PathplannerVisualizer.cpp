@@ -23,20 +23,88 @@ void PathplannerVisualizer::update(float delta_time_, const Inputs& inputs_)
 		if (dynamic_cast<DStarPathplanner*>(_pathplanner.get()))
 			_pathplanner = std::make_unique<DStarPathplanner>(_map);
 
+		bool uninformed{true};
 		auto& find_shortest_path{*_pathplanner};
-		auto result{find_shortest_path(_start, _goal)};
+		PathplanningReturnType result;
+		if (uninformed)
+			result = find_shortest_path(_map[_start.getIndex()], _map[_goal.getIndex()]);
+		else
+			result = find_shortest_path(_start, _goal);
 
+		// std::cout << result.path.back()->value << '\n';
+
+		if (uninformed)
+		{
+			for (int node_index{0}; node_index < result.path.size(); ++node_index)
+			{
+				NodePtr node{result.path[node_index]}, next_node{result.path[node_index + 1]};
+
+				_graph[node.getIndex()]->parent = node->parent;
+
+				if (node_index + 1 < result.path.size())
+				{
+					_graph[node.getIndex()]->child = _graph[next_node.getIndex()];
+					node->child = next_node;
+				}
+			}
+
+			auto dynamic_path{result.path};
+			result.path.clear();
+
+			for (NodePtr node{dynamic_path.front()}; !dynamic_path.empty(); node = dynamic_path.front())
+			{
+				dynamic_path.erase(dynamic_path.begin());
+
+				if (node->child != nullptr)
+				{
+					float new_weight{getWeight(_graph[node.getIndex()], _graph[node->child.getIndex()])};
+					
+					if (getWeight(node, node->child) != new_weight)
+					{
+						for (const auto [neighbor, cost] : node->neighbors)
+							_map.modifyWeight(node, neighbor, getWeight(_graph[node.getIndex()], _graph[neighbor.getIndex()]));
+
+						for(auto iter{node->neighbors.begin()}; iter != node->neighbors.end();)
+						{
+							if (std::isinf(iter->second))
+							{
+								const_cast<std::unordered_map<NodePtr, float>&>(iter->first->neighbors).erase(node);
+								iter = node->neighbors.erase(iter);
+							}
+							else
+								++iter;
+						}
+
+						_map.resetNodes();
+						dynamic_path = find_shortest_path(node, _map[_goal.getIndex()]).path;
+
+						for (int node_index{0}; node_index < result.path.size(); ++node_index)
+						{
+							NodePtr node{result.path[node_index]}, next_node{result.path[node_index + 1]};
+
+							_graph[node.getIndex()]->parent = node->parent;
+
+							if (node_index + 1 < result.path.size())
+							{
+								_graph[node.getIndex()]->child = _graph[next_node.getIndex()];
+								node->child = next_node;
+							}
+						}
+					}
+				}
+
+				result.path.push_back(node);
+			}
+		}
+		
 		for (auto examined_node : result.examined_nodes)
 			_graph[examined_node.getIndex()]->visualization_status = Node::Examined;
 
 		for (auto node_on_path : result.path)
-		{
 			_graph[node_on_path.getIndex()]->visualization_status = Node::OnPath;
-			_graph[node_on_path.getIndex()]->parent = node_on_path->parent;
-		}
 
-		std::cout << result.path.back()->value << '\n';
-		
+		std::cout << result.examined_nodes.size() << '\n';
+
 	}
 
 	if (inputs_.event.pressed(sf::Keyboard::D))

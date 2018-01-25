@@ -29,12 +29,16 @@ struct Node
 	float 			previous_heuristic_value;
 	float 			key_value;
 
+	// Used by uninformed Dijkstra's Algorithm and A*
+	NodePtr			child;
+
 	enum VisualizationStatus
 	{
 		Standard,
 		OnPath,
 		Examined
 	} visualization_status;
+	NodePtr visualization_parent;
 };
 
 float 					getWeight(NodePtr from_, NodePtr to_);
