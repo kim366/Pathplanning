@@ -78,13 +78,13 @@ void PathplannerVisualizer::update(float delta_time_, const Inputs& inputs_)
 						dynamic_path = std::move(dynamic_result.path);
 						result.examined_nodes.insert(result.examined_nodes.end(), dynamic_result.examined_nodes.begin(), dynamic_result.examined_nodes.end());
 
-						for (int node_index{0}; node_index < result.path.size(); ++node_index)
+						for (int node_index{0}; node_index < dynamic_path.size(); ++node_index)
 						{
-							NodePtr node{result.path[node_index]}, next_node{result.path[node_index + 1]};
+							NodePtr node{dynamic_path[node_index]}, next_node{dynamic_path[node_index + 1]};
 
 							_graph[node.getIndex()]->parent = node->parent;
 
-							if (node_index + 1 < result.path.size())
+							if (node_index + 1 < dynamic_path.size())
 							{
 								_graph[node.getIndex()]->child = _graph[next_node.getIndex()];
 								node->child = next_node;
