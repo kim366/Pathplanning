@@ -43,17 +43,6 @@ PathplanningReturnType DStarPathplanner::operator()(NodePtr start_, NodePtr goal
 					modifyCost(trace, neighbor, getWeight(updated_graph[trace.getIndex()], updated_neighbor));
 				}
 
-				for(auto iter{trace->neighbors.begin()}; iter != trace->neighbors.end();)
-				{
-					if (std::isinf(iter->second))
-					{
-						const_cast<std::unordered_map<NodePtr, float>&>(iter->first->neighbors).erase(trace);
-						iter = trace->neighbors.erase(iter);
-					}
-					else
-						++iter;
-				}
-
 				trace->heuristic_value = std::numeric_limits<float>::infinity();
 				while (!(processState() >= trace->heuristic_value));
 			}
@@ -105,35 +94,6 @@ float DStarPathplanner::processState()
 			{
 				current->parent = neighbor;
 				current->heuristic_value = neighbor->heuristic_value + cost;
-			}
-			
-			if (current->neighbors.size() == 1)
-			{
-				modifyCost(neighbor, current, neighbor->heuristic_value);
-				neighbor->heuristic_value = std::numeric_limits<float>::infinity();
-			}
-		}
-	}
-	else
-	{
-		for (auto [neighbor_ref, cost] : current->neighbors)
-		{
-			auto neighbor{neighbor_ref};
-			if (neighbor->tag == New ||
-				 (neighbor->parent == current && neighbor->heuristic_value > current->heuristic_value + cost))
-			{
-				neighbor->parent = current;
-				insert(neighbor, current->heuristic_value + cost);
-			}
-			else
-			{
-				if (neighbor->parent != current && neighbor->heuristic_value > current->heuristic_value + cost)
-					insert(current, current->heuristic_value);
-				else if (neighbor->parent != current && current->heuristic_value > neighbor->heuristic_value + cost &&
-					neighbor->tag == Closed && neighbor->heuristic_value > old_key_value)
-				{
-					insert(neighbor, neighbor->heuristic_value);
-				}
 			}
 		}
 	}
