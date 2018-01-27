@@ -35,12 +35,13 @@ void PathplannerVisualizer::update(float delta_time_, const Inputs& inputs_)
 		{
 			for (int node_index{0}; node_index < result.path.size(); ++node_index)
 			{
-				NodePtr node{result.path[node_index]}, next_node{result.path[node_index + 1]};
+				NodePtr node{result.path[node_index]};
 
 				_graph[node.getIndex()]->parent = node->parent;
 
 				if (node_index + 1 < result.path.size())
 				{
+					NodePtr next_node{result.path[node_index + 1]};
 					_graph[node.getIndex()]->child = _graph[next_node.getIndex()];
 					node->child = next_node;
 				}
@@ -80,12 +81,13 @@ void PathplannerVisualizer::update(float delta_time_, const Inputs& inputs_)
 
 						for (int node_index{0}; node_index < dynamic_path.size(); ++node_index)
 						{
-							NodePtr node{dynamic_path[node_index]}, next_node{dynamic_path[node_index + 1]};
+							NodePtr node{dynamic_path[node_index]};
 
 							_graph[node.getIndex()]->parent = node->parent;
 
 							if (node_index + 1 < dynamic_path.size())
 							{
+								NodePtr next_node{dynamic_path[node_index + 1]};
 								_graph[node.getIndex()]->child = _graph[next_node.getIndex()];
 								node->child = next_node;
 							}
@@ -103,7 +105,14 @@ void PathplannerVisualizer::update(float delta_time_, const Inputs& inputs_)
 		for (auto node_on_path : result.path)
 			_graph[node_on_path.getIndex()]->visualization_status = Node::OnPath;
 
-		std::cout << result.examined_nodes.size() << '\n';
+		float sum{0};
+		for (int node_index{0}; node_index + 1 < result.path.size(); ++node_index)
+		{
+			NodePtr node{result.path[node_index]}, next_node{result.path[node_index + 1]};
+			sf::Vector2i delta{node->position - next_node->position};
+			sum += std::hypot(delta.x, delta.y);
+		}
+		std::cout << "Path length: " << sum << "; " << result.examined_nodes.size() << " Nodes Examined\n";
 
 	}
 
