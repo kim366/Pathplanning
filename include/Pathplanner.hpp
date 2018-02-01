@@ -20,7 +20,7 @@ public:
 
 	virtual PathplanningReturnType 	operator()(NodePtr start_, NodePtr goal_) = 0;
 	void 							resetOpen();
-
+	void 							push(NodePtr node_);
 protected:
 	const std::function<bool(NodePtr, NodePtr)>
 									_compare;

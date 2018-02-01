@@ -15,7 +15,6 @@ public:
 	PathplanningReturnType 	operator()(NodePtr start_, NodePtr goal_) override;
 
 private:
-	void					insert(NodePtr node_);
 	EvaluationReturnType	evaluate(NodePtr to_evaluate_, NodePtr based_on_) const;
 	const std::function<float(NodePtr, NodePtr)> 
 							_heuristic;
