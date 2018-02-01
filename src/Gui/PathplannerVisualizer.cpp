@@ -66,6 +66,8 @@ void PathplannerVisualizer::update(float delta_time_, const Inputs& inputs_)
 					
 					if (getWeight(node, node->child) != new_weight)
 					{
+						find_shortest_path.resetOpen();
+
 						for (const auto [neighbor, cost] : node->neighbors)
 							_map.modifyWeight(node, neighbor, getWeight(_graph[node.getIndex()], _graph[neighbor.getIndex()]));
 
