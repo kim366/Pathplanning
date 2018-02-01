@@ -9,3 +9,8 @@ Pathplanner::Pathplanner(std::function<bool(NodePtr, NodePtr)> compare_)
 Pathplanner::~Pathplanner()
 {
 }
+
+void Pathplanner::resetOpen()
+{
+	_open = decltype(_open){_compare};
+}

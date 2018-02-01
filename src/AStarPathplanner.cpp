@@ -17,8 +17,6 @@ PathplanningReturnType AStarPathplanner::operator()(NodePtr start_, NodePtr goal
 { 
 	_goal = goal_;
 
-	_open = decltype(_open){_compare};
-
 	PathplanningReturnType result;
 
 	insert(start_);

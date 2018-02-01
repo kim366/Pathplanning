@@ -19,6 +19,7 @@ public:
 	virtual							~Pathplanner() = 0;
 
 	virtual PathplanningReturnType 	operator()(NodePtr start_, NodePtr goal_) = 0;
+	void 							resetOpen();
 
 protected:
 	const std::function<bool(NodePtr, NodePtr)>

@@ -16,7 +16,6 @@ private:
 	float 	modifyCost(NodePtr first_, NodePtr second_, float new_cost_);
 	float	getMinimumKey() const;
 	void	insert(NodePtr node_, float new_heuristic_);
-	
 
 	PathplanningReturnType
 			_result;

@@ -120,6 +120,8 @@ void PathplannerVisualizer::update(float delta_time_, const Inputs& inputs_)
 		}
 		std::cout << "Path length: " << sum << "; " << result.examined_nodes.size() << " Nodes Examined\n";
 
+		find_shortest_path.resetOpen();
+
 	}
 
 	if (inputs_.event.pressed(sf::Keyboard::D))

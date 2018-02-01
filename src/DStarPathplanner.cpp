@@ -17,10 +17,8 @@ DStarPathplanner::DStarPathplanner(Graph& graph_)
 PathplanningReturnType DStarPathplanner::operator()(NodePtr start_, NodePtr goal_)
 {
 	auto& updated_graph{start_.getGraph()};
-	_map.resetNodes();
 	NodePtr start{_map[start_.getIndex()]};
 	_goal = _map[goal_.getIndex()];
-	_open = decltype(_open){_compare};
 
 	_result = {};
 
