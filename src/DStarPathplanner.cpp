@@ -17,12 +17,13 @@ DStarPathplanner::DStarPathplanner(Graph& graph_)
 PathplanningReturnType DStarPathplanner::operator()(NodePtr start_, NodePtr goal_)
 {
 	auto& updated_graph{start_.getGraph()};
+	
 	NodePtr start{_map[start_.getIndex()]};
 	_goal = _map[goal_.getIndex()];
 
 	push(_goal);
 
-	while (!(processState() == -1 || start->tag == Closed));
+	while (!(processNode() == -1 || start->tag == Closed));
 
 	for (NodePtr trace{start}; trace != nullptr; trace = trace->parent)
 	{
@@ -40,7 +41,7 @@ PathplanningReturnType DStarPathplanner::operator()(NodePtr start_, NodePtr goal
 				}
 
 				trace->heuristic_value = std::numeric_limits<float>::infinity();
-				while (!(processState() >= trace->heuristic_value));
+				while (!(processNode() >= trace->heuristic_value));
 			}
 		}
 
@@ -51,7 +52,7 @@ PathplanningReturnType DStarPathplanner::operator()(NodePtr start_, NodePtr goal
 	return _result;
 }
 
-float DStarPathplanner::processState()
+float DStarPathplanner::processNode()
 {
 	if (_open.empty())
 		return -1;
