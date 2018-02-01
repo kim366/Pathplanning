@@ -61,12 +61,11 @@ float DStarPathplanner::processNode()
 
 	const float old_key_value{getMinimumKey()};
 
-	_open.pop();
+	pop();
 
 	if (std::find(_result.examined_nodes.begin(), _result.examined_nodes.end(), current) == _result.examined_nodes.end())
 		_result.examined_nodes.push_back(current);
 
-	current->tag = Closed;
 
 	if (current->heuristic_value == old_key_value)
 	{

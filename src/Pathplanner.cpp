@@ -20,3 +20,10 @@ void Pathplanner::push(NodePtr node_)
 	node_->tag = Open;
 	_open.push(node_);
 }
+
+void Pathplanner::pop()
+{
+	auto top{_open.top()};
+	top->tag = Closed;
+	_open.pop();
+}

@@ -24,16 +24,11 @@ PathplanningReturnType AStarPathplanner::operator()(NodePtr start_, NodePtr goal
 	while (!_open.empty())
 	{
 		NodePtr current{_open.top()};
-		_open.pop();
-
-		auto current_tag{current->tag};
+		pop();
 
 		if (std::find(result.examined_nodes.begin(), result.examined_nodes.end(), current) == result.examined_nodes.end())
 			result.examined_nodes.push_back(current);
 		
-		current->tag = Closed;
-
-
 		if (current == goal_)
 		{
 			for (NodePtr trace{goal_}; trace != nullptr; trace = trace->parent)
