@@ -122,6 +122,8 @@ void PathplannerVisualizer::update(float delta_time_, const Inputs& inputs_)
 
 		find_shortest_path.resetOpen();
 
+		if (DStarPathplanner* dstar_find_shortest_path{dynamic_cast<DStarPathplanner*>(_pathplanner.get())}; dstar_find_shortest_path)
+			dstar_find_shortest_path->resetResult();
 	}
 
 	if (inputs_.event.pressed(sf::Keyboard::D))

@@ -20,8 +20,6 @@ PathplanningReturnType DStarPathplanner::operator()(NodePtr start_, NodePtr goal
 	NodePtr start{_map[start_.getIndex()]};
 	_goal = _map[goal_.getIndex()];
 
-	_result = {};
-
 	push(_goal);
 
 	while (!(processState() == -1 || start->tag == Closed));
@@ -135,4 +133,9 @@ void DStarPathplanner::insert(NodePtr node_, float new_heuristic_)
 
 	if (node_->tag != Open)
 		push(node_);
+}
+
+void DStarPathplanner::resetResult()
+{
+	_result = {};
 }
