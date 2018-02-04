@@ -29,7 +29,7 @@ PathplanningReturnType DStarPathplanner::operator()(NodePtr start_, NodePtr goal
 	{
 		if (trace->parent != nullptr)
 		{
-			float new_weight{getWeight(updated_graph[trace.getIndex()], updated_graph[trace->parent.getIndex()])};
+			const float new_weight{getWeight(updated_graph[trace.getIndex()], updated_graph[trace->parent.getIndex()])};
 			
 			if (getWeight(trace, trace->parent) != new_weight)
 			{
@@ -47,7 +47,6 @@ PathplanningReturnType DStarPathplanner::operator()(NodePtr start_, NodePtr goal
 
 		_result.path.push_back(trace);
 	}
-
 
 	return _result;
 }
@@ -97,14 +96,12 @@ float DStarPathplanner::processNode()
 	return getMinimumKey();
 }
 
-float DStarPathplanner::modifyCost(NodePtr first_, NodePtr second_, float new_cost_)
+void DStarPathplanner::modifyCost(NodePtr first_, NodePtr second_, float new_cost_)
 {
 	_map.modifyWeight(first_, second_, new_cost_);
 
 	if (first_->tag == Closed)
 		insert(first_, first_->heuristic_value);
-
-	return getMinimumKey();
 }
 
 float DStarPathplanner::getMinimumKey() const

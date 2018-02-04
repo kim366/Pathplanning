@@ -62,7 +62,7 @@ void PathplannerVisualizer::update(float delta_time_, const Inputs& inputs_)
 
 				if (node->child != nullptr)
 				{
-					float new_weight{getWeight(_graph[node.getIndex()], _graph[node->child.getIndex()])};
+					const float new_weight{getWeight(_graph[node.getIndex()], _graph[node->child.getIndex()])};
 					
 					if (getWeight(node, node->child) != new_weight)
 					{

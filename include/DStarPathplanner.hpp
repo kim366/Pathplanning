@@ -14,7 +14,7 @@ public:
 
 private:
 	float 	processNode();
-	float 	modifyCost(NodePtr first_, NodePtr second_, float new_cost_);
+	void 	modifyCost(NodePtr first_, NodePtr second_, float new_cost_);
 	float	getMinimumKey() const;
 	void	insert(NodePtr node_, float new_heuristic_);
 
