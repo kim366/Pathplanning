@@ -34,11 +34,7 @@ PathplanningReturnType DStarPathplanner::operator()(NodePtr start_, NodePtr goal
 			if (getWeight(trace, trace->parent) != new_weight)
 			{
 				for (const auto [neighbor, cost] : trace->neighbors)
-				{
-					const auto updated_neighbor{updated_graph[neighbor.getIndex()]};
-
-					modifyCost(trace, neighbor, getWeight(updated_graph[trace.getIndex()], updated_neighbor));
-				}
+					modifyCost(trace, neighbor, getWeight(updated_graph[trace.getIndex()], updated_graph[neighbor.getIndex()]));
 
 				trace->heuristic_value = std::numeric_limits<float>::infinity();
 				while (!(processNode() >= trace->heuristic_value));
