@@ -20,15 +20,12 @@ void PathplannerVisualizer::update(float delta_time_, const Inputs& inputs_)
 	{
 		_graph.resetNodes();
 
-		bool uninformed;
+		bool uninformed{false};
 
-		if (dynamic_cast<DStarPathplanner*>(_pathplanner.get()))
-		{
+#ifdef UNINFORMED		
+		if (!(uninformed = !dynamic_cast<DStarPathplanner*>(_pathplanner.get())))
 			_pathplanner = std::make_unique<DStarPathplanner>(_map);
-			uninformed = false;
-		}
-		else
-			uninformed = true;
+#endif
 
 		auto& find_shortest_path{*_pathplanner};
 		PathplanningReturnType result;

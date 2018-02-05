@@ -63,9 +63,10 @@ float DStarPathplanner::processNode()
 
 	pop();
 
+#ifndef PERFORMANCE_TEST
 	if (std::find(_result.examined_nodes.begin(), _result.examined_nodes.end(), current) == _result.examined_nodes.end())
 		_result.examined_nodes.push_back(current);
-
+#endif
 
 	if (current->heuristic_value == old_key_value)
 	{

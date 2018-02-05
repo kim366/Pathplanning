@@ -26,9 +26,11 @@ PathplanningReturnType AStarPathplanner::operator()(NodePtr start_, NodePtr goal
 		NodePtr current{_open.top()};
 		pop();
 
+#ifndef PERFORMANCE_TEST
 		if (std::find(result.examined_nodes.begin(), result.examined_nodes.end(), current) == result.examined_nodes.end())
 			result.examined_nodes.push_back(current);
-		
+#endif
+
 		if (current == goal_)
 		{
 			for (NodePtr trace{goal_}; trace != nullptr; trace = trace->parent)

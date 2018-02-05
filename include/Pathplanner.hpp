@@ -7,6 +7,8 @@
 #include <Node.hpp>
 #include <NodePtr.hpp>
 
+#define UNINFORMED
+
 struct PathplanningReturnType
 {
 	std::vector<NodePtr> path, examined_nodes;

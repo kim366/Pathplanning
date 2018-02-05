@@ -23,7 +23,6 @@ public:
 	bool 		operator<(NodePtr other_) const;
 	bool 		operator==(NodePtr other_) const;
 	bool		operator!=(NodePtr other_) const;
-	bool		operator==(std::nullptr_t) const;
 	bool 		operator!=(std::nullptr_t) const;
 
 	int			getIndex() const;

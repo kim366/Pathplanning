@@ -13,32 +13,10 @@ Core::Core()
 {
 	const int grid_size{50};
 	auto grid{std::make_unique<Grid>(grid_size, true)};
-	// grid->disconnect({grid->toIndex({4, 3}), grid->toIndex({4, 2})});
-	// grid->disconnect({grid->toIndex({5, 3}), grid->toIndex({5, 2})});
-	// grid->disconnect({grid->toIndex({6, 3}), grid->toIndex({6, 2})});
-	// grid->disconnect({grid->toIndex({6, 3}), grid->toIndex({7, 3})});
-	// grid->disconnect({grid->toIndex({6, 4}), grid->toIndex({7, 4})});
 
-	// grid->disconnect({grid->toIndex({4, 3}), grid->toIndex({5, 2})});
-	// grid->disconnect({grid->toIndex({5, 3}), grid->toIndex({6, 2})});
-	// grid->disconnect({grid->toIndex({6, 3}), grid->toIndex({7, 2})});
-	// grid->disconnect({grid->toIndex({6, 4}), grid->toIndex({7, 3})});
-	// grid->disconnect({grid->toIndex({6, 5}), grid->toIndex({7, 4})});
-	// std::unique_ptr<PathplannerVisualizer> visualizer{new PathplannerVisualizer{std::make_unique<DStarPathplanner>(*grid), *grid, (*grid)[grid->toIndex({1, 8})], (*grid)[grid->toIndex({8, 1})]}};
-
-	// grid.disconnect({grid.toIndex({8, 3}), grid.toIndex({8, 4})});
-	// grid.disconnect({grid.toIndex({8, 1}), grid.toIndex({8, 2})});
-	// grid.disconnect({grid.toIndex({7, 3}), grid.toIndex({8, 4})});
-
-	// grid->disconnect({grid->toIndex({5, 4}), grid->toIndex({4, 4})});
-	// grid->disconnect({grid->toIndex({5, 4}), grid->toIndex({4, 3})});
-	// grid->disconnect({grid->toIndex({5, 4}), grid->toIndex({5, 5})});
-	// grid->disconnect({grid->toIndex({5, 4}), grid->toIndex({5, 3})});
-	// grid->disconnect({grid->toIndex({5, 4}), grid->toIndex({6, 5})});
-	// grid->disconnect({grid->toIndex({5, 4}), grid->toIndex({6, 4})});
-	// grid->disconnect({grid->toIndex({5, 4}), grid->toIndex({6, 3})});
-
-	std::unique_ptr<PathplannerVisualizer> visualizer{new PathplannerVisualizer{std::make_unique<DStarPathplanner>(/*[] (...) { return 0; }, */*grid), *grid, (*grid)[grid->toIndex({16, 33})], (*grid)[grid->toIndex({33, 16})]}};
+#ifdef UNINFORMED
+	std::unique_ptr<PathplannerVisualizer> visualizer{new PathplannerVisualizer{std::make_unique<DStarPathplanner>(*grid), *grid, (*grid)[grid->toIndex({16, 33})], (*grid)[grid->toIndex({33, 16})]}};
+#endif
 
 	std::mt19937 rng{std::random_device{}()};
 	rng.seed(1);
@@ -59,6 +37,10 @@ Core::Core()
 			grid->disconnect({chosen_node_index, neighbor_it->first.getIndex()});
 		}
 	}
+
+#ifndef UNINFORMED
+	std::unique_ptr<PathplannerVisualizer> visualizer{new PathplannerVisualizer{std::make_unique<DStarPathplanner>(*grid), *grid, (*grid)[grid->toIndex({16, 33})], (*grid)[grid->toIndex({33, 16})]}};
+#endif
 
 	_entity_manager->addEntity(std::move(grid));
 	_entity_manager->addEntity(std::move(visualizer));
