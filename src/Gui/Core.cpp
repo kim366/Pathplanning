@@ -11,15 +11,15 @@ namespace Gui
 
 Core::Core()
 {
-	const int grid_size{50};
+	const int grid_size{51};
 	auto grid{std::make_unique<Grid>(grid_size, true)};
 
 #ifdef UNINFORMED
-	std::unique_ptr<PathplannerVisualizer> visualizer{new PathplannerVisualizer{std::make_unique<DStarPathplanner>(*grid), *grid, (*grid)[grid->toIndex({16, 33})], (*grid)[grid->toIndex({33, 16})]}};
+	std::unique_ptr<PathplannerVisualizer> visualizer{new PathplannerVisualizer{std::make_unique<DStarPathplanner>(*grid), *grid, (*grid)[grid->toIndex({16, 34})], (*grid)[grid->toIndex({34, 16})]}};
 #endif
 
 	std::mt19937 rng{std::random_device{}()};
-	rng.seed(1);
+	rng.seed(0);
 	std::normal_distribution random_node{25., 10.};
 
 	for (int counter{0}; counter < 5000; ++counter)
@@ -39,7 +39,7 @@ Core::Core()
 	}
 
 #ifndef UNINFORMED
-	std::unique_ptr<PathplannerVisualizer> visualizer{new PathplannerVisualizer{std::make_unique<DStarPathplanner>(*grid), *grid, (*grid)[grid->toIndex({16, 33})], (*grid)[grid->toIndex({33, 16})]}};
+	std::unique_ptr<PathplannerVisualizer> visualizer{new PathplannerVisualizer{std::make_unique<DStarPathplanner>(*grid), *grid, (*grid)[grid->toIndex({16, 34})], (*grid)[grid->toIndex({34, 16})]}};
 #endif
 
 	_entity_manager->addEntity(std::move(grid));
