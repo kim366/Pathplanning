@@ -19,7 +19,7 @@ Core::Core()
 #endif
 
 	std::mt19937 rng{std::random_device{}()};
-	rng.seed(0);
+	rng.seed(3);
 	std::normal_distribution random_node{25., 10.};
 
 	for (int counter{0}; counter < 5000; ++counter)
@@ -28,7 +28,7 @@ Core::Core()
 
 		for (int second_counter{0}; second_counter < 2; ++second_counter)
 		{
-			if ((*grid)[chosen_node_index]->neighbors.size() <= 7)
+			if ((*grid)[chosen_node_index]->neighbors.size() <= 5)
 				break;
 
 			std::uniform_int_distribution<int> random_neighbor(0, (*grid)[chosen_node_index]->neighbors.size() - 1);
