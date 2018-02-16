@@ -7,7 +7,6 @@ Node::Node(sf::Vector2f position_)
 	, value{0}
 	, heuristic_value{0}
 	, to_start_value{0}
-	, previous_heuristic_value{0}
 	, key_value{0}
 	, child{nullptr}
 	, visualization_status{Standard}

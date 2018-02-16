@@ -68,17 +68,6 @@ void PathplannerVisualizer::update(float delta_time_, const Inputs& inputs_)
 						for (const auto [neighbor, cost] : node->neighbors)
 							_map.modifyWeight(node, neighbor, getWeight(_graph[node.getIndex()], _graph[neighbor.getIndex()]));
 
-						for(auto iter{node->neighbors.begin()}; iter != node->neighbors.end();)
-						{
-							if (std::isinf(iter->second))
-							{
-								const_cast<std::unordered_map<NodePtr, float>&>(iter->first->neighbors).erase(node);
-								iter = node->neighbors.erase(iter);
-							}
-							else
-								++iter;
-						}
-
 						_map.resetNodes();
 						auto dynamic_result{find_shortest_path(node, _map[_goal.getIndex()])};
 						dynamic_path = std::move(dynamic_result.path);

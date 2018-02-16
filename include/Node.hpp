@@ -26,7 +26,6 @@ struct Node
 	float			heuristic_value;
 
 	// Used by D*
-	float 			previous_heuristic_value;
 	float 			key_value;
 
 	// Used by uninformed Dijkstra's Algorithm and A*

@@ -123,8 +123,10 @@ void Graph::draw(sf::RenderTarget& target_, sf::RenderStates states_) const
 		std::vector<sf::RectangleShape> path_edges;
 
 		for (Node node : _nodes)
-			if (node.visualization_parent != nullptr && node.visualization_status == Node::OnPath)
-				path_edges.push_back(visualize_edge(node, _nodes[node.visualization_parent.getIndex()], {0, 0, 0}));
+			if (node.visualization_status == Node::OnPath)
+				for (auto [neighbor, cost] : node.neighbors)
+					if (neighbor->visualization_status == Node::OnPath)
+						path_edges.push_back(visualize_edge(node, *neighbor, {0, 0, 0}));
 
 		if (should_draw_path_edges)
 			for (auto& path_edge : path_edges)
