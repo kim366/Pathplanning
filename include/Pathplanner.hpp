@@ -15,7 +15,7 @@ struct PathplanningReturnType
 class Pathplanner
 {
 public:
-									Pathplanner(std::function<bool(NodePtr, NodePtr)> compare_);
+									Pathplanner();
 	virtual							~Pathplanner() = 0;
 
 	virtual PathplanningReturnType 	operator()(NodePtr start_, NodePtr goal_) = 0;

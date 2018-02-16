@@ -4,13 +4,7 @@
 #include <Grid.hpp>
 
 DStarPathplanner::DStarPathplanner(Graph& graph_)
-	: Pathplanner{[this] (NodePtr topmost_, NodePtr newly_added_) -> bool
-	{
-		if (topmost_->key_value == newly_added_->key_value)
-			return newly_added_ == _goal;
-		return newly_added_->key_value < topmost_->key_value;
-	}}
-	, _map{graph_}
+	: _map{graph_}
 {
 }
 

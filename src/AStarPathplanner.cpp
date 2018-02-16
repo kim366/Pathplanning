@@ -3,13 +3,7 @@
 #include <Graph.hpp>
 
 AStarPathplanner::AStarPathplanner(std::function<float(NodePtr, NodePtr)> heuristic_)
-	: Pathplanner{[this] (NodePtr topmost_, NodePtr newly_added_) -> bool
-	{
-		if (topmost_->value == newly_added_->value)
-			return topmost_ != _goal;
-		return newly_added_->value < topmost_->value;
-	}}
-	, _heuristic{heuristic_}
+	: _heuristic{heuristic_}
 {
 }
 
@@ -45,12 +39,12 @@ PathplanningReturnType AStarPathplanner::operator()(NodePtr start_, NodePtr goal
 		{
 			auto evaluated{evaluate(successor, current)};
 			float combined_value{evaluated.to_start_value + evaluated.heuristic_value};
-			if ((successor->tag == New) != (combined_value < successor->value))
+			if ((successor->tag == New) != (combined_value < successor->key_value))
 			{
 				successor->parent = current;
 				successor->to_start_value = evaluated.to_start_value;
 				successor->heuristic_value = evaluated.heuristic_value;
-				successor->value = combined_value;
+				successor->key_value = combined_value;
 				
 				if (successor->tag != Open)
 					push(successor);

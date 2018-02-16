@@ -4,7 +4,6 @@ Node::Node(sf::Vector2f position_)
 	: position{position_}
 	, tag{New}
 	, parent{nullptr}
-	, value{0}
 	, heuristic_value{0}
 	, to_start_value{0}
 	, key_value{0}

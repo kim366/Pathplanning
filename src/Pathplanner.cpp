@@ -1,7 +1,12 @@
 #include <Pathplanner.hpp>
 
-Pathplanner::Pathplanner(std::function<bool(NodePtr, NodePtr)> compare_)
-	: _compare{compare_}
+Pathplanner::Pathplanner()
+	: _compare{[this] (NodePtr topmost_, NodePtr newly_added_) -> bool
+	{
+		if (topmost_->key_value == newly_added_->key_value)
+			return topmost_ != _goal;
+		return newly_added_->key_value < topmost_->key_value;
+	}}
 	, _goal{nullptr}
 {
 }
