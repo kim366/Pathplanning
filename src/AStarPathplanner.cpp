@@ -38,13 +38,13 @@ PathplanningReturnType AStarPathplanner::operator()(NodePtr start_, NodePtr goal
 		for (auto successor : computeSuccessors(current))
 		{
 			auto evaluated{evaluate(successor, current)};
-			float combined_value{evaluated.to_start_value + evaluated.heuristic_value};
-			if ((successor->tag == New) != (combined_value < successor->key_value))
+			float key_value{evaluated.to_start_value + evaluated.heuristic_value};
+			if ((successor->tag == New) != (key_value < successor->key_value))
 			{
 				successor->parent = current;
 				successor->to_start_value = evaluated.to_start_value;
 				successor->heuristic_value = evaluated.heuristic_value;
-				successor->key_value = combined_value;
+				successor->key_value = key_value;
 				
 				if (successor->tag != Open)
 					push(successor);
