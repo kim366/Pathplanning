@@ -5,6 +5,7 @@
 #include <Gui/EntityManager.hpp>
 #include <Gui/RawInputReceiver.hpp>
 #include <Gui/Consts.hpp>
+#include <Args.hpp>
 
 namespace Gui
 {
@@ -12,7 +13,7 @@ namespace Gui
 class Core
 {
 public:
-										Core();
+										Core(Args args_);
 	void 								loop();
 
 private:

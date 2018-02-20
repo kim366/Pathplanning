@@ -9,10 +9,10 @@
 namespace Gui
 {
 
-Core::Core()
+Core::Core(Args args_)
 {
-	const int grid_size{80};
-	auto grid{std::make_unique<Grid>(grid_size, false)};
+	const int grid_size{args_.grid_size};
+	auto grid{std::make_unique<Grid>(grid_size, args_.eight_connected)};
 
 #ifdef UNINFORMED
 	std::unique_ptr<PathplannerVisualizer> visualizer{new PathplannerVisualizer{std::make_unique<DStarPathplanner>(*grid), *grid, (*grid)[grid->toIndex({0, grid_size - 1})], (*grid)[grid->toIndex({grid_size - 1, 0})]}};

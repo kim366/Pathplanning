@@ -1,6 +1,7 @@
 #include <Gui/Core.hpp>
+#include <Args.hpp>
 
-int main()
+int main(int argc, char const *argv[])
 {
-	Gui::Core().loop();
+	Gui::Core({argc, argv}).loop();
 }
