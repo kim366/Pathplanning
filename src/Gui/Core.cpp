@@ -11,11 +11,11 @@ namespace Gui
 
 Core::Core()
 {
-	const int grid_size{10};
-	auto grid{std::make_unique<Grid>(grid_size, true)};
+	const int grid_size{80};
+	auto grid{std::make_unique<Grid>(grid_size, false)};
 
 #ifdef UNINFORMED
-	std::unique_ptr<PathplannerVisualizer> visualizer{new PathplannerVisualizer{std::make_unique<DStarPathplanner>(*grid), *grid, (*grid)[grid->toIndex({0, 9})], (*grid)[grid->toIndex({9, 0})]}};
+	std::unique_ptr<PathplannerVisualizer> visualizer{new PathplannerVisualizer{std::make_unique<DStarPathplanner>(*grid), *grid, (*grid)[grid->toIndex({0, grid_size - 1})], (*grid)[grid->toIndex({grid_size - 1, 0})]}};
 #endif
 
 	// std::mt19937 rng{std::random_device{}()};
@@ -31,7 +31,7 @@ Core::Core()
 	// 		if ((*grid)[chosen_node_index]->neighbors.size() <= 5)
 	// 			break;
 
-	// 		std::uniform_int_distribution<int> random_neighbor(0, (*grid)[chosen_node_index]->neighbors.size() - 1);
+	// 		std::uniform_int_distribution random_neighbor(0, (*grid)[chosen_node_index]->neighbors.size() - 1);
 	// 		auto neighbor_it{(*grid)[chosen_node_index]->neighbors.begin()};
 	// 		std::advance(neighbor_it, random_neighbor(rng));
 	// 		grid->disconnect({chosen_node_index, neighbor_it->first.getIndex()});
@@ -39,8 +39,10 @@ Core::Core()
 	// }
 
 #ifndef UNINFORMED
-	std::unique_ptr<PathplannerVisualizer> visualizer{new PathplannerVisualizer{std::make_unique<DStarPathplanner>(*grid), *grid, (*grid)[grid->toIndex({1, 8})], (*grid)[grid->toIndex({8, 1})]}};
+	std::unique_ptr<PathplannerVisualizer> visualizer{new PathplannerVisualizer{std::make_unique<DStarPathplanner>(*grid), *grid, (*grid)[grid->toIndex({0, grid_size - 1})], (*grid)[grid->toIndex({grid_size - 1, 0})]}};
 #endif
+
+	grid->generateMaze();
 
 	_entity_manager->addEntity(std::move(grid));
 	_entity_manager->addEntity(std::move(visualizer));

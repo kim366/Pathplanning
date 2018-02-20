@@ -6,6 +6,9 @@
 #include <SFML/Graphics/RectangleShape.hpp>
 #include <Gui/Consts.hpp>
 #include <iostream>
+#include <random>
+#include <stack>
+#include <unordered_set>
 
 Graph::Graph(std::initializer_list<sf::Vector2i> node_positions_,
 	std::initializer_list<std::pair<int, int>> node_indices_)
@@ -24,6 +27,18 @@ Graph::Graph(const Graph& other_)
 	for (auto& node : _nodes)
 		for (auto& [neighbor, cost] : node.neighbors)
 			const_cast<NodePtr&>(neighbor)._graph = this;
+}
+
+Graph& Graph::operator=(const Graph& other_)
+{
+	_nodes = other_._nodes;
+	_selected_node_index = other_._selected_node_index;
+
+	for (auto& node : _nodes)
+		for (auto& [neighbor, cost] : node.neighbors)
+			const_cast<NodePtr&>(neighbor)._graph = this;
+
+	return *this;
 }
 
 void Graph::connect(std::pair<int, int> node_indices_)
@@ -189,4 +204,55 @@ void Graph::update(float delta_time_, const Gui::Inputs& inputs_)
 			_selected_node_index = -1;
 	}
 	
+}
+
+void Graph::generateMaze()
+{
+	std::stack<NodePtr> stack;
+	std::unordered_set<NodePtr> unvisited_nodes;
+	Graph maze;
+
+	std::mt19937 rng{std::random_device{}()};
+
+	for (int node_index = 0; node_index < _nodes.size(); ++node_index)
+	{
+		maze.createNode(_nodes[node_index].position);
+		unvisited_nodes.insert(operator[](node_index));
+	}
+
+	auto mark_visited{[&] (NodePtr node_) -> NodePtr
+	{
+		unvisited_nodes.erase(unvisited_nodes.find(node_));
+		node_->visited = true;
+		return node_;
+	}};
+
+	NodePtr current{mark_visited(operator[](0))};
+
+	while (!unvisited_nodes.empty())
+	{
+		auto unvisited{(current->neighbors.size())};
+		auto stacksize{stack.size()};
+		std::vector<NodePtr> unvisited_neighbors;
+		for (auto [neighbor, cost] : current->neighbors)
+			if (!neighbor->visited)
+				unvisited_neighbors.push_back(neighbor);
+
+		if (!unvisited_neighbors.empty())
+		{
+			std::uniform_int_distribution<int> random_unvisited_neighbor(0, unvisited_neighbors.size() - 1);
+			auto chosen_neighbor{unvisited_neighbors[random_unvisited_neighbor(rng)]};
+
+			stack.push(current);
+			connect(maze[current.getIndex()], maze[chosen_neighbor.getIndex()]);
+			current = mark_visited(chosen_neighbor);
+		}
+		else if (!stack.empty())
+		{
+			current = stack.top();
+			stack.pop();
+		}
+	}
+
+	*this = maze;
 }

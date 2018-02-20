@@ -26,9 +26,11 @@ public:
 	void 				connect(NodePtr first_, NodePtr second_);
 	void 				disconnect(NodePtr first_, NodePtr second_);
 
+	void 				generateMaze();
 	void				modifyWeight(NodePtr first_, NodePtr second_, float new_weight_);
 
 	NodePtr 			operator[](int index_);
+	Graph&				operator=(const Graph& other_);
 
 	void				resetNodes();
 protected:
@@ -40,4 +42,3 @@ protected:
 private:
 	int					_selected_node_index{-1};
 };
-

@@ -37,6 +37,9 @@ struct Node
 		Examined
 	} visualization_status;
 	NodePtr visualization_parent;
+
+	// Used by Maze Generator
+	bool visited;
 };
 
 float 					getWeight(NodePtr from_, NodePtr to_);
