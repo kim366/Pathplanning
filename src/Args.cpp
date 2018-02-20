@@ -24,6 +24,7 @@ Options:
   -u                        Make the path planners have limited environmental knowledge
   -s <size>                 Set the grid size (default: 10).
   -m {perfect|maze|random}  Set grid generation mode (default: perfect).
+  -a                        Animate procedure (future version).
 )";
 		std::exit(EXIT_SUCCESS);
 	}
@@ -41,7 +42,10 @@ Options:
 		if (next == "perfect")
 			mode = PerfectGrid;
 		else if (next == "maze")
+		{
 			mode = GenerateMaze;
+			uninformed = false;
+		}
 		else if (next == "random")
 			mode = RandomDist;
 	}
