@@ -22,8 +22,8 @@ Options:
   -h                        Display this information.
   -e                        Make the generated grid eight-connected.
   -u                        Make the path planners have limited environmental knowledge
-  -s <size>                 Set the grid size (default 10).
-  -m {perfect|maze|random}  Set grid generation mode
+  -s <size>                 Set the grid size (default: 10).
+  -m {perfect|maze|random}  Set grid generation mode (default: perfect).
 )";
 		std::exit(EXIT_SUCCESS);
 	}
@@ -33,4 +33,16 @@ Options:
 
 	if (auto found{std::find(args.begin(), args.end(), "-s")}; found != args.end() && found != args.end() - 1)
 		grid_size = std::stoi(*++found);
+
+	if (auto found{std::find(args.begin(), args.end(), "-m")}; found != args.end() && found != args.end() - 1)
+	{
+		auto next{*++found};
+		
+		if (next == "perfect")
+			mode = PerfectGrid;
+		else if (next == "maze")
+			mode = GenerateMaze;
+		else if (next == "random")
+			mode = RandomDist;
+	}
 }
