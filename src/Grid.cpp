@@ -2,6 +2,7 @@
 #include <math.h>
 #include <SFML/System/Vector2.hpp>
 #include <Gui/Consts.hpp>
+#include <random>
 
 Grid::Grid(unsigned size_, bool eight_connected_)
 	: _total_size{Gui::cst::Window::size - 2 * Gui::cst::Graph::node_radius}
@@ -111,4 +112,18 @@ sf::Vector2i Grid::toCoordinate(int index_) const
 	x = index_;
 
 	return {x, y};
+}
+
+void Grid::disconnectCrossingEges()
+{
+	std::mt19937 rng{std::random_device{}()};
+
+	for (int node_index = 0; node_index < _nodes.size() - _size; ++node_index)
+	{
+		if (toCoordinate(node_index).x == _nodes.size() - 1)
+			continue;
+
+		int random{std::uniform_int_distribution{0, 1}(rng)};
+		disconnect({node_index + random, toIndex(toCoordinate(node_index) + sf::Vector2i{1 - random, 1})});
+	}
 }
