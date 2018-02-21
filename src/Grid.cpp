@@ -118,7 +118,7 @@ void Grid::disconnectCrossingEges()
 {
 	std::mt19937 rng{std::random_device{}()};
 
-	for (int node_index = 0; node_index < _nodes.size() - _size; ++node_index)
+	for (int node_index = 0; node_index < _nodes.size() - _size - 1; ++node_index)
 	{
 		if (toCoordinate(node_index).x == _nodes.size() - 1)
 			continue;
