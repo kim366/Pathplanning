@@ -223,8 +223,12 @@ void Graph::generateMaze()
 	auto mark_visited{[&] (NodePtr node_) -> NodePtr
 	{
 		unvisited_nodes.erase(unvisited_nodes.find(node_));
-		node_->visited = true;
 		return node_;
+	}};
+
+	auto is_unvisited{[&] (NodePtr node_)
+	{
+		return unvisited_nodes.find(node_) != unvisited_nodes.end();
 	}};
 
 	NodePtr current{mark_visited(operator[](0))};
@@ -235,7 +239,7 @@ void Graph::generateMaze()
 		auto stacksize{stack.size()};
 		std::vector<NodePtr> unvisited_neighbors;
 		for (auto [neighbor, cost] : current->neighbors)
-			if (!neighbor->visited)
+			if (is_unvisited(neighbor))
 				unvisited_neighbors.push_back(neighbor);
 
 		if (!unvisited_neighbors.empty())

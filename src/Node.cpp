@@ -10,7 +10,6 @@ Node::Node(sf::Vector2f position_)
 	, child{nullptr}
 	, visualization_status{Standard}
 	, visualization_parent{nullptr}
-	, visited{false}
 {
 }
 
