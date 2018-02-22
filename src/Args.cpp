@@ -60,7 +60,4 @@ Options:
 		else if (next == "random")
 			mode = RandomDist;
 	}
-
-	uninformed = true;
-	
 }

@@ -18,7 +18,7 @@ Core::Core(Args args_)
 	if (args_.mode == RandomDist)
 	{
 		std::mt19937 rng{std::random_device{}()};
-		rng.seed(80);
+		rng.seed(3);
 		std::normal_distribution random_node{25., 10.};
 
 		for (int counter{0}; counter < 5000; ++counter)
@@ -38,8 +38,9 @@ Core::Core(Args args_)
 		}
 	}
 
-	std::unique_ptr<PathplannerVisualizer> visualizer{!args_.uninformed ? new PathplannerVisualizer{std::make_unique<DStarPathplanner>(*grid), *grid, (*grid)[grid->toIndex({1, grid_size - 2})], (*grid)[grid->toIndex({grid_size - 2, 1})]} : new PathplannerVisualizer{std::make_unique<DStarPathplanner>(perfect_grid), *grid, (*grid)[grid->toIndex({1, grid_size - 2})], (*grid)[grid->toIndex({grid_size - 2, 1})]}};
-
+	std::unique_ptr<PathplannerVisualizer> visualizer{!args_.uninformed
+		? new PathplannerVisualizer{std::make_unique<DStarPathplanner>(*grid), *grid, (*grid)[grid->toIndex({1, grid_size - 2})], (*grid)[grid->toIndex({grid_size - 2, 1})], false}
+		: new PathplannerVisualizer{std::make_unique<DStarPathplanner>(perfect_grid), *grid, (*grid)[grid->toIndex({1, grid_size - 2})], (*grid)[grid->toIndex({grid_size - 2, 1})], true}};
 
 	if (args_.mode == GenerateMaze)
 	{

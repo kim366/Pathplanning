@@ -5,12 +5,13 @@
 namespace Gui
 {
 
-PathplannerVisualizer::PathplannerVisualizer(std::unique_ptr<Pathplanner>&& pathplanner_, Graph& graph_, NodePtr start_, NodePtr goal_)
+PathplannerVisualizer::PathplannerVisualizer(std::unique_ptr<Pathplanner>&& pathplanner_, Graph& graph_, NodePtr start_, NodePtr goal_, bool uninformed_)
 	: _pathplanner{std::move(pathplanner_)}
 	, _graph{graph_}
 	, _start{start_}
 	, _goal{goal_}
 	, _map{graph_}
+	, _uninformed{uninformed_}
 {
 }
 
@@ -20,21 +21,29 @@ void PathplannerVisualizer::update(float delta_time_, const Inputs& inputs_)
 	{
 		_graph.resetNodes();
 
-		bool uninformed{false};
+		bool actual_uninformed{false};
 
-#ifdef UNINFORMED		
-		if (!(uninformed = !dynamic_cast<DStarPathplanner*>(_pathplanner.get())))
-			_pathplanner = std::make_unique<DStarPathplanner>(_map);
-#endif
+		if (_uninformed)
+		{
+			if (!(actual_uninformed = !dynamic_cast<DStarPathplanner*>(_pathplanner.get())))
+				_pathplanner = std::make_unique<DStarPathplanner>(_map);
+		}
+		else
+		{
+			_map = _graph;
+			if (dynamic_cast<DStarPathplanner*>(_pathplanner.get()))
+				_pathplanner = std::make_unique<DStarPathplanner>(_map);
+		}
+
 
 		auto& find_shortest_path{*_pathplanner};
 		PathplanningReturnType result;
-		if (uninformed)
+		if (actual_uninformed)
 			result = find_shortest_path(_map[_start.getIndex()], _map[_goal.getIndex()]);
 		else
 			result = find_shortest_path(_start, _goal);
 
-		if (uninformed)
+		if (actual_uninformed)
 		{
 			for (int node_index{0}; node_index < result.path.size(); ++node_index)
 			{
