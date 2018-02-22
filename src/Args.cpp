@@ -8,6 +8,7 @@ using namespace std::literals::string_literals;
 
 Args::Args(int argc, char const *argv[])
 	: grid_size{10}
+	, initial_pathplanner{NoPathplanner}
 {
 	std::vector<std::string> args(argv + 1, argv + argc);
 
@@ -37,7 +38,7 @@ Options:
   -s <size>                 Set the grid size (default: 10).
   -m {perfect|maze|random}  Set grid generation mode (default: perfect).
   -a                        Animate procedure (future version).
-  -i {a*|d*|dijkstra}       Initial search algorithm
+  -i {astar|dstar|dijkstra} Choose Initial search algorithm.
 )";
 		std::exit(EXIT_SUCCESS);
 	}
@@ -59,5 +60,17 @@ Options:
 		}
 		else if (next == "random")
 			mode = RandomDist;
+	}
+
+	if (auto [contains, next]{contains_and_next_is_valid("i")}; contains)
+	{		
+		if (next == "dstar")
+			initial_pathplanner = DStar;
+		else if (next == "astar")
+			initial_pathplanner = AStar;
+		else if (next == "dijkstra")
+			initial_pathplanner = Dijkstra;
+		else
+			initial_pathplanner = NoPathplanner;
 	}
 }

@@ -5,20 +5,24 @@
 namespace Gui
 {
 
-PathplannerVisualizer::PathplannerVisualizer(std::unique_ptr<Pathplanner>&& pathplanner_, Graph& graph_, NodePtr start_, NodePtr goal_, bool uninformed_)
+PathplannerVisualizer::PathplannerVisualizer(std::unique_ptr<Pathplanner>&& pathplanner_, Graph& graph_, NodePtr start_, NodePtr goal_, bool uninformed_, bool immediately_)
 	: _pathplanner{std::move(pathplanner_)}
 	, _graph{graph_}
 	, _start{start_}
 	, _goal{goal_}
 	, _map{graph_}
 	, _uninformed{uninformed_}
+	, _immediately{immediately_}
+	, _immediate_done{false}
 {
 }
 
 void PathplannerVisualizer::update(float delta_time_, const Inputs& inputs_)
 {
-	if (inputs_.event.pressed(sf::Keyboard::Space))
+	if (inputs_.event.pressed(sf::Keyboard::Space) || (_immediately && !_immediate_done))
 	{
+		_immediate_done = true;
+
 		_graph.resetNodes();
 
 		bool actual_uninformed{false};

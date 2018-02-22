@@ -11,7 +11,7 @@ namespace Gui
 class PathplannerVisualizer : public Entity
 {
 public:
-									PathplannerVisualizer(std::unique_ptr<Pathplanner>&& pathplanner_, Graph& graph_, NodePtr start_, NodePtr goal_, bool uninformed_);
+									PathplannerVisualizer(std::unique_ptr<Pathplanner>&& pathplanner_, Graph& graph_, NodePtr start_, NodePtr goal_, bool uninformed_, bool immediately_);
 
 private:
 	virtual void 					update(float delta_time_, const Inputs& inputs_) override;
@@ -23,6 +23,8 @@ private:
 	NodePtr							_start;
 	NodePtr							_goal;
 	bool							_uninformed;
+	bool							_immediately;
+	bool							_immediate_done;
 };
 
 } // namespace Gui

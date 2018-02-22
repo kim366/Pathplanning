@@ -38,10 +38,6 @@ Core::Core(Args args_)
 		}
 	}
 
-	std::unique_ptr<PathplannerVisualizer> visualizer{!args_.uninformed
-		? new PathplannerVisualizer{std::make_unique<DStarPathplanner>(*grid), *grid, (*grid)[grid->toIndex({1, grid_size - 2})], (*grid)[grid->toIndex({grid_size - 2, 1})], false}
-		: new PathplannerVisualizer{std::make_unique<DStarPathplanner>(perfect_grid), *grid, (*grid)[grid->toIndex({1, grid_size - 2})], (*grid)[grid->toIndex({grid_size - 2, 1})], true}};
-
 	if (args_.mode == GenerateMaze)
 	{
 		if (args_.eight_connected)
@@ -49,8 +45,33 @@ Core::Core(Args args_)
 		grid->generateMaze();
 	}
 
+	std::function<float(NodePtr, NodePtr)> heuristic;
+
+	if (args_.initial_pathplanner == DStar || args_.initial_pathplanner == NoPathplanner)
+	{
+		if (args_.uninformed)
+			_entity_manager->addEntity(std::make_unique<PathplannerVisualizer>(std::make_unique<DStarPathplanner>(perfect_grid), *grid, (*grid)[grid->toIndex({1, grid_size - 2})], (*grid)[grid->toIndex({grid_size - 2, 1})], true, args_.initial_pathplanner != NoPathplanner));
+		else
+			_entity_manager->addEntity(std::make_unique<PathplannerVisualizer>(std::make_unique<DStarPathplanner>(*grid), *grid, (*grid)[grid->toIndex({1, grid_size - 2})], (*grid)[grid->toIndex({grid_size - 2, 1})], false, args_.initial_pathplanner != NoPathplanner));
+	}
+	else
+	{
+		if (args_.initial_pathplanner == AStar)
+		{
+			if (args_.eight_connected)
+				heuristic = Euclidean{};
+			else
+				heuristic = Manhattan{};
+		}
+		else
+			heuristic = [] (...) { return 0; };
+
+		_entity_manager->addEntity(std::make_unique<PathplannerVisualizer>(std::make_unique<AStarPathplanner>(heuristic), *grid, (*grid)[grid->toIndex({1, grid_size - 2})], (*grid)[grid->toIndex({grid_size - 2, 1})], true, true));
+	}
+
+	std::cout << grid->eight_connected;
+
 	_entity_manager->addEntity(std::move(grid));
-	_entity_manager->addEntity(std::move(visualizer));
 	_window->setFramerateLimit(10);
 }
 
