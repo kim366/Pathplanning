@@ -20,6 +20,11 @@ Graph::Graph(std::initializer_list<sf::Vector2i> node_positions_,
 		connect(node_indices);
 }
 
+Graph::Graph(std::optional<int> seed_)
+	: _seed{seed_}
+{
+}
+
 Graph::Graph(const Graph& other_)
 	: _nodes{other_._nodes}
 	, _selected_node_index{other_._selected_node_index}
@@ -213,6 +218,8 @@ void Graph::generateMaze()
 	Graph maze;
 
 	std::mt19937 rng{std::random_device{}()};
+	if (_seed)
+		rng.seed(*_seed);
 
 	for (int node_index = 0; node_index < _nodes.size(); ++node_index)
 	{

@@ -12,7 +12,7 @@ namespace Gui
 Core::Core(Args args_)
 {
 	const int grid_size{args_.grid_size};
-	auto grid{std::make_unique<Grid>(grid_size, args_.eight_connected)};
+	auto grid{std::make_unique<Grid>(grid_size, args_.eight_connected, args_.seed)};
 	Grid perfect_grid{*grid};
 
 	if (args_.disconnect_crossing_edges && args_.eight_connected)
@@ -21,7 +21,8 @@ Core::Core(Args args_)
 	if (args_.mode == RandomDist)
 	{
 		std::mt19937 rng{std::random_device{}()};
-		rng.seed(50);
+		if (args_.seed)
+			rng.seed(*args_.seed);
 		std::normal_distribution random_node{25., 10.};
 
 		for (int counter{0}; counter < 5000; ++counter)

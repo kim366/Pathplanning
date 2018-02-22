@@ -1,5 +1,7 @@
 #pragma once
 
+#include <optional>
+
 enum Mode
 {
 	PerfectGrid,
@@ -23,6 +25,7 @@ struct Args
 	Mode mode;
 	InitialPathplanner initial_pathplanner;
 	bool disconnect_crossing_edges;
+	std::optional<int> seed;
 	bool uninformed;
 	int grid_size;
 };

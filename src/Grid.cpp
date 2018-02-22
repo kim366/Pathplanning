@@ -4,8 +4,9 @@
 #include <Gui/Consts.hpp>
 #include <random>
 
-Grid::Grid(unsigned size_, bool eight_connected_)
-	: _total_size{Gui::cst::Window::size - 2 * Gui::cst::Graph::node_radius}
+Grid::Grid(unsigned size_, bool eight_connected_, std::optional<int> seed_)
+	: Graph{seed_}
+	, _total_size{Gui::cst::Window::size - 2 * Gui::cst::Graph::node_radius}
 	, _size{size_}
 	, eight_connected{eight_connected_}
 	, unit{_total_size / (_size - 1)}
@@ -117,6 +118,8 @@ sf::Vector2i Grid::toCoordinate(int index_) const
 void Grid::disconnectCrossingEges()
 {
 	std::mt19937 rng{std::random_device{}()};
+	if (_seed)
+		rng.seed(*_seed);
 
 	for (int node_index = 0; node_index < _nodes.size() - _size - 1; ++node_index)
 	{

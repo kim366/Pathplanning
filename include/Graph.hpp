@@ -14,6 +14,7 @@ friend class NodePtr;
 
 public:
 						Graph() = default;
+						Graph(std::optional<int> seed_);
 						Graph(std::initializer_list<sf::Vector2i> node_positions_,
 							std::initializer_list<std::pair<int, int>> node_indices_);
 						Graph(const Graph& other_);
@@ -38,6 +39,7 @@ protected:
 	void				update(float delta_time_, const Gui::Inputs& inputs_) override;
 protected:
 	std::vector<Node>	_nodes;
+	std::optional<int>	_seed;
 
 private:
 	int					_selected_node_index{-1};

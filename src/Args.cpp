@@ -76,4 +76,7 @@ Options:
 		else
 			initial_pathplanner = NoPathplanner;
 	}
+
+	if (auto [contains, next]{contains_and_next_is_valid("f")}; contains)	
+		seed = std::stoi(next);
 }

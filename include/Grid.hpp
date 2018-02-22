@@ -5,7 +5,7 @@
 class Grid : public Graph
 {
 public:
-					Grid(unsigned size_, bool eight_connected_ = false);
+					Grid(unsigned size_, bool eight_connected_ = false, std::optional<int> seed_ = {});
 	int				toIndex(sf::Vector2i coordinate_) const;
 	sf::Vector2i	toCoordinate(int index_) const;
 	void 			disconnectCrossingEges();
