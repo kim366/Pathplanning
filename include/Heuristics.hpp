@@ -31,10 +31,6 @@ struct Manhattan : Heuristic
 {
 	float operator()(NodePtr node_, NodePtr goal_) const override
 	{
-		auto grid{dynamic_cast<const Grid*>(&node_.getGraph())};
-		assert(grid != nullptr);
-		assert(!grid->eight_connected);
-
 		sf::Vector2f distance{goal_->position - node_->position};
 		return std::abs(distance.x) + std::abs(distance.y);
 	}
