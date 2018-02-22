@@ -4,14 +4,26 @@
 #include <string>
 #include <iostream>
 
+using namespace std::literals::string_literals;
+
 Args::Args(int argc, char const *argv[])
 	: grid_size{10}
 {
 	std::vector<std::string> args(argv + 1, argv + argc);
 
-	auto contains{[&] (std::string s_)
+	auto contains{[&] (std::string s_) -> bool
 	{
-		return std::find(args.begin(), args.end(), s_) != args.end();
+		if (!args.empty() && args[0][0] == '-' && args[0].find(s_) != std::string::npos)
+			return true;
+		return std::find(args.begin(), args.end(), "-" + s_) != args.end();
+	}};
+
+	auto contains_and_next_is_valid{[&] (std::string s_) -> std::pair<bool, std::string>
+	{
+		auto found{std::find(args.begin(), args.end(), "-" + s_)};
+		if (found != args.end() && found != args.end() - 1)
+			return {true, *++found};
+		return {false, ""};
 	}};
 
 	if (contains("-h"))
@@ -25,20 +37,19 @@ Options:
   -s <size>                 Set the grid size (default: 10).
   -m {perfect|maze|random}  Set grid generation mode (default: perfect).
   -a                        Animate procedure (future version).
+  -i {a*|d*|dijkstra}       Initial search algorithm
 )";
 		std::exit(EXIT_SUCCESS);
 	}
 
-	eight_connected = contains("-e");
-	uninformed = contains("-u");
+	eight_connected = contains("e");
+	uninformed = contains("u");
 
-	if (auto found{std::find(args.begin(), args.end(), "-s")}; found != args.end() && found != args.end() - 1)
-		grid_size = std::stoi(*++found);
+	if (auto [contains, next]{contains_and_next_is_valid("s")}; contains)
+		grid_size = std::stoi(next);
 
-	if (auto found{std::find(args.begin(), args.end(), "-m")}; found != args.end() && found != args.end() - 1)
-	{
-		auto next{*++found};
-		
+	if (auto [contains, next]{contains_and_next_is_valid("m")}; contains)
+	{		
 		if (next == "perfect")
 			mode = PerfectGrid;
 		else if (next == "maze")
@@ -49,4 +60,7 @@ Options:
 		else if (next == "random")
 			mode = RandomDist;
 	}
+
+	uninformed = true;
+	
 }
