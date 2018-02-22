@@ -22,6 +22,7 @@ struct Args
 	bool eight_connected;
 	Mode mode;
 	InitialPathplanner initial_pathplanner;
+	bool disconnect_crossing_edges;
 	bool uninformed;
 	int grid_size;
 };

@@ -15,10 +15,13 @@ Core::Core(Args args_)
 	auto grid{std::make_unique<Grid>(grid_size, args_.eight_connected)};
 	Grid perfect_grid{*grid};
 
+	if (args_.disconnect_crossing_edges && args_.eight_connected)
+		grid->disconnectCrossingEges();
+
 	if (args_.mode == RandomDist)
 	{
 		std::mt19937 rng{std::random_device{}()};
-		rng.seed(3);
+		rng.seed(50);
 		std::normal_distribution random_node{25., 10.};
 
 		for (int counter{0}; counter < 5000; ++counter)
@@ -40,8 +43,6 @@ Core::Core(Args args_)
 
 	if (args_.mode == GenerateMaze)
 	{
-		if (args_.eight_connected)
-			grid->disconnectCrossingEges();
 		grid->generateMaze();
 	}
 
@@ -69,10 +70,7 @@ Core::Core(Args args_)
 		_entity_manager->addEntity(std::make_unique<PathplannerVisualizer>(std::make_unique<AStarPathplanner>(heuristic), *grid, (*grid)[grid->toIndex({1, grid_size - 2})], (*grid)[grid->toIndex({grid_size - 2, 1})], true, true));
 	}
 
-	std::cout << grid->eight_connected;
-
 	_entity_manager->addEntity(std::move(grid));
-	_window->setFramerateLimit(10);
 }
 
 void Core::loop()

@@ -38,6 +38,8 @@ Options:
   -s <size>                 Set the grid size (default: 10).
   -m {perfect|maze|random}  Set grid generation mode (default: perfect).
   -a                        Animate procedure (future version).
+  -d                        Disconnect crossing edges.
+  -f <seed>                 Seed the random number generators (future version).
   -i {astar|dstar|dijkstra} Choose Initial search algorithm.
 )";
 		std::exit(EXIT_SUCCESS);
@@ -45,6 +47,7 @@ Options:
 
 	eight_connected = contains("e");
 	uninformed = contains("u");
+	disconnect_crossing_edges = contains("d");
 
 	if (auto [contains, next]{contains_and_next_is_valid("s")}; contains)
 		grid_size = std::stoi(next);
