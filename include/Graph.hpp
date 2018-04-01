@@ -14,9 +14,10 @@ friend class NodePtr;
 
 public:
 						Graph() = default;
-						Graph(std::optional<int> seed_);
+						Graph(std::optional<int> seed_, float node_radius_ = 4.f);
 						Graph(std::initializer_list<sf::Vector2i> node_positions_,
-							std::initializer_list<std::pair<int, int>> node_indices_);
+							std::initializer_list<std::pair<int, int>> node_indices_,
+							float node_radius_ = 4.f);
 						Graph(const Graph& other_);
 						
 	void				createNode(sf::Vector2f position_);
@@ -40,6 +41,7 @@ protected:
 protected:
 	std::vector<Node>	_nodes;
 	std::optional<int>	_seed;
+	float				_node_radius;
 
 private:
 	int					_selected_node_index{-1};

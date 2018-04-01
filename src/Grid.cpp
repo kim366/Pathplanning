@@ -6,20 +6,22 @@
 
 Grid::Grid(unsigned size_, bool eight_connected_, std::optional<int> seed_)
 	: Graph{seed_}
-	, _total_size{Gui::cst::Window::size - 2 * Gui::cst::Graph::node_radius}
 	, _size{size_}
 	, eight_connected{eight_connected_}
 	, unit{_total_size / (_size - 1)}
 	, diagonal_unit{eight_connected_ ? std::hypot(unit, unit) : 0}
 {
+	_node_radius = -(3 / 8.f) * size_ + (95 / 4.f);
+	_total_size = Gui::cst::Window::size - 2 * _node_radius;
+
 	_nodes.reserve(std::pow(_size, 2));
 	
 	for (int y_coordinate{0}; y_coordinate < _size; ++y_coordinate)
 	{
 		for (int x_coordinate{0}; x_coordinate < _size; ++x_coordinate)
 		{
-			float x_window_coordinate{(static_cast<float>(x_coordinate) / (_size - 1)) * _total_size + Gui::cst::Graph::node_radius};
-			float y_window_coordinate{(static_cast<float>(y_coordinate) / (_size - 1)) * _total_size + Gui::cst::Graph::node_radius};
+			float x_window_coordinate{(static_cast<float>(x_coordinate) / (_size - 1)) * _total_size + _node_radius};
+			float y_window_coordinate{(static_cast<float>(y_coordinate) / (_size - 1)) * _total_size + _node_radius};
 			createNode({x_window_coordinate, y_window_coordinate});
 		}
 	}

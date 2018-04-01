@@ -11,7 +11,8 @@
 #include <unordered_set>
 
 Graph::Graph(std::initializer_list<sf::Vector2i> node_positions_,
-	std::initializer_list<std::pair<int, int>> node_indices_)
+	std::initializer_list<std::pair<int, int>> node_indices_,
+	float node_radius_)
 {
 	for (auto& node_position : node_positions_)
 		_nodes.emplace_back(static_cast<sf::Vector2f>(node_position));
@@ -20,7 +21,7 @@ Graph::Graph(std::initializer_list<sf::Vector2i> node_positions_,
 		connect(node_indices);
 }
 
-Graph::Graph(std::optional<int> seed_)
+Graph::Graph(std::optional<int> seed_, float node_radius_)
 	: _seed{seed_}
 {
 }
@@ -28,6 +29,7 @@ Graph::Graph(std::optional<int> seed_)
 Graph::Graph(const Graph& other_)
 	: _nodes{other_._nodes}
 	, _selected_node_index{other_._selected_node_index}
+	, _node_radius{other_._node_radius}
 {
 	for (auto& node : _nodes)
 		for (auto& [neighbor, cost] : node.neighbors)
@@ -122,8 +124,8 @@ void Graph::draw(sf::RenderTarget& target_, sf::RenderStates states_) const
 	auto visualize_edge{[=] (const Node& first_, const Node& second_, sf::Color color_) -> sf::RectangleShape
 	{
 		sf::Vector2f distance{second_.position - first_.position};
-		sf::RectangleShape visualized_edge{{std::hypot(distance.x, distance.y), Gui::cst::Graph::edge_width}};
-		visualized_edge.setOrigin(0, Gui::cst::Graph::edge_width / 2);
+		sf::RectangleShape visualized_edge{{std::hypot(distance.x, distance.y), .901f * _node_radius}};
+		visualized_edge.setOrigin(0, .901f * _node_radius / 2);
 		visualized_edge.setPosition(first_.position);
 		visualized_edge.setFillColor(color_);
 		visualized_edge.setRotation(std::atan(distance.y / distance.x) * 180u / 3.1415926f);
@@ -155,8 +157,8 @@ void Graph::draw(sf::RenderTarget& target_, sf::RenderStates states_) const
 
 	for (int node_index{0}; node_index < _nodes.size(); ++node_index)
 	{
-		sf::CircleShape visualized_node{Gui::cst::Graph::node_radius};
-		visualized_node.setOrigin(Gui::cst::Graph::node_radius, Gui::cst::Graph::node_radius);
+		sf::CircleShape visualized_node{_node_radius};
+		visualized_node.setOrigin(_node_radius, _node_radius);
 		visualized_node.setPosition(_nodes[node_index].position);
 		
 		if (node_index == _selected_node_index)
@@ -186,7 +188,7 @@ void Graph::update(float delta_time_, const Gui::Inputs& inputs_)
 		auto found{std::find_if(begin(_nodes), end(_nodes), [=] (auto& node_)
 		{
 			sf::Vector2f distance{static_cast<sf::Vector2f>(inputs_.cursor_position) - node_.position};
-			return std::hypot(distance.x, distance.y) <= Gui::cst::Graph::node_radius;
+			return std::hypot(distance.x, distance.y) <= _node_radius;
 		})};
 
 		if (found != end(_nodes))
