@@ -41,9 +41,9 @@ Options:
   -s, --size <size>      Set the grid size (default: 10).
   -m, --mode {perfect|maze|random}
                          Set grid generation mode (default: perfect).
-  -a, --animate          Animate procedure (future version).
+  -a, --animate          Animate procedure.
   -d                     Disconnect crossing edges.
-  -f, --seed <seed>      Seed the random number generators (future version).
+  -f, --seed <seed>      Seed the random number generators.
   -i, --initial-search {astar|dstar|dijkstra}
                          Choose Initial search algorithm.
 )";
