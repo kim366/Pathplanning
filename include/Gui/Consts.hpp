@@ -12,7 +12,7 @@ namespace Window
 {
 
 const sf::String 	title{"Pathplanning"};
-const auto 			size{951u};
+const auto 			size{960u};
 
 } // namespace Window
 
