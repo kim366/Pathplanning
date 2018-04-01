@@ -5,7 +5,7 @@
 namespace Gui
 {
 
-PathplannerVisualizer::PathplannerVisualizer(std::unique_ptr<Pathplanner>&& pathplanner_, Graph& graph_, NodePtr start_, NodePtr goal_, bool uninformed_, bool immediately_)
+PathplannerVisualizer::PathplannerVisualizer(std::unique_ptr<Pathplanner>&& pathplanner_, Graph& graph_, NodePtr start_, NodePtr goal_, bool uninformed_, bool immediately_, bool animate_)
 	: _pathplanner{std::move(pathplanner_)}
 	, _graph{graph_}
 	, _start{start_}
@@ -14,13 +14,18 @@ PathplannerVisualizer::PathplannerVisualizer(std::unique_ptr<Pathplanner>&& path
 	, _uninformed{uninformed_}
 	, _immediately{immediately_}
 	, _immediate_done{false}
+	, _initial_path_generated{false}
+	, _animate{animate_}
 {
 }
 
 void PathplannerVisualizer::update(float delta_time_, const Inputs& inputs_)
 {
+	auto& find_shortest_path{*_pathplanner};
+
 	if (inputs_.event.pressed(sf::Keyboard::Space) || (_immediately && !_immediate_done))
 	{
+		_initial_path_generated = true;
 		_immediate_done = true;
 
 		_graph.resetNodes();
@@ -40,31 +45,29 @@ void PathplannerVisualizer::update(float delta_time_, const Inputs& inputs_)
 		}
 
 
-		auto& find_shortest_path{*_pathplanner};
-		PathplanningReturnType result;
 		if (actual_uninformed)
-			result = find_shortest_path(_map[_start.getIndex()], _map[_goal.getIndex()]);
+			_result = find_shortest_path(_map[_start.getIndex()], _map[_goal.getIndex()]);
 		else
-			result = find_shortest_path(_start, _goal);
+			_result = find_shortest_path(_start, _goal);
 
 		if (actual_uninformed)
 		{
-			for (int node_index{0}; node_index < result.path.size(); ++node_index)
+			for (int node_index{0}; node_index < _result.path.size(); ++node_index)
 			{
-				NodePtr node{result.path[node_index]};
+				NodePtr node{_result.path[node_index]};
 
 				_graph[node.getIndex()]->parent = node->parent;
 
-				if (node_index + 1 < result.path.size())
+				if (node_index + 1 < _result.path.size())
 				{
-					NodePtr next_node{result.path[node_index + 1]};
+					NodePtr next_node{_result.path[node_index + 1]};
 					_graph[node.getIndex()]->child = _graph[next_node.getIndex()];
 					node->child = next_node;
 				}
 			}
 
-			auto dynamic_path{result.path};
-			result.path.clear();
+			auto dynamic_path{_result.path};
+			_result.path.clear();
 
 			for (NodePtr node{dynamic_path.front()}; !dynamic_path.empty(); node = dynamic_path.front())
 			{
@@ -84,7 +87,7 @@ void PathplannerVisualizer::update(float delta_time_, const Inputs& inputs_)
 						_map.resetNodes();
 						auto dynamic_result{find_shortest_path(node, _map[_goal.getIndex()])};
 						dynamic_path = std::move(dynamic_result.path);
-						result.examined_nodes.insert(result.examined_nodes.end(), dynamic_result.examined_nodes.begin(), dynamic_result.examined_nodes.end());
+						_result.examined_nodes.insert(_result.examined_nodes.end(), dynamic_result.examined_nodes.begin(), dynamic_result.examined_nodes.end());
 
 						for (int node_index{0}; node_index < dynamic_path.size(); ++node_index)
 						{
@@ -102,29 +105,48 @@ void PathplannerVisualizer::update(float delta_time_, const Inputs& inputs_)
 					}
 				}
 
-				result.path.push_back(node);
+				_result.path.push_back(node);
 			}
 		}
 		
-		for (auto examined_node : result.examined_nodes)
+		for (auto examined_node : _result.examined_nodes)
 			_graph[examined_node.getIndex()]->visualization_status = Node::Examined;
 
-		for (auto node_on_path : result.path)
+		for (auto node_on_path : _result.path)
 			_graph[node_on_path.getIndex()]->visualization_status = Node::OnPath;
 
 		float sum{0};
-		for (int node_index{0}; node_index + 1 < result.path.size(); ++node_index)
+		for (int node_index{0}; node_index + 1 < _result.path.size(); ++node_index)
 		{
-			NodePtr node{result.path[node_index]}, next_node{result.path[node_index + 1]};
+			NodePtr node{_result.path[node_index]}, next_node{_result.path[node_index + 1]};
 			sf::Vector2i delta{node->position - next_node->position};
 			sum += std::hypot(delta.x, delta.y);
 		}
-		std::cout << "Path length: " << sum << "; " << result.examined_nodes.size() << " Nodes Examined\n";
+		std::cout << "Path length: " << sum << "; " << _result.examined_nodes.size() << " Nodes Examined\n";
 
 		find_shortest_path.resetOpen();
 
 		if (DStarPathplanner* dstar_find_shortest_path{dynamic_cast<DStarPathplanner*>(_pathplanner.get())}; dstar_find_shortest_path)
 			dstar_find_shortest_path->resetResult();
+
+	}
+
+	if (_initial_path_generated && _animate)
+	{
+		if (!_result.examined_nodes.empty())
+		{
+			_pathplanner = std::make_unique<AStarPathplanner>(Euclidean{});
+			auto& find_shortest_path{*_pathplanner};
+			_graph.resetNodes();
+			for (auto& node : _graph._nodes)
+				node.visualization_status = Node::Standard;
+
+			auto current_animated_result{find_shortest_path(_graph[_start.getIndex()], _graph[_result.examined_nodes.front().getIndex()])};
+			_result.examined_nodes.erase(_result.examined_nodes.begin());
+
+			for (auto node : current_animated_result.path)
+				_graph[node.getIndex()]->visualization_status = Node::OnPath;			
+		}
 	}
 
 	if (inputs_.event.pressed(sf::Keyboard::D))

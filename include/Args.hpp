@@ -25,6 +25,7 @@ struct Args
 	Mode mode;
 	InitialPathplanner initial_pathplanner;
 	bool disconnect_crossing_edges;
+	bool animate;
 	std::optional<int> seed;
 	bool uninformed;
 	int grid_size;

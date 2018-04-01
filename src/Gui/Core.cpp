@@ -11,6 +11,7 @@ namespace Gui
 
 Core::Core(Args args_)
 {
+	_window->setFramerateLimit(10);
 	const int grid_size{args_.grid_size};
 	auto grid{std::make_unique<Grid>(grid_size, args_.eight_connected, args_.seed)};
 	Grid perfect_grid{*grid};
@@ -52,9 +53,9 @@ Core::Core(Args args_)
 	if (args_.initial_pathplanner == DStar || args_.initial_pathplanner == NoPathplanner)
 	{
 		if (args_.uninformed)
-			_entity_manager->addEntity(std::make_unique<PathplannerVisualizer>(std::make_unique<DStarPathplanner>(perfect_grid), *grid, (*grid)[grid->toIndex({1, grid_size - 2})], (*grid)[grid->toIndex({grid_size - 2, 1})], true, args_.initial_pathplanner != NoPathplanner));
+			_entity_manager->addEntity(std::make_unique<PathplannerVisualizer>(std::make_unique<DStarPathplanner>(perfect_grid), *grid, (*grid)[grid->toIndex({1, grid_size - 2})], (*grid)[grid->toIndex({grid_size - 2, 1})], true, args_.initial_pathplanner != NoPathplanner, args_.animate));
 		else
-			_entity_manager->addEntity(std::make_unique<PathplannerVisualizer>(std::make_unique<DStarPathplanner>(*grid), *grid, (*grid)[grid->toIndex({1, grid_size - 2})], (*grid)[grid->toIndex({grid_size - 2, 1})], false, args_.initial_pathplanner != NoPathplanner));
+			_entity_manager->addEntity(std::make_unique<PathplannerVisualizer>(std::make_unique<DStarPathplanner>(*grid), *grid, (*grid)[grid->toIndex({1, grid_size - 2})], (*grid)[grid->toIndex({grid_size - 2, 1})], false, args_.initial_pathplanner != NoPathplanner, args_.animate));
 	}
 	else
 	{
@@ -68,7 +69,7 @@ Core::Core(Args args_)
 		else
 			heuristic = [] (...) { return 0; };
 
-		_entity_manager->addEntity(std::make_unique<PathplannerVisualizer>(std::make_unique<AStarPathplanner>(heuristic), *grid, (*grid)[grid->toIndex({1, grid_size - 2})], (*grid)[grid->toIndex({grid_size - 2, 1})], true, true));
+		_entity_manager->addEntity(std::make_unique<PathplannerVisualizer>(std::make_unique<AStarPathplanner>(heuristic), *grid, (*grid)[grid->toIndex({1, grid_size - 2})], (*grid)[grid->toIndex({grid_size - 2, 1})], true, true, args_.animate));
 	}
 
 	_entity_manager->addEntity(std::move(grid));

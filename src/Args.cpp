@@ -51,6 +51,7 @@ Options:
 	}
 
 	eight_connected = contains("e") || contains("-eight-connected");
+	animate = contains("a") || contains("-animate");
 	uninformed = contains("u");
 	disconnect_crossing_edges = contains("d");
 

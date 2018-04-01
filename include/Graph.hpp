@@ -35,11 +35,11 @@ public:
 	Graph&				operator=(const Graph& other_);
 
 	void				resetNodes();
+	std::vector<Node>	_nodes;
 protected:
 	void 				draw(sf::RenderTarget& target_, sf::RenderStates states_) const override;
 	void				update(float delta_time_, const Gui::Inputs& inputs_) override;
 protected:
-	std::vector<Node>	_nodes;
 	std::optional<int>	_seed;
 	float				_node_radius;
 
