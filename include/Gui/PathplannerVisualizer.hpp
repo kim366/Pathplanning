@@ -28,6 +28,7 @@ private:
 	bool							_immediate_done;
 	bool							_initial_path_generated;
 	bool							_animate;
+	std::vector<NodePtr>			_animated_examined_nodes;
 };
 
 } // namespace Gui

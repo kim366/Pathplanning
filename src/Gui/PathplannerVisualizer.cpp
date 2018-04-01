@@ -141,7 +141,11 @@ void PathplannerVisualizer::update(float delta_time_, const Inputs& inputs_)
 			for (auto& node : _graph._nodes)
 				node.visualization_status = Node::Standard;
 
+			for (auto& node : _animated_examined_nodes)
+				node->visualization_status = Node::Examined;
+
 			auto current_animated_result{find_shortest_path(_graph[_start.getIndex()], _graph[_result.examined_nodes.front().getIndex()])};
+			_animated_examined_nodes.push_back(_graph[_result.examined_nodes.front().getIndex()]);
 			_result.examined_nodes.erase(_result.examined_nodes.begin());
 
 			for (auto node : current_animated_result.path)
