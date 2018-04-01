@@ -17,6 +17,12 @@ enum InitialPathplanner
 	NoPathplanner
 };
 
+enum StartPosition
+{
+	Center,
+	Corner
+};
+
 struct Args
 {
 	Args(int argc, char const *argv[]);
@@ -29,4 +35,5 @@ struct Args
 	std::optional<int> seed;
 	bool uninformed;
 	int grid_size;
+	StartPosition start_position;
 };

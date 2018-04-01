@@ -9,6 +9,7 @@ using namespace std::literals::string_literals;
 Args::Args(int argc, char const *argv[])
 	: grid_size{10}
 	, initial_pathplanner{NoPathplanner}
+	, start_position{Corner}
 {
 	std::vector<std::string> args(argv + 1, argv + argc);
 
@@ -43,9 +44,12 @@ Options:
                          Set grid generation mode (default: perfect).
   -a, --animate          Animate procedure.
   -d                     Disconnect crossing edges.
-  -f, --seed <seed>      Seed the random number generators.
+  -f, --seed <seed>      Seed th
+  e random number generators.
   -i, --initial-search {astar|dstar|dijkstra}
                          Choose Initial search algorithm.
+  -n, --start {center|corner}
+                         Set node start position (default: corner).
 )";
 		std::exit(EXIT_SUCCESS);
 	}
@@ -54,6 +58,14 @@ Options:
 	animate = contains("a") || contains("-animate");
 	uninformed = contains("u");
 	disconnect_crossing_edges = contains("d");
+
+	if (auto [contains, next]{contains_and_next_is_valid("n", "n")}; contains)
+	{
+		if (next == "corner")
+			start_position = Corner;
+		else if (next == "center")
+			start_position = Center;
+	}
 
 	if (auto [contains, next]{contains_and_next_is_valid("s", "-size")}; contains)
 		grid_size = std::stoi(next);
