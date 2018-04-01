@@ -10,6 +10,7 @@ Args::Args(int argc, char const *argv[])
 	: grid_size{10}
 	, initial_pathplanner{NoPathplanner}
 	, start_position{Corner}
+	, frame_limit{10}
 {
 	std::vector<std::string> args(argv + 1, argv + argc);
 
@@ -40,6 +41,7 @@ Options:
   -e, --eight-connected  Make the generated grid eight-connected.
   -u                     Make the path planners have limited environmental knowledge
   -s, --size <size>      Set the grid size (default: 10).
+  -l, --limit <limit>    Set the framerate limit (default: 10).
   -m, --mode {perfect|maze|random}
                          Set grid generation mode (default: perfect).
   -a, --animate          Animate procedure.
@@ -69,6 +71,9 @@ Options:
 
 	if (auto [contains, next]{contains_and_next_is_valid("s", "-size")}; contains)
 		grid_size = std::stoi(next);
+
+	if (auto [contains, next]{contains_and_next_is_valid("l", "-limit")}; contains)
+		frame_limit = std::stoi(next);
 
 	if (auto [contains, next]{contains_and_next_is_valid("m", "-mode")}; contains)
 	{		

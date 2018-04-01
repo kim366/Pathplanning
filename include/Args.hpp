@@ -35,5 +35,6 @@ struct Args
 	std::optional<int> seed;
 	bool uninformed;
 	int grid_size;
+	int frame_limit;
 	StartPosition start_position;
 };

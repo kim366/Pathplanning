@@ -11,7 +11,7 @@ namespace Gui
 
 Core::Core(Args args_)
 {
-	_window->setFramerateLimit(10);
+	_window->setFramerateLimit(args_.frame_limit);
 	const int grid_size{args_.grid_size};
 	auto grid{std::make_unique<Grid>(grid_size, args_.eight_connected, args_.seed)};
 	Grid perfect_grid{*grid};
