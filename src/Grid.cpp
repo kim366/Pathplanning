@@ -11,7 +11,7 @@ Grid::Grid(unsigned size_, bool eight_connected_, std::optional<int> seed_)
 	, unit{_total_size / (_size - 1)}
 	, diagonal_unit{eight_connected_ ? std::hypot(unit, unit) : 0}
 {
-	_node_radius = -(3 / 8.f) * size_ + (95 / 4.f);
+	_node_radius = (375 / 2.f) / size_ + (5 / 4.f);
 	_total_size = Gui::cst::Window::size - 2 * _node_radius;
 
 	_nodes.reserve(std::pow(_size, 2));
